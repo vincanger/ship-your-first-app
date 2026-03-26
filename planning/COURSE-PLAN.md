@@ -64,7 +64,9 @@ Each module is a standalone markdown file that Claude fetches and follows.
 ## Authoring Notes
 
 - **Always use `wasp db migrate-dev --name <descriptive-name>`** (not bare `wasp db migrate-dev`). The interactive migration-name prompt hangs in Claude Code since it can't handle interactive input. The `--name` flag passes the name directly.
-- **Progress tracking**: Every module's Meta block must include the `**Progress tracking**` instruction. The agent writes a `.course-progress` JSON file (`{ "module": N, "beat": N, "title": "...", "status": "in-progress" | "complete" }`) in the project root after each beat, and prints a `[■■□□]` progress bar. This lets the agent resume from where the learner left off if the session restarts.
+- **Progress tracking**: Every module's Meta block must include the `**Progress tracking**` instruction. The agent writes a `.course-progress` JSON file (`{ "module": N, "beat": N, "title": "...", "status": "in-progress" | "complete" }`) in the project root and prints a `[■■□□]` progress bar. Progress is updated at the *start* of each new beat (not the end of the previous one) via a `MUST DO` directive — this avoids inconsistencies if the session drops mid-beat.
+- **"Continue" command**: Every module's Meta block must include the `**"Continue"**` instruction, which tells the agent to advance to the next step/beat when the learner types "continue".
+- **Side-by-side windows**: When `wasp start` runs for the first time, suggest the learner arrange their terminal and browser side by side.
 
 ---
 

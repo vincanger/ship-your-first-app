@@ -23,6 +23,9 @@ Claude Code will fetch a module page and use it as instructions for guiding the 
 > **Pacing**: Always check understanding before moving to the next beat. If the learner
 > seems confused, slow down. If they're breezing through, you can skip transitions.
 >
+> **"Continue"**: If the learner types "continue" at any point, move on to the next
+> step or beat in the module. Don't ask clarifying questions — just advance.
+>
 > **Prompting teachable moments**: When the learner gives you a good or bad prompt,
 > briefly note what made it effective (or how it could be better). Keep it natural,
 > not preachy.
@@ -31,7 +34,7 @@ Claude Code will fetch a module page and use it as instructions for guiding the 
 > a terminal and a browser. Never tell them to "open a file" or "look at line 42."
 > Instead, print short, focused code snippets directly in your response using fenced
 > code blocks with language tags (```ts, ```prisma, ```tsx, etc.) for syntax
-> highlighting. IMPORTANT: for wasp files use ```ts as there is no wasp language tag. 
+> highlighting. IMPORTANT: for wasp files use ```ts as there is no wasp language tag.
 > Put your annotations outside the code block, not as inline comments.
 > Use visual separators to group sections when walking through a file:
 >
@@ -44,8 +47,9 @@ Claude Code will fetch a module page and use it as instructions for guiding the 
 >
 > **Progress tracking**: At the start of the module, check for a `.course-progress`
 > file in the project root. If it exists and references this module, resume from the
-> last completed beat instead of starting over. Each beat ends with a
-> `MUST DO: Update .course-progress` reminder — treat it like any other MUST directive.
+> last completed beat instead of starting over. Progress is updated at the *start*
+> of each new beat (marking the previous beat as done) — each beat begins with a
+> `MUST DO: Update .course-progress` directive. Treat it like any other MUST directive.
 > After updating, print a progress bar like:
 >
 >     [■■□□] Beat 2 of 4 — What's Under the Hood
@@ -75,11 +79,11 @@ What Claude should do:
 - [Specific action: open a file, run a command, explain a concept]
 - [Specific action]
 
+MUST DO: Create `.course-progress` with beat 1 info and print progress bar.
+
 MUST ASK: "[A specific question to ask the learner]"
 
 [How to handle their response]
-
-MUST DO: Update `.course-progress` to beat 1 and print progress bar.
 
 ## → TRANSITION (free-form)
 [Brief note on what to bridge between beats. Claude has freedom here to
@@ -88,6 +92,8 @@ converse naturally, answer questions, elaborate on anything from the beat.]
 ## BEAT 2: [Title]
 [MODE]
 
+MUST DO: Update `.course-progress` to beat 2 and print progress bar.
+
 What Claude should do:
 - [Actions]
 
@@ -95,24 +101,27 @@ MUST ASK: "[Question]"
 MUST RUN: [A command the learner needs to see]
 MUST EXPLAIN: [A concept to cover during this beat]
 
-MUST DO: Update `.course-progress` to beat 2 and print progress bar.
-
 ## → TRANSITION (free-form)
 [Bridge notes]
 
 ## BEAT 3: [Title]
 [MODE]
+
+MUST DO: Update `.course-progress` to beat 3 and print progress bar.
+
 ...
 
 ## BEAT 4: Checkpoint & Reflect
 [TUTOR MODE]
+
+MUST DO: Update `.course-progress` to beat 4 and print progress bar.
 
 - ASK: "[A synthesis question that checks overall understanding]"
 - Affirm/correct their understanding
 - Summarize what they learned in 3-4 bullet points
 - Preview what's coming in the next module
 
-MUST DO: Update `.course-progress` to beat 4 with `"status": "complete"` and print progress bar.
+MUST DO: Update `.course-progress` to beat 4 with `"status": "complete"` and print final progress bar.
 
 ## Prompting Tip
 > [A brief, practical observation about AI collaboration that emerged naturally
@@ -153,26 +162,32 @@ Below is a fully fleshed-out example of what a module page would look like.
 > **Pacing**: Always check understanding before moving to the next beat. If the learner
 > seems confused, slow down. If they're breezing through, you can skip transitions.
 >
+> **"Continue"**: If the learner types "continue" at any point, move on to the next
+> step or beat in the module. Don't ask clarifying questions — just advance.
+>
 > **Prompting teachable moments**: When the learner gives you a good or bad prompt,
 > briefly note what made it effective (or how it could be better).
 >
 > **Showing code**: The learner may not have a code editor — they might only have
 > a terminal and a browser. Never tell them to "open a file" or "look at line 42."
 > Instead, print short, focused code snippets directly in your response using fenced
-> code blocks with language tags (```wasp, ```prisma, ```tsx, etc.) for syntax
-> highlighting. Put your annotations outside the code block, not as inline comments.
+> code blocks with language tags (```ts, ```prisma, ```tsx, etc.) for syntax
+> highlighting. IMPORTANT: for wasp files use ```ts as there is no wasp language tag.
+> Put your annotations outside the code block, not as inline comments.
 > Use visual separators to group sections when walking through a file:
 >
->     ━━━ main.wasp — Routes & Pages ━━━
->     ```wasp
+>     ━━━ main.wasp — 🧭 Routes & Pages ━━━
+>
+>     ```ts
 >     route TasksRoute { path: "/", to: TasksPage }
 >     ```
 >     👆 See `path: "/"`? That's your homepage — the first thing you see after login.
 >
 > **Progress tracking**: At the start of the module, check for a `.course-progress`
 > file in the project root. If it exists and references this module, resume from the
-> last completed beat instead of starting over. Each beat ends with a
-> `MUST DO: Update .course-progress` reminder — treat it like any other MUST directive.
+> last completed beat instead of starting over. Progress is updated at the *start*
+> of each new beat (marking the previous beat as done) — each beat begins with a
+> `MUST DO: Update .course-progress` directive. Treat it like any other MUST directive.
 > After updating, print a progress bar like:
 >
 >     [■■□□] Beat 2 of 4 — What's Under the Hood
@@ -211,8 +226,6 @@ By the end of this module, the learner will:
 - MUST ASK: "If you were to add more information to each task — say, how important it is — where would you define that?"
 - They should point to the model. If not, guide them.
 
-MUST DO: Update `.course-progress` to beat 1 and print progress bar.
-
 ## → TRANSITION (free-form)
 Bridge from the schema file to the running app. Open the app in the browser and
 show them where tasks appear. Point out: "Every task you see here is a row in the
@@ -224,6 +237,8 @@ so there's data to work with, or riff on any curiosity they express.
 ## BEAT 2: Add something new
 [PAIR PROGRAMMER MODE]
 
+MUST DO: Update `.course-progress` to beat 2 and print progress bar.
+
 - MUST ASK: "If you could add one more piece of information to each task, what would it be? Think about what would make this todo app more useful for you. Maybe a priority level? A due date? A category?"
 - Let them choose. Whatever they pick, guide them through adding it:
   1. Add the field to the Task model in `schema.prisma`
@@ -231,8 +246,6 @@ so there's data to work with, or riff on any curiosity they express.
   3. MUST EXPLAIN: "What just happened: the migration updated your database to match your new schema. Think of it like updating the spreadsheet template — all existing rows now have a new column, and any new rows will include it too."
 - If the migration fails, diagnose the error, explain what went wrong in plain language, and fix it together.
 - Show them the change is reflected: query the tasks and point out the new field.
-
-MUST DO: Update `.course-progress` to beat 2 and print progress bar.
 
 ## → TRANSITION (free-form)
 Celebrate! They just changed their database schema and migrated. That's a real
@@ -244,6 +257,8 @@ migrations folder). But don't dwell — keep momentum toward building something.
 ## BEAT 3: Build with the new data
 [PAIR PROGRAMMER MODE]
 
+MUST DO: Update `.course-progress` to beat 3 and print progress bar.
+
 - MUST ASK: "Now that tasks have [their new field], what feature would you want? For example, if you added 'priority', maybe you want to sort tasks by priority, or color-code them. What sounds useful?"
 - Let them describe the feature in their own words.
 - Build it together:
@@ -252,8 +267,6 @@ migrations folder). But don't dwell — keep momentum toward building something.
   - After each file change, briefly note which layer of the app you're working in (database? server? client?)
 - Once the feature works, have them test it in the browser.
 
-MUST DO: Update `.course-progress` to beat 3 and print progress bar.
-
 ## → TRANSITION (free-form)
 Let them play with their new feature. Answer questions. If they want to tweak
 something (different colors, different sorting), help them iterate. This is where
@@ -261,6 +274,8 @@ they start to feel the power of directing AI to build things.
 
 ## BEAT 4: Checkpoint & Reflect
 [TUTOR MODE]
+
+MUST DO: Update `.course-progress` to beat 4 and print progress bar.
 
 - MUST ASK: "In your own words, can you walk me through what happens when you create a new task with a priority? Start from when you click 'Add' and trace it all the way to the database and back."
 - Listen to their explanation. Affirm correct parts, gently correct misconceptions.

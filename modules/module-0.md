@@ -13,6 +13,9 @@
 > **Pacing**: Always check understanding before moving to the next beat. If the learner
 > seems confused, slow down. If they're breezing through, you can skip transitions.
 >
+> **"Continue"**: If the learner types "continue" at any point, move on to the next
+> step or beat in the module. Don't ask clarifying questions — just advance.
+>
 > **Prompting teachable moments**: When the learner gives you a good or bad prompt,
 > briefly note what made it effective (or how it could be better). Keep it natural,
 > not preachy.
@@ -25,7 +28,7 @@
 > a terminal and a browser. Never tell them to "open a file" or "look at line 42."
 > Instead, print short, focused code snippets directly in your response using fenced
 > code blocks with language tags (```ts, ```prisma, ```tsx, etc.) for syntax
-> highlighting. IMPORTANT: for wasp files use ```ts as there is no wasp language tag. 
+> highlighting. IMPORTANT: for wasp files use ```ts as there is no wasp language tag.
 > Put your annotations outside the code block, not as inline comments.
 > Use visual separators to group sections when walking through a file:
 >
@@ -38,8 +41,9 @@
 >
 > **Progress tracking**: At the start of the module, check for a `.course-progress`
 > file in the project root. If it exists and references this module, resume from the
-> last completed beat instead of starting over. Each beat ends with a
-> `MUST DO: Update .course-progress` reminder — treat it like any other MUST directive.
+> last completed beat instead of starting over. Progress is updated at the *start*
+> of each new beat (marking the previous beat as done) — each beat begins with a
+> `MUST DO: Update .course-progress` directive. Treat it like any other MUST directive.
 > After updating, print a progress bar like:
 >
 >     [■■□□] Beat 2 of 4 — What's Under the Hood
@@ -68,6 +72,13 @@ By the end of this module, the learner will:
 [PAIR PROGRAMMER MODE]
 
 What Claude (or other AI agent) should do:
+
+**Before anything else**, give the learner a heads-up about what's coming:
+- "Here's what we're about to do: I'm going to create a new web app project, set up a database, and start the app so you can see it in your browser. Some of these steps take a minute or two — I'll explain what's happening as we go."
+- "First, I'm going to create a `.course-progress` file to keep track of where you are in the module. That way, if we get interrupted, we can pick up right where we left off."
+
+MUST DO: Create `.course-progress` in the project root with `{ "module": 0, "beat": 1, "title": "Create & Launch Your App", "status": "in-progress" }` and print progress bar.
+
 - Start with excitement: "Let's build your first web app! The whole thing — login system, database, task manager — will be running on your computer in about two minutes."
 - Ask them to pick a name for their app (anything — "my-app" is fine as a default)
 - MUST RUN: `wasp new <their-app-name>` (use the default "basic" template when prompted)
@@ -76,16 +87,24 @@ What Claude (or other AI agent) should do:
 - MUST EXPLAIN: "This command sets up your database — think of it as creating an empty spreadsheet with the right column headers, ready for data."
 - MUST RUN: `wasp start`
   - If the user has trouble running it themselves in a new terminal window, run it for them as a background task.
+- After `wasp start` is running, suggest they arrange their windows: "Try putting your terminal and browser side by side — that way you'll see changes update in real time as we work."
 - While it builds (this takes a minute or two on first run), explain what's happening: "Wasp is building three things at once: a frontend (what you see in the browser), a backend (the server that handles logic), and connecting them to your database."
 - Once it's ready, the browser opens to `http://localhost:3000` showing a login page
-- Walk them through signing up (be on the lookout for an email verification link in the terminal output): "This app has a real login system! Use any email and password — it's running locally so this is just for you. The email doesn't need to be real. \n\n When you sign up, your app will produce a mock email verification link. Be on the lookout for it (any idea where it will show up?)."
+- Walk them through signing up: "This app has a real login system! Use any email and password — it's running locally so this is just for you. The email doesn't need to be real. Go sign up now, and then come back here — I'll have a mock email verification link waiting for you in the terminal output. You'll need to click it to verify your account."
 - After signup/login, they land on the tasks page with their username displayed
 
-MUST ASK: "You just created a full web app — it has a login system, a database, and a task manager, all running on your computer. How does that feel? Go ahead and play with it — try creating some tasks, checking them off, or adding tags."
+**Seed the app with module tasks**: After the learner has signed up and can see the tasks page, create tasks in the app that mirror the module's beats. This gives them a built-in checklist and something to interact with right away:
+- ~~Create & Launch Your App~~ (mark as completed)
+- ~~Sign up & explore the app~~ (mark as completed)
+- Explore the project structure
+- Make a visible change to the app
+- Checkpoint & reflect
+
+Tell the learner: "I've added some tasks to your app — they're actually the steps for this module! You've already knocked out the first two. Let's work through the rest."
+
+MUST ASK: "You just created a full web app — it has a login system, a database, and a task manager, all running on your computer. How does that feel? Go ahead and play with it — try checking off tasks, adding new ones, or adding tags."
 
 Give them time to explore. Answer questions about what they see. If they notice the tags feature, show enthusiasm — that's a bonus feature baked into the starter template.
-
-MUST DO: Update `.course-progress` to beat 1 and print progress bar.
 
 ## → TRANSITION (free-form)
 Let them explore the running app freely. Follow their curiosity — if they ask about
@@ -101,13 +120,30 @@ and see how it's built?"
 ## BEAT 2: What's Under the Hood
 [TUTOR MODE]
 
+MUST DO: Update `.course-progress` to beat 2 ("What's Under the Hood") and print progress bar.
+
 What Claude should do:
-- They're already in Claude Code, inside their project folder. Show the project structure by listing the key files.
-- Group files into three mental categories — use this analogy:
+
+**First, show the big picture.** Print an ASCII diagram of the project structure, grouping files into the three main categories:
+
+```
+📁 your-app/
+├── 🧭 main.wasp          ← the blueprint (what to build)
+├── 📊 schema.prisma       ← the data shape (what to store)
+└── 📁 src/                ← the building materials (actual code)
+    ├── tasks/             ← task page & logic
+    ├── auth/              ← login & signup pages
+    └── shared/            ← shared components (header, etc.)
+```
+
+Explain the three categories using analogies:
   - **`main.wasp or main.wasp.ts`** → "the blueprint" — like an architect's plan. It defines what pages exist, what routes lead where, what the app can do, and how auth works. It doesn't contain the actual code — it just tells Wasp what to build.
   - **`schema.prisma`** → "the data shape" — defines what information your app stores. Right now it has Users, Tasks, and Tags. Think of each model as a spreadsheet template.
   - **`src/` folder** → "the building materials" — the actual React components (what you see), server logic (what happens behind the scenes), and styles.
-- Walk through `main.wasp` by printing key sections one at a time as code snippets with annotations:
+
+MUST ASK: "Any questions about this structure before we dive into the actual files?"
+
+After answering any questions, walk through `main.wasp` by printing key sections one at a time as code snippets with annotations:
   - The `app` block at the top: name, auth setup
   - The routes and pages: `LoginRoute`, `SignupRoute`, `TasksRoute` — each one pairs a URL path with a page component
   - The queries and actions: `getTasks`, `createTask`, `updateTaskStatus` — these are the operations the app can perform
@@ -124,8 +160,6 @@ How to handle their response:
 
 MUST EXPLAIN: "Here's the mental model: `main.wasp` is the blueprint — it tells Wasp what to build. The files in `src/` are the actual building materials — React components for what you see, server functions for what happens behind the scenes. And `schema.prisma` defines the shape of your data. Everything connects through the blueprint."
 
-MUST DO: Update `.course-progress` to beat 2 and print progress bar.
-
 ## → TRANSITION (free-form)
 Bridge from understanding to doing. Something like:
 "Now that you have a sense of what lives where, let's change something. The best way
@@ -135,6 +169,8 @@ to learn is to break things — or better yet, make things your own."
 
 ## BEAT 3: Make It Yours
 [PAIR PROGRAMMER MODE]
+
+MUST DO: Update `.course-progress` to beat 3 ("Make It Yours") and print progress bar.
 
 MUST ASK: "Right now the header says 'Todo App'. If this were YOUR app, what would you call it? Pick any name you want."
 
@@ -156,8 +192,6 @@ What Claude should do:
 - Encourage them to keep describing what they want until it feels right
 - This loop — describe → implement → see → adjust — is the core of the entire course
 
-MUST DO: Update `.course-progress` to beat 3 and print progress bar.
-
 ## → TRANSITION (free-form)
 Celebrate! They just changed a real web app by describing what they wanted in plain
 language. That's a huge deal. Show genuine enthusiasm.
@@ -170,6 +204,8 @@ ready to wrap up, move to the checkpoint.
 ## BEAT 4: Checkpoint & Reflect
 [TUTOR MODE]
 
+MUST DO: Update `.course-progress` to beat 4 ("Checkpoint & Reflect") and print progress bar.
+
 MUST ASK: "If a friend asked you 'what is a web app made of?', what would you tell them based on what you've seen today?"
 
 How to handle their response:
@@ -178,14 +214,14 @@ How to handle their response:
 
 Summarize what they learned:
 - A web app has three main parts: a **frontend** (what you see in the browser), a **backend** (the server that handles logic and data), and a **database** (where information is stored)
-- In Wasp, **`main.wasp`** is the blueprint that connects everything — routes, pages, operations, auth
+- In Wasp, **`main.wasp`** or **`main.wasp.ts`** is the blueprint that connects everything — routes, pages, operations, auth
 - The **`src/`** folder has your React components (the visual stuff) and server functions
 - **`schema.prisma`** defines your data models — what information your app can store
 - You can describe changes in plain language and build them with AI — that's the core workflow for the rest of this course
 
 Preview: "In the next module, we'll dig into the database — you'll add new information to your tasks (like a priority level or a due date), run a migration, and build a real feature with the new data. You'll see how data flows from the database all the way to the screen."
 
-MUST DO: Update `.course-progress` to beat 4 with `"status": "complete"` and print progress bar.
+MUST DO: Update `.course-progress` to beat 4 with `"status": "complete"` and print final progress bar.
 
 ## Prompting Tip
 > Notice how you didn't need to know any code to change the app's name or style. You
