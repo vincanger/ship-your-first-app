@@ -48,7 +48,7 @@ Each module is a standalone markdown file that Claude fetches and follows.
 
 1. Install Wasp + Claude Code
 2. Run `wasp new my-app && cd my-app && wasp start`
-3. Open Claude Code and say: *"I'm starting Module 0 of Ship Your First App. Fetch and follow the instructions at [site]/module-0.md"*
+3. Open Claude Code and say: *"I'm starting Module 0 of Ship Your First App. Fetch and follow the instructions at https://vincanger.github.io/ship-your-first-app/modules/module-0.md"*
 4. Claude fetches the page, reads the instructions, becomes their tutor
 5. At the end of each module, Claude verifies understanding and points to the next module
 6. If things break: `git checkout module-X-complete` to reset to a known-good state
@@ -58,6 +58,13 @@ Each module is a standalone markdown file that Claude fetches and follows.
 - Public GitHub repo with branches: `module-0-complete`, `module-1-complete`, etc.
 - Each branch represents the expected state of the code after completing that module
 - Module instructions tell Claude how to verify the learner is at the right starting state
+
+---
+
+## Authoring Notes
+
+- **Always use `wasp db migrate-dev --name <descriptive-name>`** (not bare `wasp db migrate-dev`). The interactive migration-name prompt hangs in Claude Code since it can't handle interactive input. The `--name` flag passes the name directly.
+- **Progress tracking**: Every module's Meta block must include the `**Progress tracking**` instruction. The agent writes a `.course-progress` JSON file (`{ "module": N, "beat": N, "title": "...", "status": "in-progress" | "complete" }`) in the project root after each beat, and prints a `[■■□□]` progress bar. This lets the agent resume from where the learner left off if the session restarts.
 
 ---
 

@@ -9,13 +9,13 @@ An async, AI-led course where learners use Claude Code as their tutor and pair p
 The setup script checks your system and installs everything you need:
 
 ```bash
-curl -fsSL https://shipyourfirstapp.com/setup.sh | bash
+curl -fsSL https://vincanger.github.io/ship-your-first-app/utils/setup.sh | bash
 ```
 
 Or download and run it manually:
 
 ```bash
-curl -fsSL https://shipyourfirstapp.com/setup.sh -o setup.sh
+curl -fsSL https://vincanger.github.io/ship-your-first-app/utils/setup.sh -o setup.sh
 bash setup.sh
 ```
 
@@ -37,7 +37,7 @@ wasp start
 
 Open Claude Code in your project folder and say:
 
-> "I'm starting Module 0 of Ship Your First App. Fetch and follow the instructions at [site]/module-0.md"
+> "I'm starting Module 0 of Ship Your First App. Fetch and follow the instructions at https://vincanger.github.io/ship-your-first-app/modules/module-0.md"
 
 ## What the setup script does
 

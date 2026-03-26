@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # setup.sh — Ship Your First App: Dev Environment Installer
 # Usage: bash setup.sh [--yes]
-# Or:    curl -fsSL https://shipyourfirstapp.com/setup.sh | bash
+# Or:    curl -fsSL https://vincanger.github.io/ship-your-first-app/utils/setup.sh | bash
 set -euo pipefail
 
 # ─── Configuration ────────────────────────────────────────────────────────────
@@ -500,7 +500,7 @@ main() {
         printf "     ${CYAN}cd my-app && wasp start${NC}\n\n"
         printf "  ${DIM}3.${NC} Open Claude Code in your project folder and say:\n"
         printf "     ${CYAN}\"I'm starting Module 0 of Ship Your First App.${NC}\n"
-        printf "      ${CYAN}Fetch and follow the instructions at [site]/module-0.md\"${NC}\n\n"
+        printf "      ${CYAN}Fetch and follow the instructions at https://vincanger.github.io/ship-your-first-app/modules/module-0.md\"${NC}\n\n"
         if check_claude_code; then
             print_info "Claude Code requires a Claude Pro or Max subscription (\$20 or \$100/month)."
             print_info "Sign up at: ${NC}${CYAN}https://claude.ai/pricing${NC}"

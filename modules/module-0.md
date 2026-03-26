@@ -20,6 +20,32 @@
 > **Important context**: This is likely the learner's FIRST time using a terminal,
 > writing code, or working with an AI coding tool. Be patient. Celebrate everything.
 > Nothing is "obvious" or "simple" — if they did it, it's an achievement.
+>
+> **Showing code**: The learner may not have a code editor — they might only have
+> a terminal and a browser. Never tell them to "open a file" or "look at line 42."
+> Instead, print short, focused code snippets directly in your response using fenced
+> code blocks with language tags (```wasp, ```prisma, ```tsx, etc.) for syntax
+> highlighting. Put your annotations outside the code block, not as inline comments.
+> Use visual separators to group sections when walking through a file:
+>
+>     ━━━ main.wasp — Routes & Pages ━━━
+>     ```wasp
+>     route TasksRoute { path: "/", to: TasksPage }
+>     ```
+>     👆 See `path: "/"`? That's your homepage — the first thing you see after login.
+>
+> **Progress tracking**: At the start of the module, check for a `.course-progress`
+> file in the project root. If it exists and references this module, resume from the
+> last completed beat instead of starting over. After completing each beat, update
+> `.course-progress` and print a progress bar like:
+>
+>     [■■□□] Beat 2 of 4 — What's Under the Hood
+>
+> The file format is:
+> ```json
+> { "module": 0, "beat": 2, "title": "What's Under the Hood", "status": "in-progress" }
+> ```
+> Set `"status": "complete"` after the final beat (Checkpoint & Reflect).
 
 ## Prerequisites
 - Learner has run the setup script (`setup.sh`) and all tools should be installed
@@ -38,17 +64,18 @@ By the end of this module, the learner will:
 ## BEAT 1: Create & Launch Your App
 [PAIR PROGRAMMER MODE]
 
-What Claude should do:
+What Claude (or other AI agent) should do:
 - Start with excitement: "Let's build your first web app! The whole thing — login system, database, task manager — will be running on your computer in about two minutes."
 - Ask them to pick a name for their app (anything — "my-app" is fine as a default)
 - MUST RUN: `wasp new <their-app-name>` (use the default "basic" template when prompted)
 - MUST RUN: `cd <their-app-name>`
-- MUST RUN: `wasp db migrate-dev` — when it asks for a migration name, suggest "initial" or "first setup"
+- MUST RUN: `wasp db migrate-dev --name <descriptive-name>` — the `--name` flag provides the migration name directly so the command doesn't hang waiting for interactive input
 - MUST EXPLAIN: "This command sets up your database — think of it as creating an empty spreadsheet with the right column headers, ready for data."
 - MUST RUN: `wasp start`
+  - If the user has trouble running it themselves in a new terminal window, run it for them as a background task.
 - While it builds (this takes a minute or two on first run), explain what's happening: "Wasp is building three things at once: a frontend (what you see in the browser), a backend (the server that handles logic), and connecting them to your database."
 - Once it's ready, the browser opens to `http://localhost:3000` showing a login page
-- Walk them through signing up: "This app has a real login system! Use any email and password — it's running locally so this is just for you. The email doesn't need to be real."
+- Walk them through signing up (be on the lookout for an email verification link in the terminal output): "This app has a real login system! Use any email and password — it's running locally so this is just for you. The email doesn't need to be real. \n\n When you sign up, your app will produce a mock email verification link. Be on the lookout for it (any idea where it will show up?)."
 - After signup/login, they land on the tasks page with their username displayed
 
 MUST ASK: "You just created a full web app — it has a login system, a database, and a task manager, all running on your computer. How does that feel? Go ahead and play with it — try creating some tasks, checking them off, or adding tags."
@@ -75,7 +102,7 @@ What Claude should do:
   - **`main.wasp or main.wasp.ts`** → "the blueprint" — like an architect's plan. It defines what pages exist, what routes lead where, what the app can do, and how auth works. It doesn't contain the actual code — it just tells Wasp what to build.
   - **`schema.prisma`** → "the data shape" — defines what information your app stores. Right now it has Users, Tasks, and Tags. Think of each model as a spreadsheet template.
   - **`src/` folder** → "the building materials" — the actual React components (what you see), server logic (what happens behind the scenes), and styles.
-- Open `main.wasp` and walk through it at a high level:
+- Walk through `main.wasp` by printing key sections one at a time as code snippets with annotations:
   - The `app` block at the top: name, auth setup
   - The routes and pages: `LoginRoute`, `SignupRoute`, `TasksRoute` — each one pairs a URL path with a page component
   - The queries and actions: `getTasks`, `createTask`, `updateTaskStatus` — these are the operations the app can perform
@@ -88,7 +115,7 @@ How to handle their response:
 - If they get it, celebrate: "Exactly! The `@src/` part is a shortcut that means 'look in the src folder'. So the main page lives in `src/tasks/TasksPage.tsx`."
 - If they're stuck, guide them: "Look for a route with `path: "/"` — that's the homepage URL. What page does it point to?"
 
-- Briefly open `src/tasks/TasksPage.tsx` and connect it to what they see in the browser: "See this line with `{user.username}'s tasks`? That's the heading you see on the page. And these components — `CreateTaskForm` and `TaskList` — are the two sections below it."
+- Print the key lines from `src/tasks/TasksPage.tsx` and connect them to what the learner sees in the browser: "See this line with `{user.username}'s tasks`? That's the heading you see on the page. And these components — `CreateTaskForm` and `TaskList` — are the two sections below it."
 
 MUST EXPLAIN: "Here's the mental model: `main.wasp` is the blueprint — it tells Wasp what to build. The files in `src/` are the actual building materials — React components for what you see, server functions for what happens behind the scenes. And `schema.prisma` defines the shape of your data. Everything connects through the blueprint."
 

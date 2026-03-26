@@ -26,6 +26,32 @@ Claude Code will fetch a module page and use it as instructions for guiding the 
 > **Prompting teachable moments**: When the learner gives you a good or bad prompt,
 > briefly note what made it effective (or how it could be better). Keep it natural,
 > not preachy.
+>
+> **Showing code**: The learner may not have a code editor — they might only have
+> a terminal and a browser. Never tell them to "open a file" or "look at line 42."
+> Instead, print short, focused code snippets directly in your response using fenced
+> code blocks with language tags (```wasp, ```prisma, ```tsx, etc.) for syntax
+> highlighting. Put your annotations outside the code block, not as inline comments.
+> Use visual separators to group sections when walking through a file:
+>
+>     ━━━ main.wasp — Routes & Pages ━━━
+>     ```wasp
+>     route TasksRoute { path: "/", to: TasksPage }
+>     ```
+>     👆 See `path: "/"`? That's your homepage — the first thing you see after login.
+>
+> **Progress tracking**: At the start of the module, check for a `.course-progress`
+> file in the project root. If it exists and references this module, resume from the
+> last completed beat instead of starting over. After completing each beat, update
+> `.course-progress` and print a progress bar like:
+>
+>     [■■□□] Beat 2 of 4 — What's Under the Hood
+>
+> The file format is:
+> ```json
+> { "module": N, "beat": 2, "title": "Beat Title", "status": "in-progress" }
+> ```
+> Set `"status": "complete"` after the final beat (Checkpoint & Reflect).
 
 ## Prerequisites
 - [What they should have done before this module]
@@ -120,6 +146,32 @@ Below is a fully fleshed-out example of what a module page would look like.
 >
 > **Prompting teachable moments**: When the learner gives you a good or bad prompt,
 > briefly note what made it effective (or how it could be better).
+>
+> **Showing code**: The learner may not have a code editor — they might only have
+> a terminal and a browser. Never tell them to "open a file" or "look at line 42."
+> Instead, print short, focused code snippets directly in your response using fenced
+> code blocks with language tags (```wasp, ```prisma, ```tsx, etc.) for syntax
+> highlighting. Put your annotations outside the code block, not as inline comments.
+> Use visual separators to group sections when walking through a file:
+>
+>     ━━━ main.wasp — Routes & Pages ━━━
+>     ```wasp
+>     route TasksRoute { path: "/", to: TasksPage }
+>     ```
+>     👆 See `path: "/"`? That's your homepage — the first thing you see after login.
+>
+> **Progress tracking**: At the start of the module, check for a `.course-progress`
+> file in the project root. If it exists and references this module, resume from the
+> last completed beat instead of starting over. After completing each beat, update
+> `.course-progress` and print a progress bar like:
+>
+>     [■■□□] Beat 2 of 4 — What's Under the Hood
+>
+> The file format is:
+> ```json
+> { "module": 1, "beat": 2, "title": "Beat Title", "status": "in-progress" }
+> ```
+> Set `"status": "complete"` after the final beat (Checkpoint & Reflect).
 
 ## Prerequisites
 - Learner has completed Module 0
@@ -163,7 +215,7 @@ so there's data to work with, or riff on any curiosity they express.
 - MUST ASK: "If you could add one more piece of information to each task, what would it be? Think about what would make this todo app more useful for you. Maybe a priority level? A due date? A category?"
 - Let them choose. Whatever they pick, guide them through adding it:
   1. Add the field to the Task model in `schema.prisma`
-  2. MUST RUN: `wasp db migrate-dev` (have them name the migration something descriptive)
+  2. MUST RUN: `wasp db migrate-dev --name <descriptive-name>` (always use `--name` to pass the migration name directly — the interactive prompt hangs in Claude Code)
   3. MUST EXPLAIN: "What just happened: the migration updated your database to match your new schema. Think of it like updating the spreadsheet template — all existing rows now have a new column, and any new rows will include it too."
 - If the migration fails, diagnose the error, explain what went wrong in plain language, and fix it together.
 - Show them the change is reflected: query the tasks and point out the new field.
