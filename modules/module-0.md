@@ -24,20 +24,23 @@
 > **Showing code**: The learner may not have a code editor — they might only have
 > a terminal and a browser. Never tell them to "open a file" or "look at line 42."
 > Instead, print short, focused code snippets directly in your response using fenced
-> code blocks with language tags (```wasp, ```prisma, ```tsx, etc.) for syntax
-> highlighting. Put your annotations outside the code block, not as inline comments.
+> code blocks with language tags (```ts, ```prisma, ```tsx, etc.) for syntax
+> highlighting. IMPORTANT: for wasp files use ```ts as there is no wasp language tag. 
+> Put your annotations outside the code block, not as inline comments.
 > Use visual separators to group sections when walking through a file:
 >
->     ━━━ main.wasp — Routes & Pages ━━━
->     ```wasp
+>     ━━━ main.wasp — 🧭 Routes & Pages ━━━
+>
+>     ```ts
 >     route TasksRoute { path: "/", to: TasksPage }
 >     ```
 >     👆 See `path: "/"`? That's your homepage — the first thing you see after login.
 >
 > **Progress tracking**: At the start of the module, check for a `.course-progress`
 > file in the project root. If it exists and references this module, resume from the
-> last completed beat instead of starting over. After completing each beat, update
-> `.course-progress` and print a progress bar like:
+> last completed beat instead of starting over. Each beat ends with a
+> `MUST DO: Update .course-progress` reminder — treat it like any other MUST directive.
+> After updating, print a progress bar like:
 >
 >     [■■□□] Beat 2 of 4 — What's Under the Hood
 >
@@ -82,6 +85,8 @@ MUST ASK: "You just created a full web app — it has a login system, a database
 
 Give them time to explore. Answer questions about what they see. If they notice the tags feature, show enthusiasm — that's a bonus feature baked into the starter template.
 
+MUST DO: Update `.course-progress` to beat 1 and print progress bar.
+
 ## → TRANSITION (free-form)
 Let them explore the running app freely. Follow their curiosity — if they ask about
 tags, the header, logging out, whatever catches their eye. The goal is for them to
@@ -119,6 +124,8 @@ How to handle their response:
 
 MUST EXPLAIN: "Here's the mental model: `main.wasp` is the blueprint — it tells Wasp what to build. The files in `src/` are the actual building materials — React components for what you see, server functions for what happens behind the scenes. And `schema.prisma` defines the shape of your data. Everything connects through the blueprint."
 
+MUST DO: Update `.course-progress` to beat 2 and print progress bar.
+
 ## → TRANSITION (free-form)
 Bridge from understanding to doing. Something like:
 "Now that you have a sense of what lives where, let's change something. The best way
@@ -149,6 +156,8 @@ What Claude should do:
 - Encourage them to keep describing what they want until it feels right
 - This loop — describe → implement → see → adjust — is the core of the entire course
 
+MUST DO: Update `.course-progress` to beat 3 and print progress bar.
+
 ## → TRANSITION (free-form)
 Celebrate! They just changed a real web app by describing what they wanted in plain
 language. That's a huge deal. Show genuine enthusiasm.
@@ -175,6 +184,8 @@ Summarize what they learned:
 - You can describe changes in plain language and build them with AI — that's the core workflow for the rest of this course
 
 Preview: "In the next module, we'll dig into the database — you'll add new information to your tasks (like a priority level or a due date), run a migration, and build a real feature with the new data. You'll see how data flows from the database all the way to the screen."
+
+MUST DO: Update `.course-progress` to beat 4 with `"status": "complete"` and print progress bar.
 
 ## Prompting Tip
 > Notice how you didn't need to know any code to change the app's name or style. You
