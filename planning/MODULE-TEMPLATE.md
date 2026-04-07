@@ -1,7 +1,7 @@
 # Module Template — Ship Your First App
 
 This is the template for writing LLMs.txt module pages. Each module follows this structure.
-Claude Code will fetch a module page and use it as instructions for guiding the learner.
+The AI coding agent will fetch a module page and use it as instructions for guiding the learner.
 
 ---
 
@@ -45,7 +45,7 @@ Claude Code will fetch a module page and use it as instructions for guiding the 
 >     ```
 >     👆 See `path: "/"`? That's your homepage — the first thing you see after login.
 >
-> **Progress tracking**: At the start of the module, check for a `.course-progress`
+> **Progress tracking**: At the start of the module, check for a `public/course-progress.json`
 > file in the project root. If it exists and references this module, resume from the
 > last completed beat instead of starting over. Progress is updated at the *start*
 > of each new beat (marking the previous beat as done) — each beat begins with a
@@ -56,9 +56,20 @@ Claude Code will fetch a module page and use it as instructions for guiding the 
 >
 > The file format is:
 > ```json
-> { "module": N, "beat": 2, "title": "Beat Title", "status": "in-progress" }
+> { "module": number, "beat": number, "title": string, "status": "in-progress" | "complete", "guideStep": number | null }
 > ```
 > Set `"status": "complete"` after the final beat (Checkpoint & Reflect).
+>
+> **Guide bubble**: The app includes a `GuideBubble` component that shows a floating
+> message banner at the top of the browser. All steps are hardcoded in the component —
+> just set the `guideStep` field in `public/course-progress.json` to a number to show
+> that step's message. Set `guideStep` to `null` to hide the bubble.
+
+## Fetching Next Module
+> When this module ends and you need to fetch the next one, try fetching the URL directly.
+> If you cannot fetch URLs, ask the learner to download the file:
+>   `curl -fsSL <next-module-url> -o <filename>.md`
+> Then read the local file and follow its instructions.
 
 ## Prerequisites
 - [What they should have done before this module]
@@ -79,7 +90,7 @@ What Claude should do:
 - [Specific action: open a file, run a command, explain a concept]
 - [Specific action]
 
-MUST DO: Create `.course-progress` with beat 1 info and print progress bar.
+MUST DO: Create `public/course-progress.json` with beat 1 info and print progress bar.
 
 MUST ASK: "[A specific question to ask the learner]"
 
@@ -92,7 +103,7 @@ converse naturally, answer questions, elaborate on anything from the beat.]
 ## BEAT 2: [Title]
 [MODE]
 
-MUST DO: Update `.course-progress` to beat 2 and print progress bar.
+MUST DO: Update `public/course-progress.json` to beat 2 and print progress bar.
 
 What Claude should do:
 - [Actions]
@@ -107,21 +118,21 @@ MUST EXPLAIN: [A concept to cover during this beat]
 ## BEAT 3: [Title]
 [MODE]
 
-MUST DO: Update `.course-progress` to beat 3 and print progress bar.
+MUST DO: Update `public/course-progress.json` to beat 3 and print progress bar.
 
 ...
 
 ## BEAT 4: Checkpoint & Reflect
 [TUTOR MODE]
 
-MUST DO: Update `.course-progress` to beat 4 and print progress bar.
+MUST DO: Update `public/course-progress.json` to beat 4 and print progress bar.
 
 - ASK: "[A synthesis question that checks overall understanding]"
 - Affirm/correct their understanding
 - Summarize what they learned in 3-4 bullet points
 - Preview what's coming in the next module
 
-MUST DO: Update `.course-progress` to beat 4 with `"status": "complete"` and print final progress bar.
+MUST DO: Update `public/course-progress.json` to beat 4 with `"status": "complete"` and print final progress bar.
 
 ## Prompting Tip
 > [A brief, practical observation about AI collaboration that emerged naturally
@@ -183,7 +194,7 @@ Below is a fully fleshed-out example of what a module page would look like.
 >     ```
 >     👆 See `path: "/"`? That's your homepage — the first thing you see after login.
 >
-> **Progress tracking**: At the start of the module, check for a `.course-progress`
+> **Progress tracking**: At the start of the module, check for a `public/course-progress.json`
 > file in the project root. If it exists and references this module, resume from the
 > last completed beat instead of starting over. Progress is updated at the *start*
 > of each new beat (marking the previous beat as done) — each beat begins with a
@@ -194,9 +205,20 @@ Below is a fully fleshed-out example of what a module page would look like.
 >
 > The file format is:
 > ```json
-> { "module": 1, "beat": 2, "title": "Beat Title", "status": "in-progress" }
+> { "module": number, "beat": number, "title": string, "status": "in-progress" | "complete", "guideStep": number | null }
 > ```
 > Set `"status": "complete"` after the final beat (Checkpoint & Reflect).
+>
+> **Guide bubble**: The app includes a `GuideBubble` component that shows a floating
+> message banner at the top of the browser. All steps are hardcoded in the component —
+> just set the `guideStep` field in `public/course-progress.json` to a number to show
+> that step's message. Set `guideStep` to `null` to hide the bubble.
+
+## Fetching Next Module
+> When this module ends and you need to fetch the next one, try fetching the URL directly.
+> If you cannot fetch URLs, ask the learner to download the file:
+>   `curl -fsSL https://vincanger.github.io/ship-your-first-app/modules/module-2.md -o module-2.md`
+> Then read the local file and follow its instructions.
 
 ## Prerequisites
 - Learner has completed Module 0
@@ -237,12 +259,12 @@ so there's data to work with, or riff on any curiosity they express.
 ## BEAT 2: Add something new
 [PAIR PROGRAMMER MODE]
 
-MUST DO: Update `.course-progress` to beat 2 and print progress bar.
+MUST DO: Update `public/course-progress.json` to beat 2 and print progress bar.
 
 - MUST ASK: "If you could add one more piece of information to each task, what would it be? Think about what would make this todo app more useful for you. Maybe a priority level? A due date? A category?"
 - Let them choose. Whatever they pick, guide them through adding it:
   1. Add the field to the Task model in `schema.prisma`
-  2. MUST RUN: `wasp db migrate-dev --name <descriptive-name>` (always use `--name` to pass the migration name directly — the interactive prompt hangs in Claude Code)
+  2. MUST RUN: `wasp db migrate-dev --name <descriptive-name>` (always use `--name` to pass the migration name directly — the interactive prompt hangs in most AI coding agents)
   3. MUST EXPLAIN: "What just happened: the migration updated your database to match your new schema. Think of it like updating the spreadsheet template — all existing rows now have a new column, and any new rows will include it too."
 - If the migration fails, diagnose the error, explain what went wrong in plain language, and fix it together.
 - Show them the change is reflected: query the tasks and point out the new field.
@@ -257,7 +279,7 @@ migrations folder). But don't dwell — keep momentum toward building something.
 ## BEAT 3: Build with the new data
 [PAIR PROGRAMMER MODE]
 
-MUST DO: Update `.course-progress` to beat 3 and print progress bar.
+MUST DO: Update `public/course-progress.json` to beat 3 and print progress bar.
 
 - MUST ASK: "Now that tasks have [their new field], what feature would you want? For example, if you added 'priority', maybe you want to sort tasks by priority, or color-code them. What sounds useful?"
 - Let them describe the feature in their own words.
@@ -275,7 +297,7 @@ they start to feel the power of directing AI to build things.
 ## BEAT 4: Checkpoint & Reflect
 [TUTOR MODE]
 
-MUST DO: Update `.course-progress` to beat 4 and print progress bar.
+MUST DO: Update `public/course-progress.json` to beat 4 and print progress bar.
 
 - MUST ASK: "In your own words, can you walk me through what happens when you create a new task with a priority? Start from when you click 'Add' and trace it all the way to the database and back."
 - Listen to their explanation. Affirm correct parts, gently correct misconceptions.
@@ -286,7 +308,7 @@ MUST DO: Update `.course-progress` to beat 4 and print progress bar.
   - ✅ You can describe a feature in plain language and build it with AI
 - Preview: "In the next module, we'll make this app actually look good — you'll learn how the visual side works and build custom UI with Tailwind CSS."
 
-MUST DO: Update `.course-progress` to beat 4 with `"status": "complete"` and print progress bar.
+MUST DO: Update `public/course-progress.json` to beat 4 with `"status": "complete"` and print progress bar.
 
 ## Prompting Tip
 > Notice how when you described the feature you wanted ("sort tasks by priority"

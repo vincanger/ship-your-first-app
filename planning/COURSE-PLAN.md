@@ -1,7 +1,7 @@
 # Ship Your First App — Course Plan
 
 ## Concept
-An async, AI-led course where learners use Claude Code as their tutor and pair programmer to learn web dev by building real things with Wasp. Delivered as a multi-page LLMs.txt website — learners point their Claude Code session at a module URL and the AI guides them through it interactively.
+An async, AI-led course where learners use an AI coding agent as their tutor and pair programmer to learn web dev by building real things with Wasp. Delivered as a multi-page LLMs.txt website — learners point their agent at a module URL and the AI guides them through it interactively.
 
 ## Audience
 - Complete beginners (never written code)
@@ -46,11 +46,12 @@ Each module is a standalone markdown file that Claude fetches and follows.
 
 ## Learner Workflow
 
-1. Install Wasp + Claude Code
-2. Run `wasp new my-app && cd my-app && wasp start`
-3. Open Claude Code and say: *"I'm starting Module 0 of Ship Your First App. Fetch and follow the instructions at https://vincanger.github.io/ship-your-first-app/modules/module-0.md"*
-4. Claude fetches the page, reads the instructions, becomes their tutor
-5. At the end of each module, Claude verifies understanding and points to the next module
+1. Install Wasp + an AI coding agent
+2. Run `wasp new my-app && cd my-app`
+3. Open their AI coding agent and tell it to fetch: `https://vincanger.github.io/ship-your-first-app/llms.txt`
+   - If the agent can't fetch URLs: `curl -fsSL <url> -o <filename>.md` and point the agent at the local file
+4. The agent fetches the page, reads the instructions, becomes their tutor
+5. At the end of each module, the agent verifies understanding and points to the next module
 6. If things break: `git checkout module-X-complete` to reset to a known-good state
 
 ## Checkpoint System
@@ -63,8 +64,8 @@ Each module is a standalone markdown file that Claude fetches and follows.
 
 ## Authoring Notes
 
-- **Always use `wasp db migrate-dev --name <descriptive-name>`** (not bare `wasp db migrate-dev`). The interactive migration-name prompt hangs in Claude Code since it can't handle interactive input. The `--name` flag passes the name directly.
-- **Progress tracking**: Every module's Meta block must include the `**Progress tracking**` instruction. The agent writes a `.course-progress` JSON file (`{ "module": N, "beat": N, "title": "...", "status": "in-progress" | "complete" }`) in the project root and prints a `[■■□□]` progress bar. Progress is updated at the *start* of each new beat (not the end of the previous one) via a `MUST DO` directive — this avoids inconsistencies if the session drops mid-beat.
+- **Always use `wasp db migrate-dev --name <descriptive-name>`** (not bare `wasp db migrate-dev`). The interactive migration-name prompt hangs in most AI coding agents since they can't handle interactive input. The `--name` flag passes the name directly.
+- **Progress tracking**: Every module's Meta block must include the `**Progress tracking**` instruction. The agent writes `public/course-progress.json` (`{ "module": N, "beat": N, "title": "...", "status": "in-progress" | "complete" }`) and prints a `[■■□□]` progress bar. Progress is updated at the *start* of each new beat (not the end of the previous one) via a `MUST DO` directive — this avoids inconsistencies if the session drops mid-beat.
 - **"Continue" command**: Every module's Meta block must include the `**"Continue"**` instruction, which tells the agent to advance to the next step/beat when the learner types "continue".
 - **Side-by-side windows**: When `wasp start` runs for the first time, suggest the learner arrange their terminal and browser side by side.
 
@@ -107,7 +108,7 @@ Each module is a standalone markdown file that Claude fetches and follows.
 
 1. **Finalize the module template format** (see `MODULE-TEMPLATE.md`)
 2. **Write Module 0** as a proof of concept
-3. **Test Module 0** with Claude Code — does it actually work well as a tutor?
+3. **Test Module 0** with AI coding agents — does it actually work well as a tutor?
 4. **Record a pilot YT video** for Module 0
 5. **Get 3-5 beta testers** (actual beginners) to try it
 6. **Iterate**, then build Modules 1-3

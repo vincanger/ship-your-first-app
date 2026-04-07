@@ -28,7 +28,8 @@
 > a terminal and a browser. Never tell them to "open a file" or "look at line 42."
 > Instead, print short, focused code snippets directly in your response using fenced
 > code blocks with language tags (```ts, ```prisma, ```tsx, etc.) for syntax
-> highlighting. IMPORTANT: for wasp files use ```ts as there is no wasp language tag.
+> highlighting, and add a couple of line breaks after the code block. 
+> IMPORTANT: for wasp files use ```ts as there is no wasp language tag.
 > Put your annotations outside the code block, not as inline comments.
 > Use visual separators to group sections when walking through a file:
 >
@@ -37,22 +38,28 @@
 >     ```ts
 >     route TasksRoute { path: "/", to: TasksPage }
 >     ```
+>
 >     👆 See `path: "/"`? That's your homepage — the first thing you see after login.
 >
-> **Progress tracking**: At the start of the module, check for a `.course-progress`
-> file in the project root. If it exists and references this module, resume from the
-> last completed beat instead of starting over. Progress is updated at the *start*
-> of each new beat (marking the previous beat as done) — each beat begins with a
-> `MUST DO: Update .course-progress` directive. Treat it like any other MUST directive.
-> After updating, print a progress bar like:
+> **Progress tracking & guide bubble**: Two files control progress and the in-browser
+> guide bubble. At the start of the module, check for `public/course-progress.json` —
+> if it exists and references this module, resume from the last completed beat.
+>
+> Every `MUST DO: Write public/course-progress.json` directive gives you the **complete
+> JSON object** to write — copy it exactly. Never partially update; always write the
+> full object. After writing, print a progress bar like:
 >
 >     [■■□□] Beat 2 of 4 — What's Under the Hood
 >
-> The file format is:
-> ```json
-> { "module": 0, "beat": 2, "title": "What's Under the Hood", "status": "in-progress" }
-> ```
-> Set `"status": "complete"` after the final beat (Checkpoint & Reflect).
+> The `guideStep` field controls a floating guide bubble in the browser. The bubble
+> has all steps hardcoded — just set `guideStep` to a number to show that step's
+> message. Set `guideStep` to `null` to hide the bubble.
+>
+> **Fetching the next module**: When this module ends, fetch the next module's instructions from:
+>   https://vincanger.github.io/ship-your-first-app/modules/module-1.md
+> If you cannot fetch URLs, ask the learner to download the file:
+>   `curl -fsSL https://vincanger.github.io/ship-your-first-app/modules/module-1.md -o module-1.md`
+> Then read the local file and follow its instructions.
 
 ## Prerequisites
 - Learner has run the setup script (`setup.sh`) and all tools should be installed
@@ -64,25 +71,41 @@ By the end of this module, the learner will:
 - Have a running full-stack web app on their computer
 - Understand the project structure at a high level (what files live where and why)
 - Have made a visible change to the app by describing what they want in plain language
-- Feel confident that they can direct Claude to build things for them
+- Feel confident that they can direct the agent to build things for them
 
 ---
 
 ## BEAT 1: Create & Launch Your App
 [PAIR PROGRAMMER MODE]
 
-What Claude (or other AI agent) should do:
+What the AI agent should do:
 
 **Before anything else**, give the learner a heads-up about what's coming:
 - "Here's what we're about to do: I'm going to create a new web app project, set up a database, and start the app so you can see it in your browser. Some of these steps take a minute or two — I'll explain what's happening as we go."
-- "First, I'm going to create a `.course-progress` file to keep track of where you are in the module. That way, if we get interrupted, we can pick up right where we left off."
+- "First, I'm going to create some files to keep track of where you are in the module. That way, if we get interrupted, we can pick up right where we left off."
 
-MUST DO: Create `.course-progress` in the project root with `{ "module": 0, "beat": 1, "title": "Create & Launch Your App", "status": "in-progress" }` and print progress bar.
+MUST DO: Write `public/course-progress.json` with:
+```json
+{ "module": 0, "beat": 1, "title": "Create & Launch Your App", "status": "in-progress", "guideStep": null }
+```
+Print progress bar.
 
 - Start with excitement: "Let's build your first web app! The whole thing — login system, database, task manager — will be running on your computer in about two minutes."
 - Ask them to pick a name for their app (anything — "my-app" is fine as a default)
 - MUST RUN: `wasp new <their-app-name>` (use the default "basic" template when prompted)
 - MUST RUN: `cd <their-app-name>`
+
+MUST DO: Install the GuideBubble component. Download the two files into `src/guide-bubble/`:
+- MUST RUN: `mkdir -p src/guide-bubble`
+- MUST RUN: `curl -fsSL https://raw.githubusercontent.com/vincanger/ship-your-first-app/main/components/GuideBubble/GuideBubble.tsx -o src/guide-bubble/GuideBubble.tsx`
+- MUST RUN: `curl -fsSL https://raw.githubusercontent.com/vincanger/ship-your-first-app/main/components/GuideBubble/useGuideState.ts -o src/guide-bubble/useGuideState.ts`
+
+Then add the GuideBubble to the app layout. In `src/App.tsx`, add this import at the top:
+```tsx
+import { GuideBubble } from "./guide-bubble/GuideBubble";
+```
+And add `<GuideBubble />` just before the closing `</main>` tag.
+
 - MUST RUN: `wasp db migrate-dev --name <descriptive-name>` — the `--name` flag provides the migration name directly so the command doesn't hang waiting for interactive input
 - MUST EXPLAIN: "This command sets up your database — think of it as creating an empty spreadsheet with the right column headers, ready for data."
 - MUST RUN: `wasp start`
@@ -90,8 +113,18 @@ MUST DO: Create `.course-progress` in the project root with `{ "module": 0, "bea
 - After `wasp start` is running, suggest they arrange their windows: "Try putting your terminal and browser side by side — that way you'll see changes update in real time as we work."
 - While it builds (this takes a minute or two on first run), explain what's happening: "Wasp is building three things at once: a frontend (what you see in the browser), a backend (the server that handles logic), and connecting them to your database."
 - Once it's ready, the browser opens to `http://localhost:3000` showing a login page
+MUST DO: Write `public/course-progress.json` with:
+```json
+{ "module": 0, "beat": 1, "title": "Create & Launch Your App", "status": "in-progress", "guideStep": 1 }
+```
+
 - Walk them through signing up: "This app has a real login system! Use any email and password — it's running locally so this is just for you. The email doesn't need to be real. Go sign up now, and then come back here — I'll have a mock email verification link waiting for you in the terminal output. You'll need to click it to verify your account."
 - After signup/login, they land on the tasks page with their username displayed
+
+MUST DO: Write `public/course-progress.json` with:
+```json
+{ "module": 0, "beat": 1, "title": "Create & Launch Your App", "status": "in-progress", "guideStep": 2 }
+```
 
 **Seed the app with module tasks**: After the learner has signed up and can see the tasks page, create tasks in the app that mirror the module's beats. This gives them a built-in checklist and something to interact with right away:
 - ~~Create & Launch Your App~~ (mark as completed)
@@ -100,7 +133,17 @@ MUST DO: Create `.course-progress` in the project root with `{ "module": 0, "bea
 - Make a visible change to the app
 - Checkpoint & reflect
 
+MUST DO: Write `public/course-progress.json` with:
+```json
+{ "module": 0, "beat": 1, "title": "Create & Launch Your App", "status": "in-progress", "guideStep": 3 }
+```
+
 Tell the learner: "I've added some tasks to your app — they're actually the steps for this module! You've already knocked out the first two. Let's work through the rest."
+
+MUST DO: Write `public/course-progress.json` with:
+```json
+{ "module": 0, "beat": 1, "title": "Create & Launch Your App", "status": "in-progress", "guideStep": 4 }
+```
 
 MUST ASK: "You just created a full web app — it has a login system, a database, and a task manager, all running on your computer. How does that feel? Go ahead and play with it — try checking off tasks, adding new ones, or adding tags."
 
@@ -120,9 +163,13 @@ and see how it's built?"
 ## BEAT 2: What's Under the Hood
 [TUTOR MODE]
 
-MUST DO: Update `.course-progress` to beat 2 ("What's Under the Hood") and print progress bar.
+MUST DO: Write `public/course-progress.json` with:
+```json
+{ "module": 0, "beat": 2, "title": "What's Under the Hood", "status": "in-progress", "guideStep": null }
+```
+Print progress bar.
 
-What Claude should do:
+What the AI agent should do:
 
 **First, show the big picture.** Print an ASCII diagram of the project structure, grouping files into the three main categories:
 
@@ -149,6 +196,11 @@ After answering any questions, walk through `main.wasp` by printing key sections
   - The queries and actions: `getTasks`, `createTask`, `updateTaskStatus` — these are the operations the app can perform
 - Don't go deep into any one section — just help them see the map
 
+MUST DO: Write `public/course-progress.json` with:
+```json
+{ "module": 0, "beat": 2, "title": "What's Under the Hood", "status": "in-progress", "guideStep": 5 }
+```
+
 MUST ASK: "Looking at this file, can you find where it defines the main page — the one you see after you log in? What clues tell you which file contains the actual page code?"
 
 How to handle their response:
@@ -170,11 +222,15 @@ to learn is to break things — or better yet, make things your own."
 ## BEAT 3: Make It Yours
 [PAIR PROGRAMMER MODE]
 
-MUST DO: Update `.course-progress` to beat 3 ("Make It Yours") and print progress bar.
+MUST DO: Write `public/course-progress.json` with:
+```json
+{ "module": 0, "beat": 3, "title": "Make It Yours", "status": "in-progress", "guideStep": 6 }
+```
+Print progress bar.
 
 MUST ASK: "Right now the header says 'Todo App'. If this were YOUR app, what would you call it? Pick any name you want."
 
-What Claude should do:
+What the AI agent should do:
 - Let them choose a name. Whatever they pick, this is the moment to model good AI collaboration.
 - Instead of just making the change, show them HOW to ask for it. Say something like: "Great name! Now here's the fun part — you're going to tell me what to change, and I'll do it. Try saying something like: 'Change the app title to [their name]'"
 - Wait for them to prompt you (even if it's awkward or imprecise — that's fine, this is practice)
@@ -183,14 +239,24 @@ What Claude should do:
   - Update the `title` field in `main.wasp` to match
 - Point out the hot reload: "Look at your browser — it already updated! You didn't have to restart anything. Every time we save a change, Wasp automatically rebuilds and refreshes."
 
+MUST DO: Write `public/course-progress.json` with:
+```json
+{ "module": 0, "beat": 3, "title": "Make It Yours", "status": "in-progress", "guideStep": 7 }
+```
+
 MUST ASK: "Nice! What else would you want to change? Maybe a color, the layout, add something to the page? Describe what you want in your own words — don't worry about using technical terms."
 
-What Claude should do:
+What the AI agent should do:
 - Let them direct one more change — color, font size, spacing, add text, whatever they want
 - Implement it, explain briefly what you changed and where
 - If the result isn't quite what they wanted: "Not exactly what you had in mind? Tell me what you'd adjust — we can iterate."
 - Encourage them to keep describing what they want until it feels right
 - This loop — describe → implement → see → adjust — is the core of the entire course
+
+MUST DO: Write `public/course-progress.json` with:
+```json
+{ "module": 0, "beat": 3, "title": "Make It Yours", "status": "in-progress", "guideStep": 8 }
+```
 
 ## → TRANSITION (free-form)
 Celebrate! They just changed a real web app by describing what they wanted in plain
@@ -204,7 +270,11 @@ ready to wrap up, move to the checkpoint.
 ## BEAT 4: Checkpoint & Reflect
 [TUTOR MODE]
 
-MUST DO: Update `.course-progress` to beat 4 ("Checkpoint & Reflect") and print progress bar.
+MUST DO: Write `public/course-progress.json` with:
+```json
+{ "module": 0, "beat": 4, "title": "Checkpoint & Reflect", "status": "in-progress", "guideStep": null }
+```
+Print progress bar.
 
 MUST ASK: "If a friend asked you 'what is a web app made of?', what would you tell them based on what you've seen today?"
 
@@ -219,13 +289,22 @@ Summarize what they learned:
 - **`schema.prisma`** defines your data models — what information your app can store
 - You can describe changes in plain language and build them with AI — that's the core workflow for the rest of this course
 
+MUST DO: Write `public/course-progress.json` with:
+```json
+{ "module": 0, "beat": 4, "title": "Checkpoint & Reflect", "status": "in-progress", "guideStep": 9 }
+```
+
 Preview: "In the next module, we'll dig into the database — you'll add new information to your tasks (like a priority level or a due date), run a migration, and build a real feature with the new data. You'll see how data flows from the database all the way to the screen."
 
-MUST DO: Update `.course-progress` to beat 4 with `"status": "complete"` and print final progress bar.
+MUST DO: Write `public/course-progress.json` with:
+```json
+{ "module": 0, "beat": 4, "title": "Checkpoint & Reflect", "status": "complete", "guideStep": null }
+```
+Print final progress bar.
 
 ## Prompting Tip
 > Notice how you didn't need to know any code to change the app's name or style. You
-> described WHAT you wanted ("change the title to My Awesome App"), and Claude figured
+> described WHAT you wanted ("change the title to My Awesome App"), and the AI agent figured
 > out the HOW (which file to edit, what code to change). That's the key to working with
 > AI: be specific about the result you want, not the code you think it needs.
 > "Change the header to say My Awesome App" works much better than "find the h1 tag
