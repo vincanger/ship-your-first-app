@@ -330,7 +330,7 @@ export function GuideBubble() {
               type="checkbox"
               checked={hasMessage && !guideHidden}
               disabled={!hasMessage}
-              onChange={() => setGuideHidden((h) => !h)}
+              onChange={(e) => setGuideHidden(!e.target.checked)}  
               style={{ accentColor: "#89b4fa" }}
             />
             {hasMessage ? "Show guide" : "No guide message"}
