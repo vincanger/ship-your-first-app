@@ -89,7 +89,8 @@ Print progress bar.
 
 - Start with excitement: "Let's build your first web app! We're going to start with a full-featured Task Management App. The whole thing — login system, database, task manager — will be running on your computer in about two minutes."
 - Ask them to pick a name for their app (anything — "my-app" is fine as a default)
-- AGENT RUN: `wasp new <their-app-name>` (use the default "basic" template when prompted)
+- Tell the learner: "The next few steps — creating the project, setting up the database, and starting the app — can take a few minutes the first time since it needs to download and install dependencies. I'll keep you posted as we go."
+- AGENT RUN: `wasp new <their-app-name>` — this uses Wasp's default ToDo app template, which is **required** for this course. The entire course is built around exploring and extending this specific app. Do NOT use a different template, start from a different template, or ask them what kind of app they'd like to create.
 - AGENT RUN: `cd <their-app-name>`
 
 MUST DO: Install the GuideBubble component. Download the two files into `src/guide-bubble/`:
@@ -103,7 +104,8 @@ import { GuideBubble } from "./guide-bubble/GuideBubble";
 ```
 And add `<GuideBubble />` just before the closing `</main>` tag.
 
-- AGENT RUN: `wasp db migrate-dev --name <descriptive-name>` — the `--name` flag provides the migration name directly so the command doesn't hang waiting for interactive input
+- AGENT RUN: `wasp db migrate-dev --name init`
+  - IMPORTANT: The `--name` flag MUST BE provided so the command doesn't hang waiting for interactive input!
 - MUST EXPLAIN: "This command sets up your database — think of it as creating an empty spreadsheet with the right column headers, ready for data."
 
 LEARNER MUST RUN: `wasp start`
