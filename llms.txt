@@ -24,7 +24,7 @@ https://vincanger.github.io/ship-your-first-app
 To fetch a file, append the path to this base URL. For example, to fetch Setup:
 
 ```
-https://vincanger.github.io/ship-your-first-app/setup.md
+https://vincanger.github.io/ship-your-first-app/modules/setup.md
 ```
 
 ### Fetching course files
@@ -44,19 +44,19 @@ Fetch these files **in order**. Start with Setup, then proceed to Module 0.
 
 | # | Name | Path |
 |---|------|------|
-| 0 | Setup | `/setup.md` |
+| 0 | Setup | `/modules/setup.md` |
 | 1 | Module 0 — Setup & First Vibe | `/modules/module-0.md` |
 | 2 | Module 1 — Data & The Database | `/modules/module-1.md` *(Coming Soon)* |
 | 3 | Module 2 — Making It Look Good | `/modules/module-2.md` *(Coming Soon)* |
 | 4 | Module 3 — How It All Connects | `/modules/module-3.md` *(Coming Soon)* |
 
 **To build the full URL**: combine the base URL + the path. For example:
-- Setup → `https://vincanger.github.io/ship-your-first-app/setup.md`
+- Setup → `https://vincanger.github.io/ship-your-first-app/modules/setup.md`
 - Module 0 → `https://vincanger.github.io/ship-your-first-app/modules/module-0.md`
 
 ### Start now
 
 Fetch Setup first:
 ```
-https://vincanger.github.io/ship-your-first-app/setup.md
+https://vincanger.github.io/ship-your-first-app/modules/setup.md
 ```
