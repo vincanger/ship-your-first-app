@@ -9,7 +9,13 @@ set -euo pipefail
 REQUIRED_NODE_MAJOR=22
 REQUIRED_NODE_MINOR=12
 REQUIRED_NODE_VERSION="${REQUIRED_NODE_MAJOR}.${REQUIRED_NODE_MINOR}"
-AUTO_YES=false
+
+# Auto-accept prompts if stdin is not a TTY (piped from curl, run by an AI agent, etc.)
+if [ ! -t 0 ]; then
+    AUTO_YES=true
+else
+    AUTO_YES=false
+fi
 
 # ─── Colors & Symbols ────────────────────────────────────────────────────────
 
@@ -192,9 +198,9 @@ print_status_table() {
     fi
 
     if check_claude_code; then
-        printf "  %-20b %-10b %s\n" "Claude Code" "$CHECKMARK" "${CLAUDE_VERSION}"
+        printf "  %-20b %-10b %s\n" "Claude Code ${DIM}(optional)${NC}" "$CHECKMARK" "${CLAUDE_VERSION}"
     else
-        printf "  %-20b %-10b %s\n" "Claude Code" "$CROSS" "not found"
+        printf "  %-20b %-10b %s\n" "Claude Code ${DIM}(optional)${NC}" "${DIM}—${NC}" "${DIM}not found${NC}"
     fi
 
     if check_docker; then
@@ -442,16 +448,16 @@ main() {
         fi
     fi
 
-    # Claude Code
+    # Claude Code (optional — any AI coding agent works)
     if ! check_claude_code; then
-        anything_missing=true
         printf "\n"
+        print_info "This course works with any AI coding agent (Claude Code, Codex, Copilot, Open Code, etc.)."
         print_info "Claude Code requires a Claude Pro or Max subscription (\$20 or \$100/month)."
         print_info "Sign up first if you haven't: ${NC}${CYAN}https://claude.ai/pricing${NC}"
-        if ask_yes_no "Claude Code is your AI tutor for the course. Install it?"; then
+        if ask_yes_no "Install Claude Code? (skip if using a different agent)"; then
             install_claude_code
         else
-            print_warning "Skipped Claude Code."
+            print_warning "Skipped Claude Code. Make sure you have an AI coding agent installed."
         fi
     fi
 
@@ -498,14 +504,10 @@ main() {
         printf "     ${CYAN}wasp new my-app${NC}\n\n"
         printf "  ${DIM}2.${NC} Start it up:\n"
         printf "     ${CYAN}cd my-app && wasp start${NC}\n\n"
-        printf "  ${DIM}3.${NC} Open Claude Code in your project folder and say:\n"
-        printf "     ${CYAN}\"I'm starting Module 0 of Ship Your First App.${NC}\n"
-        printf "      ${CYAN}Fetch and follow the instructions at https://vincanger.github.io/ship-your-first-app/modules/module-0.md\"${NC}\n\n"
-        if check_claude_code; then
-            print_info "Claude Code requires a Claude Pro or Max subscription (\$20 or \$100/month)."
-            print_info "Sign up at: ${NC}${CYAN}https://claude.ai/pricing${NC}"
-            print_info "Then run 'claude' to log in.\n"
-        fi
+        printf "  ${DIM}3.${NC} Open your AI coding agent in the project folder and tell it to fetch:\n"
+        printf "     ${CYAN}https://vincanger.github.io/ship-your-first-app/llms.txt${NC}\n\n"
+        printf "     ${DIM}Works with Claude Code, Codex, Copilot, Open Code, or any coding agent.${NC}\n"
+        printf "     ${DIM}If your agent can't fetch URLs, open the link in your browser and paste the contents.${NC}\n\n"
         printf "  ${DIM}Happy building!${NC}\n\n"
     else
         printf "\n"
@@ -513,7 +515,7 @@ main() {
         print_info "Re-run this script after installing them, or install manually:\n"
         check_node || print_info "  Node.js: https://nodejs.org/en/download"
         check_wasp || print_info "  Wasp CLI: npm i -g @wasp.sh/wasp-cli@latest"
-        check_claude_code || print_info "  Claude Code: curl -fsSL https://claude.ai/install.sh | bash"
+        print_info "  AI coding agent: Claude Code, Codex, Copilot, Open Code, or similar"
         printf "\n"
     fi
 }

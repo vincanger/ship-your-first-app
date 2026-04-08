@@ -142,12 +142,7 @@ MUST DO: Update `public/course-progress.json` to beat 4 with `"status": "complet
 > desired behavior, the better the result."
 
 ## Checkpoint
-If anything broke beyond repair:
-```
-git checkout module-[N]-complete
-```
 Expected state after this module: [Brief description of what should exist]
-```
 
 ---
 
@@ -319,10 +314,7 @@ MUST DO: Update `public/course-progress.json` to beat 4 with `"status": "complet
 > how much more precise the result is.
 
 ## Checkpoint
-If anything broke beyond repair:
-```
-git checkout module-1-complete
-```
+
 Expected state: Task model has a new field (e.g., priority), migration has run,
 and there's a working feature that uses the new field (e.g., priority-based sorting
 or color coding).

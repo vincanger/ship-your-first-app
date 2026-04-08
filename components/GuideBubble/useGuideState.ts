@@ -17,10 +17,10 @@ const POLL_INTERVAL = 2000;
 const GUIDE_STEPS: Record<number, Record<number, string>> = {
   0: {
     1: "Sign up here — use any email address (real or fake) and any password. It's all local, just for you.",
-    2: "Welcome to YOUR app! This whole page — the header, the task list — is all running on your computer.",
+    2: "Welcome to YOUR app! This whole page — the header, the task list — is all running on your computer (it can't be accessed by anyone via the internet yet).",
     3: "I added your module checklist as tasks — you've already knocked out the first two!",
     4: "Try it out — check off a task, add a new one, or play with tags!",
-    5: "See this page? It exists because main.wasp has a route pointing \"/\" here. The blueprint decides what pages exist.",
+    5: "See this page? It exists because the wasp config file has a route pointing \"/\" here. The blueprint decides what pages exist.",
     6: "This is the title you're about to change. What do you want YOUR app to be called?",
     7: "Look — it already updated! You didn't restart anything. That's hot reload in action.",
     8: "You described what you wanted, and it happened. That describe → see → adjust loop is the whole course.",

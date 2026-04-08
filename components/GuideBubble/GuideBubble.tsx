@@ -6,15 +6,26 @@ const TOTAL_BEATS = 4;
 export function GuideBubble() {
   const progress = useCourseProgress();
   const message = getGuideMessage(progress);
-  const [guideHidden, setGuideHidden] = useState(false);
+  const activeStep = progress?.guideStep ?? null;
+
+  const dismissedStep = sessionStorage.getItem("guide-dismissed-step");
+  const guideHidden = dismissedStep != null && Number(dismissedStep) === activeStep;
+
+  const setGuideHidden = (hidden: boolean) => {
+    if (hidden && activeStep != null) {
+      sessionStorage.setItem("guide-dismissed-step", String(activeStep));
+    } else {
+      sessionStorage.removeItem("guide-dismissed-step");
+    }
+    // Force re-render by dispatching a storage event won't work same-tab,
+    // so we use a dummy state to trigger it
+    setRenderTick((t) => t + 1);
+  };
+
+  const [, setRenderTick] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
   const menuTimeoutRef = useRef<number>(0);
-
-  // Show guide bubble again when the message changes
-  useEffect(() => {
-    setGuideHidden(false);
-  }, [message]);
 
   const handleMenuEnter = () => {
     window.clearTimeout(menuTimeoutRef.current);

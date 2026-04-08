@@ -75,18 +75,18 @@ Each module is a standalone markdown file that Claude fetches and follows.
 
 ### Module 0: Setup & First Vibe
 - Install tools, run `wasp new`, start the app
-- First interaction with Claude as tutor — walk through what got created
-- **Explore**: Project structure, what each file does at a high level
+- First interaction with AI tutor — high-level overview of what a web app is
+- **Explore**: The three layers (frontend, backend, database) conceptually — no file contents
 - **Modify**: Change something visible (app title, color) via prompting
-- **Extend**: Add a simple UI element
-- *Prompting focus*: How to give Claude context, how to ask it to explain things
+- *Concepts*: What a web app is, how the frontend/backend/database loop works, what Wasp/React/Prisma are
+- *Prompting focus*: How to give the agent context, how to describe what you want
 
 ### Module 1: Data & The Database
-- **Explore**: The todo app's data model — schema, how tasks are stored
+- **Explore**: The actual project files — walk through `main.wasp`, `schema.prisma`, and `src/` to see how the three layers map to real code. Then dive into the data model — how tasks are stored
 - **Modify**: Add a field to tasks (priority, due date)
 - **Extend**: Build a feature using the new field (filter/sort)
-- *Concepts*: What a database is, CRUD, data flow from DB → server → client
-- *Prompting focus*: How to describe features you want, reviewing Claude's plan before it codes
+- *Concepts*: Reading code with AI help, what a database schema is, CRUD, data flow from DB → server → client
+- *Prompting focus*: How to describe features you want, reviewing the agent's plan before it codes
 
 ### Module 2: Making It Look Good
 - **Explore**: Existing UI, components, Tailwind classes, HTML structure

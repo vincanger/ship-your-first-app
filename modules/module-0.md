@@ -24,25 +24,21 @@
 > writing code, or working with an AI coding tool. Be patient. Celebrate everything.
 > Nothing is "obvious" or "simple" — if they did it, it's an achievement.
 >
-> **Showing code**: The learner may not have a code editor — they might only have
-> a terminal and a browser. Never tell them to "open a file" or "look at line 42."
-> Instead, print short, focused code snippets directly in your response using fenced
-> code blocks with language tags (```ts, ```prisma, ```tsx, etc.) for syntax
-> highlighting, and add a couple of line breaks after the code block. 
-> IMPORTANT: for wasp files use ```ts as there is no wasp language tag.
-> Put your annotations outside the code block, not as inline comments.
-> Use visual separators to group sections when walking through a file:
->
->     ━━━ main.wasp — 🧭 Routes & Pages ━━━
->
->     ```ts
->     route TasksRoute { path: "/", to: TasksPage }
->     ```
->
->     👆 See `path: "/"`? That's your homepage — the first thing you see after login.
+> **Who runs what**: This module uses two prefixes for commands:
+> - `AGENT RUN:` — YOU (the agent) execute this command. The learner doesn't
+>   need to do anything.
+> - `LEARNER MUST RUN:` — Tell the learner to run this command themselves. Give them
+>   the exact command to copy-paste. This is used when running the command is itself
+>   a learning moment.
+> - `MUST DO:` — YOU (the agent) perform this action (write a file, edit code, etc.).
 >
 > **Progress tracking & guide bubble**: Two files control progress and the in-browser
-> guide bubble. At the start of the module, check for `public/course-progress.json` —
+> guide bubble. **IMPORTANT: All file paths like `public/course-progress.json` are
+> relative to the learner's app directory** (the folder created by `wasp new`), NOT
+> the directory where the agent session started. After `cd <their-app-name>`, all
+> file operations should happen inside that app folder.
+>
+> At the start of the module, check for `public/course-progress.json` —
 > if it exists and references this module, resume from the last completed beat.
 >
 > Every `MUST DO: Write public/course-progress.json` directive gives you the **complete
@@ -55,8 +51,9 @@
 > has all steps hardcoded — just set `guideStep` to a number to show that step's
 > message. Set `guideStep` to `null` to hide the bubble.
 >
-> **Fetching the next module**: When this module ends, fetch the next module's instructions from:
->   https://vincanger.github.io/ship-your-first-app/modules/module-1.md
+> **Fetching the next module**: When this module ends, fetch the next module's instructions from the course index:
+>   https://vincanger.github.io/ship-your-first-app/llms.txt
+>   e.g. https://vincanger.github.io/ship-your-first-app/modules/module-1.md
 > If you cannot fetch URLs, ask the learner to download the file:
 >   `curl -fsSL https://vincanger.github.io/ship-your-first-app/modules/module-1.md -o module-1.md`
 > Then read the local file and follow its instructions.
@@ -90,35 +87,47 @@ MUST DO: Write `public/course-progress.json` with:
 ```
 Print progress bar.
 
-- Start with excitement: "Let's build your first web app! The whole thing — login system, database, task manager — will be running on your computer in about two minutes."
+- Start with excitement: "Let's build your first web app! We're going to start with a full-featured Task Management App. The whole thing — login system, database, task manager — will be running on your computer in about two minutes."
 - Ask them to pick a name for their app (anything — "my-app" is fine as a default)
-- MUST RUN: `wasp new <their-app-name>` (use the default "basic" template when prompted)
-- MUST RUN: `cd <their-app-name>`
+- AGENT RUN: `wasp new <their-app-name>` (use the default "basic" template when prompted)
+- AGENT RUN: `cd <their-app-name>`
 
 MUST DO: Install the GuideBubble component. Download the two files into `src/guide-bubble/`:
-- MUST RUN: `mkdir -p src/guide-bubble`
-- MUST RUN: `curl -fsSL https://raw.githubusercontent.com/vincanger/ship-your-first-app/main/components/GuideBubble/GuideBubble.tsx -o src/guide-bubble/GuideBubble.tsx`
-- MUST RUN: `curl -fsSL https://raw.githubusercontent.com/vincanger/ship-your-first-app/main/components/GuideBubble/useGuideState.ts -o src/guide-bubble/useGuideState.ts`
+- AGENT RUN: `mkdir -p src/guide-bubble`
+- AGENT RUN: `curl -fsSL https://raw.githubusercontent.com/vincanger/ship-your-first-app/main/components/GuideBubble/GuideBubble.tsx -o src/guide-bubble/GuideBubble.tsx`
+- AGENT RUN: `curl -fsSL https://raw.githubusercontent.com/vincanger/ship-your-first-app/main/components/GuideBubble/useGuideState.ts -o src/guide-bubble/useGuideState.ts`
 
-Then add the GuideBubble to the app layout. In `src/App.tsx`, add this import at the top:
+MUST DO: Add the GuideBubble to the app layout. In `src/App.tsx`, add this import:
 ```tsx
 import { GuideBubble } from "./guide-bubble/GuideBubble";
 ```
 And add `<GuideBubble />` just before the closing `</main>` tag.
 
-- MUST RUN: `wasp db migrate-dev --name <descriptive-name>` — the `--name` flag provides the migration name directly so the command doesn't hang waiting for interactive input
+- AGENT RUN: `wasp db migrate-dev --name <descriptive-name>` — the `--name` flag provides the migration name directly so the command doesn't hang waiting for interactive input
 - MUST EXPLAIN: "This command sets up your database — think of it as creating an empty spreadsheet with the right column headers, ready for data."
-- MUST RUN: `wasp start`
-  - If the user has trouble running it themselves in a new terminal window, run it for them as a background task.
-- After `wasp start` is running, suggest they arrange their windows: "Try putting your terminal and browser side by side — that way you'll see changes update in real time as we work."
+
+LEARNER MUST RUN: `wasp start`
+Tell the learner: "Now it's your turn to run a command! Open a **new terminal window or tab**, then run these two commands:"
+```
+cd <full-path-to-their-app>
+wasp start
+```
+Give them the exact `cd` path based on where their project was created so they don't have to guess.
+
+If the learner has trouble (can't find terminal, wrong directory, errors), help them troubleshoot. As a last resort, run `wasp start` for them as a background task.
+
+- After `wasp start` is running, tell them: "Your app is now running in that terminal window. **Keep it open** — don't close it! You'll want to check back there periodically because the app will sometimes print useful information there (like email verification links). Think of it as your app's logbook."
+- Suggest they arrange their windows: "Try putting your terminal and browser side by side — that way you'll see changes update in real time as we work."
 - While it builds (this takes a minute or two on first run), explain what's happening: "Wasp is building three things at once: a frontend (what you see in the browser), a backend (the server that handles logic), and connecting them to your database."
 - Once it's ready, the browser opens to `http://localhost:3000` showing a login page
+
 MUST DO: Write `public/course-progress.json` with:
 ```json
 { "module": 0, "beat": 1, "title": "Create & Launch Your App", "status": "in-progress", "guideStep": 1 }
 ```
 
-- Walk them through signing up: "This app has a real login system! Use any email and password — it's running locally so this is just for you. The email doesn't need to be real. Go sign up now, and then come back here — I'll have a mock email verification link waiting for you in the terminal output. You'll need to click it to verify your account."
+LEARNER ACTION: Sign up in the browser.
+Tell the learner: "This app has a real login system! Use any email and password — it's running locally so this is just for you. The email doesn't need to be real. Go sign up now, and then come back here — I'll have a mock email verification link waiting for you in that terminal window where `wasp start` is running. You'll need to click it to verify your account."
 - After signup/login, they land on the tasks page with their username displayed
 
 MUST DO: Write `public/course-progress.json` with:
@@ -131,7 +140,7 @@ MUST DO: Write `public/course-progress.json` with:
 - ~~Sign up & explore the app~~ (mark as completed)
 - Explore the project structure
 - Make a visible change to the app
-- Checkpoint & reflect
+- Reflect
 
 MUST DO: Write `public/course-progress.json` with:
 ```json
@@ -171,46 +180,53 @@ Print progress bar.
 
 What the AI agent should do:
 
-**First, show the big picture.** Print an ASCII diagram of the project structure, grouping files into the three main categories:
+**Explain what a web app is using what they just experienced.** Don't open any files or show any code — keep it conceptual. Use the app they just built as the example.
+
+Explain the three layers:
+- **Frontend**: "When you signed up and saw the task list, that was the frontend — it's what runs in your browser. Think of it as the 'face' of the app. In our app, a tool called React builds those pages."
+- **Backend**: "When you clicked 'add task' and it actually saved, that request went to a server running on your computer. The backend handles the logic — is this user allowed to do this? OK, save it to the database."
+- **Database**: "The task didn't disappear when you refreshed, right? That's because it was saved in a database — a structured place to store information. Think of it like a spreadsheet that the server can read and write to."
+
+Print an ASCII diagram showing how a click flows through the app:
 
 ```
-📁 your-app/
-├── 🧭 main.wasp          ← the blueprint (what to build)
-├── 📊 schema.prisma       ← the data shape (what to store)
-└── 📁 src/                ← the building materials (actual code)
-    ├── tasks/             ← task page & logic
-    ├── auth/              ← login & signup pages
-    └── shared/            ← shared components (header, etc.)
+You click "Add Task"
+       ↓
+🖥️ Frontend (browser)  — sends the request
+       ↓
+⚙️ Backend (server)    — processes it, checks auth
+       ↓
+💾 Database            — saves the task
+       ↓
+⚙️ Backend             — confirms success
+       ↓
+🖥️ Frontend            — updates your screen
 ```
 
-Explain the three categories using analogies:
-  - **`main.wasp or main.wasp.ts`** → "the blueprint" — like an architect's plan. It defines what pages exist, what routes lead where, what the app can do, and how auth works. It doesn't contain the actual code — it just tells Wasp what to build.
-  - **`schema.prisma`** → "the data shape" — defines what information your app stores. Right now it has Users, Tasks, and Tags. Think of each model as a spreadsheet template.
-  - **`src/` folder** → "the building materials" — the actual React components (what you see), server logic (what happens behind the scenes), and styles.
+MUST ASK: "Does this make sense? Any questions about how these three parts work together?"
 
-MUST ASK: "Any questions about this structure before we dive into the actual files?"
+After answering questions, briefly connect the layers to the project files — but do NOT open or print any file contents:
 
-After answering any questions, walk through `main.wasp` by printing key sections one at a time as code snippets with annotations:
-  - The `app` block at the top: name, auth setup
-  - The routes and pages: `LoginRoute`, `SignupRoute`, `TasksRoute` — each one pairs a URL path with a page component
-  - The queries and actions: `getTasks`, `createTask`, `updateTaskStatus` — these are the operations the app can perform
-- Don't go deep into any one section — just help them see the map
+"In your project, these three layers map to three key files:
+- **`main.wasp`** — the blueprint. It wires everything together: what pages exist, what the server can do, how login works. Think of it like an architect's plan.
+- **`schema.prisma`** — the database layer. It defines what information your app stores (users, tasks, tags). Like a spreadsheet template.
+- **`src/` folder** — the actual code for both the frontend (what you see) and backend (what happens behind the scenes).
+
+You don't need to memorize any of this — we'll explore these files hands-on in future modules."
 
 MUST DO: Write `public/course-progress.json` with:
 ```json
 { "module": 0, "beat": 2, "title": "What's Under the Hood", "status": "in-progress", "guideStep": 5 }
 ```
 
-MUST ASK: "Looking at this file, can you find where it defines the main page — the one you see after you log in? What clues tell you which file contains the actual page code?"
+MUST ASK: "When you added a task in the browser and it showed up in your list, which of the three parts — frontend, backend, database — do you think were involved?"
 
 How to handle their response:
-- They should find `TasksRoute` with `path: "/"` pointing to `TasksPage` imported from `@src/tasks/TasksPage`
-- If they get it, celebrate: "Exactly! The `@src/` part is a shortcut that means 'look in the src folder'. So the main page lives in `src/tasks/TasksPage.tsx`."
-- If they're stuck, guide them: "Look for a route with `path: "/"` — that's the homepage URL. What page does it point to?"
+- The answer is all three! The frontend sent the request, the backend processed it, the database stored it, and the result came back to the screen.
+- Celebrate any answer — even a partial one shows they're getting it.
+- If they say "all of them" — they nailed it.
 
-- Print the key lines from `src/tasks/TasksPage.tsx` and connect them to what the learner sees in the browser: "See this line with `{user.username}'s tasks`? That's the heading you see on the page. And these components — `CreateTaskForm` and `TaskList` — are the two sections below it."
-
-MUST EXPLAIN: "Here's the mental model: `main.wasp` is the blueprint — it tells Wasp what to build. The files in `src/` are the actual building materials — React components for what you see, server functions for what happens behind the scenes. And `schema.prisma` defines the shape of your data. Everything connects through the blueprint."
+MUST EXPLAIN: "Here's the mental model to take away: every interaction in your app follows that loop — something happens in the browser, it goes to the server, the server talks to the database, and the result comes back to your screen. That's how all web apps work, not just yours."
 
 ## → TRANSITION (free-form)
 Bridge from understanding to doing. Something like:
@@ -284,9 +300,8 @@ How to handle their response:
 
 Summarize what they learned:
 - A web app has three main parts: a **frontend** (what you see in the browser), a **backend** (the server that handles logic and data), and a **database** (where information is stored)
-- In Wasp, **`main.wasp`** or **`main.wasp.ts`** is the blueprint that connects everything — routes, pages, operations, auth
-- The **`src/`** folder has your React components (the visual stuff) and server functions
-- **`schema.prisma`** defines your data models — what information your app can store
+- Every interaction follows the same loop: browser → server → database → back to the screen
+- Their project has three key files that map to these layers: `main.wasp` (the blueprint), `schema.prisma` (the data shape), and `src/` (the code)
 - You can describe changes in plain language and build them with AI — that's the core workflow for the rest of this course
 
 MUST DO: Write `public/course-progress.json` with:
@@ -311,10 +326,7 @@ Print final progress bar.
 > and modify the innerHTML."
 
 ## Checkpoint
-If anything broke beyond repair:
-```
-git checkout module-0-complete
-```
+
 Expected state after this module: App created via `wasp new`, database migrated,
 app running via `wasp start`. The learner has signed up, explored the todo app,
 understands the project structure at a high level, and has made at least one visible

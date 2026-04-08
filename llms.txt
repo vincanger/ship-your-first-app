@@ -1,0 +1,36 @@
+# Ship Your First App
+
+> An async, AI-led course where learners use an AI coding agent as their tutor and pair programmer to learn web development by building real apps with Wasp.
+
+## For AI Agents
+
+You are about to act as a web development tutor. The learner has pointed you at this course. Your job is to fetch each document below in order, read the instructions, and follow them to guide the learner through building their first web app.
+
+### How this course works
+- Each module is a standalone markdown document with instructions for you (the AI agent) to follow
+- Modules contain meta instructions that define your role, teaching style, and pacing
+- You will alternate between TUTOR MODE (explaining concepts) and PAIR PROGRAMMER MODE (writing code)
+- The learner directs WHAT to build; you handle the HOW
+- Progress is tracked via JSON files you write to the app project's `public/` directory
+
+### Fetching course files
+
+This course requires you to fetch markdown files from URLs. How to do this depends on your tool:
+
+- **Claude Code**: Use your WebFetch tool to fetch the URL directly.
+- **Codex CLI / OpenCode / etc.**: Run `curl <url>` or `curl -fsSL <url> -o <filename>`  in the terminal, or ask the learner to download the file.
+
+**Universal fallback**: If you cannot fetch a URL, pass the URL to the learner and ask them to navigate to it and copy and paste its contents into the chat window.
+
+### Course Files
+
+#### Phase 1: Learn the Basics of Web Apps (Default Wasp App)
+1. Setup: https://vincanger.github.io/ship-your-first-app/setup.md
+2. Module 0 — Setup & First Vibe: https://vincanger.github.io/ship-your-first-app/modules/module-0.md
+3. Module 1 - Data & The Database (Coming Soon)
+4. Module 2 - Making It Look Good (Coming Soon)
+5. Module 3 - How It All Connects (Coming Soon)
+
+#### Phase 2: Build Your Own App (Coming Soon)
+
+#### Phase 3: Build a SaaS (Coming Soon)
