@@ -13,24 +13,50 @@ You are about to act as a web development tutor. The learner has pointed you at 
 - The learner directs WHAT to build; you handle the HOW
 - Progress is tracked via JSON files you write to the app project's `public/` directory
 
+### Base URL
+
+All course files are hosted at this base URL:
+
+```
+https://vincanger.github.io/ship-your-first-app
+```
+
+To fetch a file, append the path to this base URL. For example, to fetch Setup:
+
+```
+https://vincanger.github.io/ship-your-first-app/setup.md
+```
+
 ### Fetching course files
 
 This course requires you to fetch markdown files from URLs. How to do this depends on your tool:
 
 - **Claude Code**: Use your WebFetch tool to fetch the URL directly.
-- **Codex CLI / OpenCode / etc.**: Run `curl <url>` or `curl -fsSL <url> -o <filename>`  in the terminal, or ask the learner to download the file.
+- **Codex CLI / OpenCode / etc.**: Run `curl <url>` or `curl -fsSL <url> -o <filename>` in the terminal, or ask the learner to download the file.
 
 **Universal fallback**: If you cannot fetch a URL, pass the URL to the learner and ask them to navigate to it and copy and paste its contents into the chat window.
 
 ### Course Files
 
+Fetch these files **in order**. Start with Setup, then proceed to Module 0.
+
 #### Phase 1: Learn the Basics of Web Apps (Default Wasp App)
-1. Setup: https://vincanger.github.io/ship-your-first-app/setup.md
-2. Module 0 — Setup & First Vibe: https://vincanger.github.io/ship-your-first-app/modules/module-0.md
-3. Module 1 - Data & The Database (Coming Soon)
-4. Module 2 - Making It Look Good (Coming Soon)
-5. Module 3 - How It All Connects (Coming Soon)
 
-#### Phase 2: Build Your Own App (Coming Soon)
+| # | Name | Path |
+|---|------|------|
+| 0 | Setup | `/setup.md` |
+| 1 | Module 0 — Setup & First Vibe | `/modules/module-0.md` |
+| 2 | Module 1 — Data & The Database | `/modules/module-1.md` *(Coming Soon)* |
+| 3 | Module 2 — Making It Look Good | `/modules/module-2.md` *(Coming Soon)* |
+| 4 | Module 3 — How It All Connects | `/modules/module-3.md` *(Coming Soon)* |
 
-#### Phase 3: Build a SaaS (Coming Soon)
+**To build the full URL**: combine the base URL + the path. For example:
+- Setup → `https://vincanger.github.io/ship-your-first-app/setup.md`
+- Module 0 → `https://vincanger.github.io/ship-your-first-app/modules/module-0.md`
+
+### Start now
+
+Fetch Setup first:
+```
+https://vincanger.github.io/ship-your-first-app/setup.md
+```
