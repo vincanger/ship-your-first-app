@@ -31,17 +31,12 @@ https://vincanger.github.io/ship-your-first-app/modules/setup.md
 
 **IMPORTANT**: Each course file contains detailed, step-by-step instructions that you MUST read in full. Do NOT summarize or skim — every directive matters. The files are your script; follow them exactly.
 
-**Recommended method**: Use `curl` to download the file locally, then read it. This guarantees you get the complete, raw content:
-```bash
-curl -fsSL <url> -o <filename>.md
-```
-Then read the downloaded file.
+When fetching, ask for the **complete raw markdown content** — not a summary. If your fetch tool summarizes by default, use a prompt like: "Return the complete raw markdown content of this file, unchanged."
 
-**Alternative methods**:
-- **Claude Code**: You can use WebFetch, but make sure your prompt asks for the **complete raw content** — not a summary.
-- **Other tools**: Use your built-in URL fetcher if it returns full content. If it summarizes, fall back to `curl`.
+- **Claude Code**: Use WebFetch with the prompt "Return the complete raw markdown content of this file, unchanged."
+- **Other tools**: Use your built-in URL fetcher. If it summarizes content, run `curl -fsSL <url>` in the terminal to get the raw text.
 
-**Universal fallback**: If you cannot fetch a URL, pass the URL to the learner and ask them to navigate to it and copy and paste its **entire** contents into the chat window.
+**Universal fallback**: If you cannot fetch a URL, pass the URL to the learner and ask them to navigate to it and copy and paste the **entire** contents into the chat window.
 
 ### Course Files
 
