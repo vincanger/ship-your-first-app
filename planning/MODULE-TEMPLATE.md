@@ -212,7 +212,7 @@ Below is a fully fleshed-out example of what a module page would look like.
 ## Fetching Next Module
 > When this module ends and you need to fetch the next one, try fetching the URL directly.
 > If you cannot fetch URLs, ask the learner to download the file:
->   `curl -fsSL https://vincanger.github.io/ship-your-first-app/modules/module-2.md -o module-2.md`
+>   `curl -fsSL https://wasp-lang.github.io/ship-your-first-app/modules/module-2.md -o module-2.md`
 > Then read the local file and follow its instructions.
 
 ## Prerequisites

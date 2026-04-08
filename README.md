@@ -7,17 +7,17 @@ An async, AI-led course where learners use an AI coding agent as their tutor and
 Point any AI coding agent at the course entry point:
 
 ```
-https://vincanger.github.io/ship-your-first-app/llms.txt
+https://wasp-lang.github.io/ship-your-first-app/llms.txt
 ```
 
 Or paste this prompt into your agent:
 
-> I'm starting the "Ship Your First App" course. Fetch the following URL and follow the instructions: https://vincanger.github.io/ship-your-first-app/llms.txt
+> I'm starting the "Ship Your First App" course. Fetch the following URL and follow the instructions: https://wasp-lang.github.io/ship-your-first-app/llms.txt
 
 If your agent can't fetch URLs, download the file and point it at the local copy:
 
 ```bash
-curl -fsSL https://vincanger.github.io/ship-your-first-app/llms.txt -o llms.txt
+curl -fsSL https://wasp-lang.github.io/ship-your-first-app/llms.txt -o llms.txt
 ```
 
 **Works with:** Claude Code, Codex, Copilot, Open Code, and any agent that can read files and run terminal commands.
@@ -42,6 +42,6 @@ curl -fsSL https://vincanger.github.io/ship-your-first-app/llms.txt -o llms.txt
 
 ## Links
 
-- [Course landing page](https://vincanger.github.io/ship-your-first-app/)
+- [Course landing page](https://wasp-lang.github.io/ship-your-first-app/)
 - [Wasp](https://wasp.sh)
 - [Wasp Discord](https://discord.gg/rzdnErX)

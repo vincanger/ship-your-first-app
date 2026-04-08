@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # setup.sh — Ship Your First App: Dev Environment Installer
 # Usage: bash setup.sh [--yes]
-# Or:    curl -fsSL https://vincanger.github.io/ship-your-first-app/utils/setup.sh | bash
+# Or:    curl -fsSL https://wasp-lang.github.io/ship-your-first-app/utils/setup.sh | bash
 set -euo pipefail
 
 # ─── Configuration ────────────────────────────────────────────────────────────
@@ -505,7 +505,7 @@ main() {
         printf "  ${DIM}2.${NC} Start it up:\n"
         printf "     ${CYAN}cd my-app && wasp start${NC}\n\n"
         printf "  ${DIM}3.${NC} Open your AI coding agent in the project folder and tell it to fetch:\n"
-        printf "     ${CYAN}https://vincanger.github.io/ship-your-first-app/llms.txt${NC}\n\n"
+        printf "     ${CYAN}https://wasp-lang.github.io/ship-your-first-app/llms.txt${NC}\n\n"
         printf "     ${DIM}Works with Claude Code, Codex, Copilot, Open Code, or any coding agent.${NC}\n"
         printf "     ${DIM}If your agent can't fetch URLs, open the link in your browser and paste the contents.${NC}\n\n"
         printf "  ${DIM}Happy building!${NC}\n\n"

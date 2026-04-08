@@ -19,7 +19,7 @@
 
 AGENT RUN:
 ```bash
-curl -fsSL https://vincanger.github.io/ship-your-first-app/utils/setup.sh | bash
+curl -fsSL https://wasp-lang.github.io/ship-your-first-app/utils/setup.sh | bash
 ```
 
 This script auto-detects the OS and installs:
@@ -57,10 +57,10 @@ If either check still fails after retrying, help the learner install the missing
 Setup is complete.
 
 MUST DO: Fetch the Module 0 instructions and follow them:
-  https://vincanger.github.io/ship-your-first-app/modules/module-0.md
+  https://wasp-lang.github.io/ship-your-first-app/modules/module-0.md
 
 If you cannot fetch URLs, ask the learner to download the file:
 ```bash
-curl -fsSL https://vincanger.github.io/ship-your-first-app/modules/module-0.md -o module-0.md
+curl -fsSL https://wasp-lang.github.io/ship-your-first-app/modules/module-0.md -o module-0.md
 ```
 Then read the local `module-0.md` file and follow its instructions.

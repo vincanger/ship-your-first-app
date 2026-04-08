@@ -48,7 +48,7 @@ Each module is a standalone markdown file that Claude fetches and follows.
 
 1. Install Wasp + an AI coding agent
 2. Run `wasp new my-app && cd my-app`
-3. Open their AI coding agent and tell it to fetch: `https://vincanger.github.io/ship-your-first-app/llms.txt`
+3. Open their AI coding agent and tell it to fetch: `https://wasp-lang.github.io/ship-your-first-app/llms.txt`
    - If the agent can't fetch URLs: `curl -fsSL <url> -o <filename>.md` and point the agent at the local file
 4. The agent fetches the page, reads the instructions, becomes their tutor
 5. At the end of each module, the agent verifies understanding and points to the next module

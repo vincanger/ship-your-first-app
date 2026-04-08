@@ -52,10 +52,10 @@
 > message. Set `guideStep` to `null` to hide the bubble.
 >
 > **Fetching the next module**: When this module ends, fetch the next module's instructions from the course index:
->   https://vincanger.github.io/ship-your-first-app/llms.txt
->   e.g. https://vincanger.github.io/ship-your-first-app/modules/module-1.md
+>   https://wasp-lang.github.io/ship-your-first-app/llms.txt
+>   e.g. https://wasp-lang.github.io/ship-your-first-app/modules/module-1.md
 > If you cannot fetch URLs, ask the learner to download the file:
->   `curl -fsSL https://vincanger.github.io/ship-your-first-app/modules/module-1.md -o module-1.md`
+>   `curl -fsSL https://wasp-lang.github.io/ship-your-first-app/modules/module-1.md -o module-1.md`
 > Then read the local file and follow its instructions.
 
 ## Prerequisites
@@ -95,8 +95,8 @@ Print progress bar.
 
 MUST DO: Install the GuideBubble component. Download the two files into `src/guide-bubble/`:
 - AGENT RUN: `mkdir -p src/guide-bubble`
-- AGENT RUN: `curl -fsSL https://raw.githubusercontent.com/vincanger/ship-your-first-app/main/components/GuideBubble/GuideBubble.tsx -o src/guide-bubble/GuideBubble.tsx`
-- AGENT RUN: `curl -fsSL https://raw.githubusercontent.com/vincanger/ship-your-first-app/main/components/GuideBubble/useGuideState.ts -o src/guide-bubble/useGuideState.ts`
+- AGENT RUN: `curl -fsSL https://raw.githubusercontent.com/wasp-lang/ship-your-first-app/main/components/GuideBubble/GuideBubble.tsx -o src/guide-bubble/GuideBubble.tsx`
+- AGENT RUN: `curl -fsSL https://raw.githubusercontent.com/wasp-lang/ship-your-first-app/main/components/GuideBubble/useGuideState.ts -o src/guide-bubble/useGuideState.ts`
 
 MUST DO: Add the GuideBubble to the app layout. In `src/App.tsx`, add this import:
 ```tsx
