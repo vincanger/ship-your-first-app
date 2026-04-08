@@ -32,7 +32,7 @@ https://vincanger.github.io/ship-your-first-app/modules/setup.md
 This course requires you to fetch markdown files from URLs. How to do this depends on your tool:
 
 - **Claude Code**: Use your WebFetch tool to fetch the URL directly.
-- **Codex CLI / OpenCode / etc.**: Run `curl <url>` or `curl -fsSL <url> -o <filename>` in the terminal, or ask the learner to download the file.
+- **Other Tools**: Use your built in URL fetcher tool. As a fallback, run `curl <url>` or `curl -fsSL <url> -o <filename>` to fetch it.
 
 **Universal fallback**: If you cannot fetch a URL, pass the URL to the learner and ask them to navigate to it and copy and paste its contents into the chat window.
 
@@ -42,13 +42,13 @@ Fetch these files **in order**. Start with Setup, then proceed to Module 0.
 
 #### Phase 1: Learn the Basics of Web Apps (Default Wasp App)
 
-| # | Name | Path |
-|---|------|------|
-| 0 | Setup | `/modules/setup.md` |
-| 1 | Module 0 — Setup & First Vibe | `/modules/module-0.md` |
-| 2 | Module 1 — Data & The Database | `/modules/module-1.md` *(Coming Soon)* |
-| 3 | Module 2 — Making It Look Good | `/modules/module-2.md` *(Coming Soon)* |
-| 4 | Module 3 — How It All Connects | `/modules/module-3.md` *(Coming Soon)* |
+| Name | Path |
+|------|------|
+| Setup | `/modules/setup.md` |
+| Module 0 — Setup & First Vibe | `/modules/module-0.md` |
+| Module 1 — Data & The Database | `/modules/module-1.md` *(Coming Soon)* |
+| Module 2 — Making It Look Good | `/modules/module-2.md` *(Coming Soon)* |
+| Module 3 — How It All Connects | `/modules/module-3.md` *(Coming Soon)* |
 
 **To build the full URL**: combine the base URL + the path. For example:
 - Setup → `https://vincanger.github.io/ship-your-first-app/modules/setup.md`
