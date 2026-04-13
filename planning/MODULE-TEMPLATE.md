@@ -30,6 +30,17 @@ The AI coding agent will fetch a module page and use it as instructions for guid
 > briefly note what made it effective (or how it could be better). Keep it natural,
 > not preachy.
 >
+> **Prefixes**: This module uses four prefixes. Everything with a prefix is mandatory —
+> do not skip or reorder. Unprefixed text is guidance you can adapt naturally.
+> - `RUN:` — YOU (the agent) execute this command. The learner doesn't need to
+>   do anything.
+> - `LEARNER:` — The learner performs this action (run a command, click something).
+>   Give them the exact command to copy-paste when applicable.
+> - `SAY:` — YOU (the agent) tell the learner this message (verbatim or near-verbatim).
+>   Do not skip or significantly rephrase these.
+> - `ASK:` — YOU (the agent) ask the learner this question and wait for their response
+>   before continuing. Do not answer it for them.
+>
 > **Showing code**: The learner may not have a code editor — they might only have
 > a terminal and a browser. Never tell them to "open a file" or "look at line 42."
 > Instead, print short, focused code snippets directly in your response using fenced
@@ -49,12 +60,13 @@ The AI coding agent will fetch a module page and use it as instructions for guid
 > file in the project root. If it exists and references this module, resume from the
 > last completed beat instead of starting over. Progress is updated at the *start*
 > of each new beat (marking the previous beat as done) — each beat begins with a
-> `MUST DO: Update .course-progress` directive. Treat it like any other MUST directive.
-> After updating, print a progress bar like:
+> `Write public/course-progress.json` directive.
+> After writing, print a progress bar like:
 >
 >     [■■□□] Beat 2 of 4 — What's Under the Hood
 >
-> The file format is:
+> Every progress write directive gives you the **complete JSON object** — copy it
+> exactly. Never partially update; always write the full object. The file format is:
 > ```json
 > { "module": number, "beat": number, "title": string, "status": "in-progress" | "complete", "guideStep": number | null }
 > ```
@@ -73,7 +85,7 @@ The AI coding agent will fetch a module page and use it as instructions for guid
 
 ## Prerequisites
 - [What they should have done before this module]
-- VERIFY: [A specific check Claude should run to confirm they're ready]
+- VERIFY: [A specific check the agent should run to confirm they're ready]
 
 ## Learning Objectives
 By the end of this module, the learner will:
@@ -86,31 +98,31 @@ By the end of this module, the learner will:
 ## BEAT 1: [Title]
 [TUTOR MODE] or [PAIR PROGRAMMER MODE]
 
-What Claude should do:
+What the agent should do:
 - [Specific action: open a file, run a command, explain a concept]
 - [Specific action]
 
-MUST DO: Create `public/course-progress.json` with beat 1 info and print progress bar.
+Write `public/course-progress.json` with beat 1 info and print progress bar.
 
-MUST ASK: "[A specific question to ask the learner]"
+ASK: "[A specific question to ask the learner]"
 
 [How to handle their response]
 
 ## → TRANSITION (free-form)
-[Brief note on what to bridge between beats. Claude has freedom here to
+[Brief note on what to bridge between beats. The agent has freedom here to
 converse naturally, answer questions, elaborate on anything from the beat.]
 
 ## BEAT 2: [Title]
 [MODE]
 
-MUST DO: Update `public/course-progress.json` to beat 2 and print progress bar.
+Write `public/course-progress.json` with beat 2 info and print progress bar.
 
-What Claude should do:
+What the agent should do:
 - [Actions]
 
-MUST ASK: "[Question]"
-MUST RUN: [A command the learner needs to see]
-MUST EXPLAIN: [A concept to cover during this beat]
+ASK: "[Question]"
+RUN: [A command to execute]
+SAY: "[A concept to cover during this beat]"
 
 ## → TRANSITION (free-form)
 [Bridge notes]
@@ -118,31 +130,32 @@ MUST EXPLAIN: [A concept to cover during this beat]
 ## BEAT 3: [Title]
 [MODE]
 
-MUST DO: Update `public/course-progress.json` to beat 3 and print progress bar.
+Write `public/course-progress.json` with beat 3 info and print progress bar.
 
 ...
 
 ## BEAT 4: Checkpoint & Reflect
 [TUTOR MODE]
 
-MUST DO: Update `public/course-progress.json` to beat 4 and print progress bar.
+Write `public/course-progress.json` with beat 4 info and print progress bar.
 
-- ASK: "[A synthesis question that checks overall understanding]"
+ASK: "[A synthesis question that checks overall understanding]"
 - Affirm/correct their understanding
 - Summarize what they learned in 3-4 bullet points
 - Preview what's coming in the next module
 
-MUST DO: Update `public/course-progress.json` to beat 4 with `"status": "complete"` and print final progress bar.
+Write `public/course-progress.json` with beat 4 and `"status": "complete"` and print final progress bar.
 
 ## Prompting Tip
 > [A brief, practical observation about AI collaboration that emerged naturally
 > from this lesson. Written as a tip the learner can take away.]
 > Example: "Notice how describing WHAT you wanted (not HOW to code it) was enough
-> for Claude to build the feature. The more specific your description of the
+> for the agent to build the feature. The more specific your description of the
 > desired behavior, the better the result."
 
 ## Checkpoint
 Expected state after this module: [Brief description of what should exist]
+```
 
 ---
 
@@ -174,6 +187,13 @@ Below is a fully fleshed-out example of what a module page would look like.
 > **Prompting teachable moments**: When the learner gives you a good or bad prompt,
 > briefly note what made it effective (or how it could be better).
 >
+> **Prefixes**: This module uses four prefixes. Everything with a prefix is mandatory —
+> do not skip or reorder. Unprefixed text is guidance you can adapt naturally.
+> - `RUN:` — YOU (the agent) execute this command.
+> - `LEARNER:` — The learner performs this action.
+> - `SAY:` — YOU (the agent) tell the learner this message verbatim or near-verbatim.
+> - `ASK:` — YOU (the agent) ask this question and wait for a response.
+>
 > **Showing code**: The learner may not have a code editor — they might only have
 > a terminal and a browser. Never tell them to "open a file" or "look at line 42."
 > Instead, print short, focused code snippets directly in your response using fenced
@@ -191,10 +211,9 @@ Below is a fully fleshed-out example of what a module page would look like.
 >
 > **Progress tracking**: At the start of the module, check for a `public/course-progress.json`
 > file in the project root. If it exists and references this module, resume from the
-> last completed beat instead of starting over. Progress is updated at the *start*
-> of each new beat (marking the previous beat as done) — each beat begins with a
-> `MUST DO: Update .course-progress` directive. Treat it like any other MUST directive.
-> After updating, print a progress bar like:
+> last completed beat instead of starting over. Every progress write directive gives
+> you the **complete JSON object** — copy it exactly. Never partially update; always
+> write the full object. After writing, print a progress bar like:
 >
 >     [■■□□] Beat 2 of 4 — What's Under the Hood
 >
@@ -233,14 +252,14 @@ By the end of this module, the learner will:
 [TUTOR MODE]
 
 - Open `schema.prisma` and display the Task model
-- MUST ASK: "Before I explain anything — look at this file. What do you think it describes? What do the words 'model', 'String', 'Boolean' suggest to you?"
+- ASK: "Before I explain anything — look at this file. What do you think it describes? What do the words 'model', 'String', 'Boolean' suggest to you?"
 - Wait for their response. Affirm what they got right.
 - Explain:
   - A **model** is like a spreadsheet template — it defines what columns (fields) a table has
   - Each **field** has a name and a type (String = text, Boolean = true/false, Int = number)
   - The `@id` and `@default` are like spreadsheet rules/formulas
 - Connect to reality: "Every task you see in the app right now exists as a row in this 'spreadsheet'"
-- MUST ASK: "If you were to add more information to each task — say, how important it is — where would you define that?"
+- ASK: "If you were to add more information to each task — say, how important it is — where would you define that?"
 - They should point to the model. If not, guide them.
 
 ## → TRANSITION (free-form)
@@ -254,15 +273,17 @@ so there's data to work with, or riff on any curiosity they express.
 ## BEAT 2: Add something new
 [PAIR PROGRAMMER MODE]
 
-MUST DO: Update `public/course-progress.json` to beat 2 and print progress bar.
+Write `public/course-progress.json` with beat 2 info and print progress bar.
 
-- MUST ASK: "If you could add one more piece of information to each task, what would it be? Think about what would make this todo app more useful for you. Maybe a priority level? A due date? A category?"
-- Let them choose. Whatever they pick, guide them through adding it:
-  1. Add the field to the Task model in `schema.prisma`
-  2. MUST RUN: `wasp db migrate-dev --name <descriptive-name>` (always use `--name` to pass the migration name directly — the interactive prompt hangs in most AI coding agents)
-  3. MUST EXPLAIN: "What just happened: the migration updated your database to match your new schema. Think of it like updating the spreadsheet template — all existing rows now have a new column, and any new rows will include it too."
-- If the migration fails, diagnose the error, explain what went wrong in plain language, and fix it together.
-- Show them the change is reflected: query the tasks and point out the new field.
+ASK: "If you could add one more piece of information to each task, what would it be? Think about what would make this todo app more useful for you. Maybe a priority level? A due date? A category?"
+
+Let them choose. Whatever they pick, guide them through adding it:
+1. Add the field to the Task model in `schema.prisma`
+2. RUN: `wasp db migrate-dev --name <descriptive-name>` (always use `--name` to pass the migration name directly — the interactive prompt hangs in most AI coding agents)
+3. SAY: "What just happened: the migration updated your database to match your new schema. Think of it like updating the spreadsheet template — all existing rows now have a new column, and any new rows will include it too."
+
+If the migration fails, diagnose the error, explain what went wrong in plain language, and fix it together.
+Show them the change is reflected: query the tasks and point out the new field.
 
 ## → TRANSITION (free-form)
 Celebrate! They just changed their database schema and migrated. That's a real
@@ -274,15 +295,16 @@ migrations folder). But don't dwell — keep momentum toward building something.
 ## BEAT 3: Build with the new data
 [PAIR PROGRAMMER MODE]
 
-MUST DO: Update `public/course-progress.json` to beat 3 and print progress bar.
+Write `public/course-progress.json` with beat 3 info and print progress bar.
 
-- MUST ASK: "Now that tasks have [their new field], what feature would you want? For example, if you added 'priority', maybe you want to sort tasks by priority, or color-code them. What sounds useful?"
-- Let them describe the feature in their own words.
-- Build it together:
-  - Claude does most of the coding, but explains the key parts as it goes
-  - MUST EXPLAIN the data flow as you build: "Here's what's happening: the database stores the priority → the server query fetches tasks with priority included → the client receives the data → React renders it on screen with the color we chose"
-  - After each file change, briefly note which layer of the app you're working in (database? server? client?)
-- Once the feature works, have them test it in the browser.
+ASK: "Now that tasks have [their new field], what feature would you want? For example, if you added 'priority', maybe you want to sort tasks by priority, or color-code them. What sounds useful?"
+
+Let them describe the feature in their own words. Build it together:
+- The agent does most of the coding, but explains the key parts as it goes
+- SAY: "Here's what's happening: the database stores the priority → the server query fetches tasks with priority included → the client receives the data → React renders it on screen with the color we chose"
+- After each file change, briefly note which layer of the app you're working in (database? server? client?)
+
+Once the feature works, have them test it in the browser.
 
 ## → TRANSITION (free-form)
 Let them play with their new feature. Answer questions. If they want to tweak
@@ -292,22 +314,24 @@ they start to feel the power of directing AI to build things.
 ## BEAT 4: Checkpoint & Reflect
 [TUTOR MODE]
 
-MUST DO: Update `public/course-progress.json` to beat 4 and print progress bar.
+Write `public/course-progress.json` with beat 4 info and print progress bar.
 
-- MUST ASK: "In your own words, can you walk me through what happens when you create a new task with a priority? Start from when you click 'Add' and trace it all the way to the database and back."
-- Listen to their explanation. Affirm correct parts, gently correct misconceptions.
-- Summarize:
-  - ✅ The **schema** defines the shape of your data (like a spreadsheet template)
-  - ✅ **Migrations** update the database to match schema changes
-  - ✅ Data flows: **database → server → client → screen** (and back for writes)
-  - ✅ You can describe a feature in plain language and build it with AI
-- Preview: "In the next module, we'll make this app actually look good — you'll learn how the visual side works and build custom UI with Tailwind CSS."
+ASK: "In your own words, can you walk me through what happens when you create a new task with a priority? Start from when you click 'Add' and trace it all the way to the database and back."
 
-MUST DO: Update `public/course-progress.json` to beat 4 with `"status": "complete"` and print progress bar.
+Listen to their explanation. Affirm correct parts, gently correct misconceptions.
+Summarize:
+- The **schema** defines the shape of your data (like a spreadsheet template)
+- **Migrations** update the database to match schema changes
+- Data flows: **database → server → client → screen** (and back for writes)
+- You can describe a feature in plain language and build it with AI
+
+Preview: "In the next module, we'll make this app actually look good — you'll learn how the visual side works and build custom UI with Tailwind CSS."
+
+Write `public/course-progress.json` with beat 4 and `"status": "complete"` and print final progress bar.
 
 ## Prompting Tip
 > Notice how when you described the feature you wanted ("sort tasks by priority"
-> or "color-code by importance"), Claude was able to build it — even though you
+> or "color-code by importance"), the agent was able to build it — even though you
 > didn't specify any technical details. The key was being specific about the
 > *behavior* you wanted. Try this: next time, add one more detail to your prompt
 > (e.g., "sort by priority, with high-priority tasks at the top in red") and see
@@ -327,7 +351,7 @@ or color coding).
 When writing new modules, keep these principles in mind:
 
 1. **Start with doing, not explaining.** Open a file, show the app, ask a question — THEN explain.
-2. **MUST ASK / MUST RUN / MUST EXPLAIN** are the scripted anchors. Everything else is flexible.
+2. **`RUN` / `SAY` / `ASK` / `LEARNER`** are the scripted anchors. Everything else is flexible guidance.
 3. **Analogies over jargon.** Spreadsheets, post offices, assembly lines — whatever makes it click.
 4. **Celebrate progress.** These are beginners. Every change they make to a real app is a win.
 5. **One concept per beat.** Don't overload. If a beat is getting complex, split it.

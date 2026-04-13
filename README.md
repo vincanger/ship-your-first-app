@@ -42,6 +42,6 @@ curl -fsSL https://wasp-lang.github.io/ship-your-first-app/llms.txt -o llms.txt
 
 ## Links
 
-- [Course landing page](https://wasp-lang.github.io/ship-your-first-app/)
+- [Course landing page for humans](https://wasp-lang.github.io/ship-your-first-app/)
 - [Wasp](https://wasp.sh)
 - [Wasp Discord](https://discord.gg/rzdnErX)

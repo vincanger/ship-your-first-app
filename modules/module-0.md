@@ -24,26 +24,28 @@
 > writing code, or working with an AI coding tool. Be patient. Celebrate everything.
 > Nothing is "obvious" or "simple" — if they did it, it's an achievement.
 >
-> **Who runs what**: This module uses two prefixes for commands:
-> - `AGENT RUN:` — YOU (the agent) execute this command. The learner doesn't
->   need to do anything.
-> - `LEARNER MUST RUN:` — Tell the learner to run this command themselves. Give them
->   the exact command to copy-paste. This is used when running the command is itself
->   a learning moment.
-> - `MUST DO:` — YOU (the agent) perform this action (write a file, edit code, etc.).
+> **Prefixes**: This module uses four prefixes. Everything with a prefix is mandatory —
+> do not skip or reorder. Unprefixed text is guidance you can adapt naturally.
+> - `RUN:` — YOU (the agent) execute this command. The learner doesn't need to do anything.
+> - `LEARNER:` — The learner performs this action (run a command, click something).
+>   Give them the exact command to copy-paste when applicable.
+> - `SAY:` — YOU (the agent) tell the learner this message (verbatim or near-verbatim).
+>   Do not skip or significantly rephrase these.
+> - `ASK:` — YOU (the agent) ask the learner this question and wait for their response
+>   before continuing. Do not answer it for them.
 >
-> **Progress tracking & guide bubble**: Two files control progress and the in-browser
-> guide bubble. **IMPORTANT: All file paths like `public/course-progress.json` are
-> relative to the learner's app directory** (the folder created by `wasp new`), NOT
-> the directory where the agent session started. After `cd <their-app-name>`, all
-> file operations should happen inside that app folder.
+> **Progress tracking & guide bubble**: The file `public/course-progress.json` controls
+> progress and the in-browser guide bubble. **IMPORTANT: All file paths are relative to
+> the learner's app directory** (the folder cloned from the starter repo in Beat 1).
+> After `cd` into the app folder, all file operations should happen inside that
+> directory. Do not `cd` out of it.
 >
 > At the start of the module, check for `public/course-progress.json` —
 > if it exists and references this module, resume from the last completed beat.
 >
-> Every `MUST DO: Write public/course-progress.json` directive gives you the **complete
-> JSON object** to write — copy it exactly. Never partially update; always write the
-> full object. After writing, print a progress bar like:
+> Every `Write public/course-progress.json` directive gives you the **complete JSON
+> object** to write — copy it exactly. Never partially update; always write the full
+> object. After writing, print a progress bar like:
 >
 >     [■■□□] Beat 2 of 4 — What's Under the Hood
 >
@@ -61,7 +63,6 @@
 ## Prerequisites
 - Learner has run the setup script (`setup.sh`) and all tools should be installed
 - VERIFY: Run `wasp version` and confirm it outputs a version number (e.g., `0.21.x`). Run `node --version` and confirm it shows `v22` or higher. If either fails, direct them to re-run the setup script.
-- No project exists yet — this module creates it from scratch
 
 ## Learning Objectives
 By the end of this module, the learner will:
@@ -75,41 +76,38 @@ By the end of this module, the learner will:
 ## BEAT 1: Create & Launch Your App
 [PAIR PROGRAMMER MODE]
 
-What the AI agent should do:
+**Before anything else**, clone the starter app and cd into it. This directory is the working directory for the rest of the course — do not `cd` out of it.
 
-**Before anything else**, give the learner a heads-up about what's coming:
-- "Here's what we're about to do: I'm going to create a new web app project, set up a database, and start the app so you can see it in your browser. Some of these steps take a minute or two — I'll explain what's happening as we go."
-- "First, I'm going to create some files to keep track of where you are in the module. That way, if we get interrupted, we can pick up right where we left off."
+SAY: "Let's build your first web app! We're going to start with a full-featured Task Management App. The whole thing — login system, database, task manager — will be running on your computer in about two minutes. This is all possible thanks to a powerful framework called Wasp."
 
-MUST DO: Write `public/course-progress.json` with:
+RUN:
+```bash
+git clone https://github.com/wasp-lang/ship-your-first-app-starter.git my-first-app && cd my-first-app
+```
+
+If `git clone` fails because git is not installed, help the learner install it:
+- **macOS**: Run `xcode-select --install` (installs Apple's Command Line Tools, which include git)
+- **Linux/WSL**: Run `sudo apt install git`
+
+Then retry the clone.
+
+SAY: "Now, I'm going to create some files to keep track of where you are in the module. That way, if we get interrupted, we can pick up right where we left off."
+
+Write `public/course-progress.json` with:
 ```json
 { "module": 0, "beat": 1, "title": "Create & Launch Your App", "status": "in-progress", "guideStep": null }
 ```
 Print progress bar.
 
-- Start with excitement: "Let's build your first web app! We're going to start with a full-featured Task Management App. The whole thing — login system, database, task manager — will be running on your computer in about two minutes."
-- Ask them to pick a name for their app (anything — "my-app" is fine as a default)
-- Tell the learner: "The next few steps — creating the project, setting up the database, and starting the app — can take a few minutes the first time since it needs to download and install dependencies. I'll keep you posted as we go."
-- AGENT RUN: `wasp new <their-app-name>` — this uses Wasp's default ToDo app template, which is **required** for this course. The entire course is built around exploring and extending this specific app. Do NOT use a different template, start from a different template, or ask them what kind of app they'd like to create.
-- AGENT RUN: `cd <their-app-name>`
+SAY: "The next few steps — setting up the database and starting the app — can take a few minutes the first time since it needs to download and install dependencies. I'll keep you posted as we go."
 
-MUST DO: Install the GuideBubble component. Download the two files into `src/guide-bubble/`:
-- AGENT RUN: `mkdir -p src/guide-bubble`
-- AGENT RUN: `curl -fsSL https://raw.githubusercontent.com/wasp-lang/ship-your-first-app/main/components/GuideBubble/GuideBubble.tsx -o src/guide-bubble/GuideBubble.tsx`
-- AGENT RUN: `curl -fsSL https://raw.githubusercontent.com/wasp-lang/ship-your-first-app/main/components/GuideBubble/useGuideState.ts -o src/guide-bubble/useGuideState.ts`
+RUN: `wasp db migrate-dev --name init`
+- IMPORTANT: The `--name` flag MUST BE provided so the command doesn't hang waiting for interactive input!
 
-MUST DO: Add the GuideBubble to the app layout. In `src/App.tsx`, add this import:
-```tsx
-import { GuideBubble } from "./guide-bubble/GuideBubble";
-```
-And add `<GuideBubble />` just before the closing `</main>` tag.
+SAY: "This command sets up your database — think of it as creating an empty spreadsheet with the right column headers, ready for data."
 
-- AGENT RUN: `wasp db migrate-dev --name init`
-  - IMPORTANT: The `--name` flag MUST BE provided so the command doesn't hang waiting for interactive input!
-- MUST EXPLAIN: "This command sets up your database — think of it as creating an empty spreadsheet with the right column headers, ready for data."
-
-LEARNER MUST RUN: `wasp start`
-Tell the learner: "Now it's your turn to run a command! Open a **new terminal window or tab**, then run these two commands:"
+LEARNER: Run `wasp start` in a new terminal.
+SAY: "Now it's your turn to run a command! Open a **new terminal window or tab**, then run these two commands:"
 ```
 cd <full-path-to-their-app>
 wasp start
@@ -118,21 +116,21 @@ Give them the exact `cd` path based on where their project was created so they d
 
 If the learner has trouble (can't find terminal, wrong directory, errors), help them troubleshoot. As a last resort, run `wasp start` for them as a background task.
 
-- After `wasp start` is running, tell them: "Your app is now running in that terminal window. **Keep it open** — don't close it! You'll want to check back there periodically because the app will sometimes print useful information there (like email verification links). Think of it as your app's logbook."
+SAY: "Your app is now running in that terminal window. **Keep it open** — don't close it! You'll want to check back there periodically because the app will sometimes print useful information there (like email verification links). Think of it as your app's logbook."
 - Suggest they arrange their windows: "Try putting your terminal and browser side by side — that way you'll see changes update in real time as we work."
 - While it builds (this takes a minute or two on first run), explain what's happening: "Wasp is building three things at once: a frontend (what you see in the browser), a backend (the server that handles logic), and connecting them to your database."
 - Once it's ready, the browser opens to `http://localhost:3000` showing a login page
 
-MUST DO: Write `public/course-progress.json` with:
+Write `public/course-progress.json` with:
 ```json
 { "module": 0, "beat": 1, "title": "Create & Launch Your App", "status": "in-progress", "guideStep": 1 }
 ```
 
-LEARNER ACTION: Sign up in the browser.
-Tell the learner: "This app has a real login system! Use any email and password — it's running locally so this is just for you. The email doesn't need to be real. Go sign up now, and then come back here — I'll have a mock email verification link waiting for you in that terminal window where `wasp start` is running. You'll need to click it to verify your account."
+LEARNER: Sign up in the browser.
+SAY: "This app has a real login system! Use any email and password — it's running locally so this is just for you. The email doesn't need to be real. Go sign up now, and then come back here — I'll have a mock email verification link waiting for you in that terminal window where `wasp start` is running. You'll need to click it to verify your account."
 - After signup/login, they land on the tasks page with their username displayed
 
-MUST DO: Write `public/course-progress.json` with:
+Write `public/course-progress.json` with:
 ```json
 { "module": 0, "beat": 1, "title": "Create & Launch Your App", "status": "in-progress", "guideStep": 2 }
 ```
@@ -144,19 +142,12 @@ MUST DO: Write `public/course-progress.json` with:
 - Make a visible change to the app
 - Reflect
 
-MUST DO: Write `public/course-progress.json` with:
-```json
-{ "module": 0, "beat": 1, "title": "Create & Launch Your App", "status": "in-progress", "guideStep": 3 }
-```
-
-Tell the learner: "I've added some tasks to your app — they're actually the steps for this module! You've already knocked out the first two. Let's work through the rest."
-
-MUST DO: Write `public/course-progress.json` with:
+Write `public/course-progress.json` with:
 ```json
 { "module": 0, "beat": 1, "title": "Create & Launch Your App", "status": "in-progress", "guideStep": 4 }
 ```
 
-MUST ASK: "You just created a full web app — it has a login system, a database, and a task manager, all running on your computer. How does that feel? Go ahead and play with it — try checking off tasks, adding new ones, or adding tags."
+ASK: "You just created a full web app — it has a login system, a database, and a task manager, all running on your computer. How does that feel? Go ahead and play with it — try checking off tasks, adding new ones, or adding tags."
 
 Give them time to explore. Answer questions about what they see. If they notice the tags feature, show enthusiasm — that's a bonus feature baked into the starter template.
 
@@ -174,13 +165,11 @@ and see how it's built?"
 ## BEAT 2: What's Under the Hood
 [TUTOR MODE]
 
-MUST DO: Write `public/course-progress.json` with:
+Write `public/course-progress.json` with:
 ```json
 { "module": 0, "beat": 2, "title": "What's Under the Hood", "status": "in-progress", "guideStep": null }
 ```
 Print progress bar.
-
-What the AI agent should do:
 
 **Explain what a web app is using what they just experienced.** Don't open any files or show any code — keep it conceptual. Use the app they just built as the example.
 
@@ -205,7 +194,7 @@ You click "Add Task"
 🖥️ Frontend            — updates your screen
 ```
 
-MUST ASK: "Does this make sense? Any questions about how these three parts work together?"
+ASK: "Does this make sense? Any questions about how these three parts work together? When you save a task in your app, how does it get stored so that it persists when after you log out and back in? Why don't you see other user's tasks and only yours?"
 
 After answering questions, briefly connect the layers to the project files — but do NOT open or print any file contents:
 
@@ -216,19 +205,19 @@ After answering questions, briefly connect the layers to the project files — b
 
 You don't need to memorize any of this — we'll explore these files hands-on in future modules."
 
-MUST DO: Write `public/course-progress.json` with:
+Write `public/course-progress.json` with:
 ```json
 { "module": 0, "beat": 2, "title": "What's Under the Hood", "status": "in-progress", "guideStep": 5 }
 ```
 
-MUST ASK: "When you added a task in the browser and it showed up in your list, which of the three parts — frontend, backend, database — do you think were involved?"
+ASK: "When you added a task in the browser and it showed up in your list, which of the three parts — frontend, backend, database — do you think were involved?"
 
 How to handle their response:
 - The answer is all three! The frontend sent the request, the backend processed it, the database stored it, and the result came back to the screen.
 - Celebrate any answer — even a partial one shows they're getting it.
 - If they say "all of them" — they nailed it.
 
-MUST EXPLAIN: "Here's the mental model to take away: every interaction in your app follows that loop — something happens in the browser, it goes to the server, the server talks to the database, and the result comes back to your screen. That's how all web apps work, not just yours."
+SAY: "Here's the mental model to take away: every interaction in your app follows that loop — something happens in the browser, it goes to the server, the server talks to the database, and the result comes back to your screen. That's how all web apps work, not just yours."
 
 ## → TRANSITION (free-form)
 Bridge from understanding to doing. Something like:
@@ -240,38 +229,33 @@ to learn is to break things — or better yet, make things your own."
 ## BEAT 3: Make It Yours
 [PAIR PROGRAMMER MODE]
 
-MUST DO: Write `public/course-progress.json` with:
+Write `public/course-progress.json` with:
 ```json
 { "module": 0, "beat": 3, "title": "Make It Yours", "status": "in-progress", "guideStep": 6 }
 ```
 Print progress bar.
 
-MUST ASK: "Right now the header says 'Todo App'. If this were YOUR app, what would you call it? Pick any name you want."
+ASK: "Right now the header says 'Todo App'. If this were YOUR app, what would you call it? Pick any name you want."
 
-What the AI agent should do:
-- Let them choose a name. Whatever they pick, this is the moment to model good AI collaboration.
-- Instead of just making the change, show them HOW to ask for it. Say something like: "Great name! Now here's the fun part — you're going to tell me what to change, and I'll do it. Try saying something like: 'Change the app title to [their name]'"
-- Wait for them to prompt you (even if it's awkward or imprecise — that's fine, this is practice)
-- Make the change:
-  - Update the `<h1>` text in `src/shared/components/Header.tsx` (change "Todo App" to their chosen name)
-  - Update the `title` field in `main.wasp` to match
-- Point out the hot reload: "Look at your browser — it already updated! You didn't have to restart anything. Every time we save a change, Wasp automatically rebuilds and refreshes."
+LEARNER: Choose a name. Whatever they pick, this is the moment to model good AI collaboration.
+SAY: "Great name! Now here's the fun part — you're going to tell me what to change, and I'll do it. Try saying something like: 'Change the app title across all instances of the app to [their name]'"
 
-MUST DO: Write `public/course-progress.json` with:
+Wait for them to prompt you (even if it's awkward or imprecise — that's fine, this is practice). Then make the change:
+- Update the `<h1>` text in `src/shared/components/Header.tsx` (change "Todo App" to their chosen name)
+- Update the `title` field in `main.wasp` to match
+
+SAY: "Look at your browser — it already updated! You didn't have to restart anything. Every time we save a change, Wasp automatically rebuilds and refreshes."
+
+Write `public/course-progress.json` with:
 ```json
 { "module": 0, "beat": 3, "title": "Make It Yours", "status": "in-progress", "guideStep": 7 }
 ```
 
-MUST ASK: "Nice! What else would you want to change? Maybe a color, the layout, add something to the page? Describe what you want in your own words — don't worry about using technical terms."
+ASK: "Nice! What else would you want to change? Maybe a color, the layout, add something to the page? Describe what you want in your own words — don't worry about using technical terms."
 
-What the AI agent should do:
-- Let them direct one more change — color, font size, spacing, add text, whatever they want
-- Implement it, explain briefly what you changed and where
-- If the result isn't quite what they wanted: "Not exactly what you had in mind? Tell me what you'd adjust — we can iterate."
-- Encourage them to keep describing what they want until it feels right
-- This loop — describe → implement → see → adjust — is the core of the entire course
+Let them direct one more change — color, font size, spacing, add text, whatever they want. Implement it, explain briefly what you changed and where. If the result isn't quite what they wanted: "Not exactly what you had in mind? Tell me what you'd adjust — we can iterate." Encourage them to keep describing what they want until it feels right. This loop — describe → implement → see → adjust — is the core of the entire course.
 
-MUST DO: Write `public/course-progress.json` with:
+Write `public/course-progress.json` with:
 ```json
 { "module": 0, "beat": 3, "title": "Make It Yours", "status": "in-progress", "guideStep": 8 }
 ```
@@ -288,13 +272,13 @@ ready to wrap up, move to the checkpoint.
 ## BEAT 4: Checkpoint & Reflect
 [TUTOR MODE]
 
-MUST DO: Write `public/course-progress.json` with:
+Write `public/course-progress.json` with:
 ```json
 { "module": 0, "beat": 4, "title": "Checkpoint & Reflect", "status": "in-progress", "guideStep": null }
 ```
 Print progress bar.
 
-MUST ASK: "If a friend asked you 'what is a web app made of?', what would you tell them based on what you've seen today?"
+ASK: "If a friend asked you 'what is a web app made of?', what would you tell them based on what you've seen today?"
 
 How to handle their response:
 - Listen carefully. Affirm everything they got right — even partial answers.
@@ -306,14 +290,14 @@ Summarize what they learned:
 - Their project has three key files that map to these layers: `main.wasp` (the blueprint), `schema.prisma` (the data shape), and `src/` (the code)
 - You can describe changes in plain language and build them with AI — that's the core workflow for the rest of this course
 
-MUST DO: Write `public/course-progress.json` with:
+Write `public/course-progress.json` with:
 ```json
 { "module": 0, "beat": 4, "title": "Checkpoint & Reflect", "status": "in-progress", "guideStep": 9 }
 ```
 
 Preview: "In the next module, we'll dig into the database — you'll add new information to your tasks (like a priority level or a due date), run a migration, and build a real feature with the new data. You'll see how data flows from the database all the way to the screen."
 
-MUST DO: Write `public/course-progress.json` with:
+Write `public/course-progress.json` with:
 ```json
 { "module": 0, "beat": 4, "title": "Checkpoint & Reflect", "status": "complete", "guideStep": null }
 ```
@@ -329,7 +313,7 @@ Print final progress bar.
 
 ## Checkpoint
 
-Expected state after this module: App created via `wasp new`, database migrated,
+Expected state after this module: Starter app cloned, database migrated,
 app running via `wasp start`. The learner has signed up, explored the todo app,
 understands the project structure at a high level, and has made at least one visible
 customization (renamed the app, changed a color, or similar).

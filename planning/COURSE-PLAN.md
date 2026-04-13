@@ -47,18 +47,12 @@ Each module is a standalone markdown file that Claude fetches and follows.
 ## Learner Workflow
 
 1. Install Wasp + an AI coding agent
-2. Run `wasp new my-app && cd my-app`
+2. Run `git clone https://github.com/wasp-lang/ship-your-first-app-starter.git my-first-app && cd my-first-app`
 3. Open their AI coding agent and tell it to fetch: `https://wasp-lang.github.io/ship-your-first-app/llms.txt`
    - If the agent can't fetch URLs: `curl -fsSL <url> -o <filename>.md` and point the agent at the local file
 4. The agent fetches the page, reads the instructions, becomes their tutor
 5. At the end of each module, the agent verifies understanding and points to the next module
 6. If things break: `git checkout module-X-complete` to reset to a known-good state
-
-## Checkpoint System
-
-- Public GitHub repo with branches: `module-0-complete`, `module-1-complete`, etc.
-- Each branch represents the expected state of the code after completing that module
-- Module instructions tell Claude how to verify the learner is at the right starting state
 
 ---
 
@@ -74,7 +68,7 @@ Each module is a standalone markdown file that Claude fetches and follows.
 ## Phase 1 Modules
 
 ### Module 0: Setup & First Vibe
-- Install tools, run `wasp new`, start the app
+- Install tools, clone the starter app, start the app
 - First interaction with AI tutor — high-level overview of what a web app is
 - **Explore**: The three layers (frontend, backend, database) conceptually — no file contents
 - **Modify**: Change something visible (app title, color) via prompting

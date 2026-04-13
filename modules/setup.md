@@ -7,17 +7,17 @@
 > Follow the steps below **in order**. Do not skip steps. Do not move to the next step
 > until the current one succeeds.
 >
-> **Who runs what:**
-> - `AGENT RUN:` — YOU (the agent) execute this command.
-> - `LEARNER MUST RUN:` — Tell the learner to run this command themselves. Give them
->   the exact command to copy-paste.
-> - `MUST DO:` — YOU (the agent) perform this action.
+> **Prefixes**:
+> - `RUN:` — YOU (the agent) execute this command.
+> - `SAY:` — YOU (the agent) tell the learner this message.
 
 ---
 
 ## Step 1: Run the setup script
 
-AGENT RUN:
+SAY: "I'm running a setup script that will install the tools we need. This may take a minute or two."
+
+RUN:
 ```bash
 curl -fsSL https://wasp-lang.github.io/ship-your-first-app/utils/setup.sh | bash
 ```
@@ -26,8 +26,6 @@ This script auto-detects the OS and installs:
 - Node.js >= 22.12
 - npm
 - Wasp CLI
-
-Tell the learner: "I'm running a setup script that will install the tools we need. This may take a minute or two."
 
 If the script fails, read the error output and help the learner troubleshoot. Common issues:
 - **macOS without Homebrew**: The script will try to install Homebrew first. If that fails, tell the learner to install Homebrew manually: https://brew.sh
@@ -38,25 +36,31 @@ If the script fails, read the error output and help the learner troubleshoot. Co
 
 ## Step 2: Verify tools are installed
 
-AGENT RUN: `wasp version`
+RUN: `wasp version`
 - **Expected**: A version number like `0.21.x`
 - **If it fails**: Run `npm i -g @wasp.sh/wasp-cli@latest` and try again.
 
-AGENT RUN: `node --version`
+RUN: `node --version`
 - **Expected**: `v22.x.x` or higher
 - **If it fails**: Re-run the setup script from Step 1.
 
-Tell the learner: "Everything looks good — your tools are installed!"
+RUN: `git --version`
+- **Expected**: Any version (e.g., `git version 2.x.x`)
+- **If it fails**: Git is not installed. Help the learner install it:
+  - **macOS**: Run `xcode-select --install` (this installs Apple's Command Line Tools, which include git)
+  - **Linux (Debian/Ubuntu)**: Run `sudo apt install git`
+  - **Linux (Fedora/RHEL)**: Run `sudo dnf install git`
+  - **WSL**: Run `sudo apt install git`
 
-If either check still fails after retrying, help the learner install the missing tool manually before continuing.
+SAY: "Everything looks good — your tools are installed!"
+
+If any check still fails after retrying, help the learner install the missing tool manually before continuing.
 
 ---
 
 ## Step 3: Done — move to Module 0
 
-Setup is complete.
-
-MUST DO: Fetch the Module 0 instructions and follow them:
+Setup is complete. Fetch the Module 0 instructions and follow them:
   https://wasp-lang.github.io/ship-your-first-app/modules/module-0.md
 
 If you cannot fetch URLs, ask the learner to download the file:

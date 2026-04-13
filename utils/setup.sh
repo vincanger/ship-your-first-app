@@ -500,11 +500,7 @@ main() {
         if [ "$INSTALLED_SOMETHING" = true ]; then
             printf "  ${DIM}0.${NC} Restart your terminal (to pick up PATH changes)\n\n"
         fi
-        printf "  ${DIM}1.${NC} Create your first app:\n"
-        printf "     ${CYAN}wasp new my-app${NC}\n\n"
-        printf "  ${DIM}2.${NC} Start it up:\n"
-        printf "     ${CYAN}cd my-app && wasp start${NC}\n\n"
-        printf "  ${DIM}3.${NC} Open your AI coding agent in the project folder and tell it to fetch:\n"
+        printf "  ${DIM}1.${NC} Open your AI coding agent and tell it to fetch:\n"
         printf "     ${CYAN}https://wasp-lang.github.io/ship-your-first-app/llms.txt${NC}\n\n"
         printf "     ${DIM}Works with Claude Code, Codex, Copilot, Open Code, or any coding agent.${NC}\n"
         printf "     ${DIM}If your agent can't fetch URLs, open the link in your browser and paste the contents.${NC}\n\n"
