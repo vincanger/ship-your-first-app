@@ -32,7 +32,7 @@ The AI coding agent will fetch a module page and use it as instructions for guid
 >
 > **Formatting**: Use this visual system consistently throughout the module.
 > - **Beat titles**: At the start of each beat, print the hardcoded box provided in that beat's section. Copy it exactly — do not regenerate it. When writing a new module, pre-calculate the correct box: count the title characters, add 2 for padding, use that many ─ chars on the top and bottom rows.
-> - **Messages to learner** (SAY): prefix with 🐝, blank line before and after
+> - **Messages to learner** (SAY): blank line before and after
 > - **Questions** (ASK): prefix with ❓, blank line before and after
 > - **Learner actions** (LEARNER): prefix with 👉, blank line before and after
 > - **Beat transitions**: print `— — —` on its own line with a blank line before and after
@@ -205,7 +205,7 @@ Below is a fully fleshed-out example of what a module page would look like.
 >
 > **Formatting**: Use this visual system consistently throughout the module.
 > - **Beat titles**: At the start of each beat, print the hardcoded box provided in that beat's section. Copy it exactly — do not regenerate it. When writing a new module, pre-calculate the correct box: count the title characters, add 2 for padding, use that many ─ chars on the top and bottom rows.
-> - **Messages to learner** (SAY): prefix with 🐝, blank line before and after
+> - **Messages to learner** (SAY): blank line before and after
 > - **Questions** (ASK): prefix with ❓, blank line before and after
 > - **Learner actions** (LEARNER): prefix with 👉, blank line before and after
 > - **Beat transitions**: print `— — —` on its own line with a blank line before and after

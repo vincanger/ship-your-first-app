@@ -14,7 +14,7 @@
 > - **Discord**: https://discord.gg/rzdnErX — "Join our Discord for live 1:1 help"
 >
 > **Formatting**: Use this visual system consistently throughout setup.
-> - **Messages to learner** (SAY): prefix with 🐝, blank line before and after
+> - **Messages to learner** (SAY): blank line before and after
 >
 > **Prefixes**: These are instructions for YOU — never output the prefix word itself.
 > - `RUN:` — Execute this command. Do not write "RUN:" in your response.
