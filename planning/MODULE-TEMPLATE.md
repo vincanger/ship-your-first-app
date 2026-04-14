@@ -30,8 +30,16 @@ The AI coding agent will fetch a module page and use it as instructions for guid
 > briefly note what made it effective (or how it could be better). Keep it natural,
 > not preachy.
 >
-> **Prefixes**: This module uses four prefixes. Everything with a prefix is mandatory —
-> do not skip or reorder. Unprefixed text is guidance you can adapt naturally.
+> **Formatting**: Use this visual system consistently throughout the module.
+> - **Beat titles**: At the start of each beat, print the hardcoded box provided in that beat's section. Copy it exactly — do not regenerate it. When writing a new module, pre-calculate the correct box: count the title characters, add 2 for padding, use that many ─ chars on the top and bottom rows.
+> - **Messages to learner** (SAY): prefix with 🐝, blank line before and after
+> - **Questions** (ASK): prefix with ❓, blank line before and after
+> - **Learner actions** (LEARNER): prefix with 👉, blank line before and after
+> - **Beat transitions**: print `— — —` on its own line with a blank line before and after
+>
+> **Prefixes**: These are instructions for YOU — never output the prefix word itself.
+> Everything with a prefix is mandatory — do not skip or reorder. Unprefixed text is
+> guidance you can adapt naturally.
 > - `RUN:` — YOU (the agent) execute this command. The learner doesn't need to
 >   do anything.
 > - `LEARNER:` — The learner performs this action (run a command, click something).
@@ -195,8 +203,16 @@ Below is a fully fleshed-out example of what a module page would look like.
 > **Prompting teachable moments**: When the learner gives you a good or bad prompt,
 > briefly note what made it effective (or how it could be better).
 >
-> **Prefixes**: This module uses four prefixes. Everything with a prefix is mandatory —
-> do not skip or reorder. Unprefixed text is guidance you can adapt naturally.
+> **Formatting**: Use this visual system consistently throughout the module.
+> - **Beat titles**: At the start of each beat, print the hardcoded box provided in that beat's section. Copy it exactly — do not regenerate it. When writing a new module, pre-calculate the correct box: count the title characters, add 2 for padding, use that many ─ chars on the top and bottom rows.
+> - **Messages to learner** (SAY): prefix with 🐝, blank line before and after
+> - **Questions** (ASK): prefix with ❓, blank line before and after
+> - **Learner actions** (LEARNER): prefix with 👉, blank line before and after
+> - **Beat transitions**: print `— — —` on its own line with a blank line before and after
+>
+> **Prefixes**: These are instructions for YOU — never output the prefix word itself.
+> Everything with a prefix is mandatory — do not skip or reorder. Unprefixed text is
+> guidance you can adapt naturally.
 > - `RUN:` — YOU (the agent) execute this command.
 > - `LEARNER:` — The learner performs this action.
 > - `SAY:` — YOU (the agent) tell the learner this message verbatim or near-verbatim.

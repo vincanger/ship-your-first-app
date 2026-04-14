@@ -30,8 +30,16 @@
 > - **Feedback form**: https://forms.gle/3U5wKpc3ZeEWJvaq7 — "Fill this out and we'll get back to you"
 > - **Discord**: https://discord.gg/rzdnErX — "Join our Discord for live 1:1 help"
 >
-> **Prefixes**: This module uses four prefixes. Everything with a prefix is mandatory —
-> do not skip or reorder. Unprefixed text is guidance you can adapt naturally.
+> **Formatting**: Use this visual system consistently throughout the module.
+> - **Beat titles**: At the start of each beat, print the hardcoded box provided in that beat's section. Copy it exactly — do not regenerate it.
+> - **Messages to learner** (SAY): prefix with 🐝, blank line before and after
+> - **Questions** (ASK): prefix with ❓, blank line before and after
+> - **Learner actions** (LEARNER): prefix with 👉, blank line before and after
+> - **Beat transitions**: print `— — —` on its own line with a blank line before and after
+>
+> **Prefixes**: These are instructions for YOU — never output the prefix word itself.
+> Everything with a prefix is mandatory — do not skip or reorder. Unprefixed text is
+> guidance you can adapt naturally.
 > - `RUN:` — YOU (the agent) execute this command. The learner doesn't need to do anything.
 > - `LEARNER:` — The learner performs this action (run a command, click something).
 >   Give them the exact command to copy-paste when applicable.
@@ -81,6 +89,13 @@ By the end of this module, the learner will:
 
 ## BEAT 1: Create & Launch Your App
 [PAIR PROGRAMMER MODE]
+
+Print:
+```
+╭───────────────────────────────────╮
+│ Beat 1 · Create & Launch Your App │
+╰───────────────────────────────────╯
+```
 
 **Before anything else**, clone the starter app and cd into it. This directory is the working directory for the rest of the course — do not `cd` out of it.
 
@@ -171,6 +186,13 @@ and see how it's built?"
 ## BEAT 2: What's Under the Hood
 [TUTOR MODE]
 
+Print:
+```
+╭────────────────────────────────╮
+│ Beat 2 · What's Under the Hood │
+╰────────────────────────────────╯
+```
+
 Write `public/course-progress.json` with:
 ```json
 { "module": 0, "beat": 2, "title": "What's Under the Hood", "status": "in-progress", "guideStep": null }
@@ -235,6 +257,13 @@ to learn is to break things — or better yet, make things your own."
 ## BEAT 3: Make It Yours
 [PAIR PROGRAMMER MODE]
 
+Print:
+```
+╭────────────────────────╮
+│ Beat 3 · Make It Yours │
+╰────────────────────────╯
+```
+
 Write `public/course-progress.json` with:
 ```json
 { "module": 0, "beat": 3, "title": "Make It Yours", "status": "in-progress", "guideStep": 6 }
@@ -277,6 +306,13 @@ ready to wrap up, move to the checkpoint.
 
 ## BEAT 4: Checkpoint & Reflect
 [TUTOR MODE]
+
+Print:
+```
+╭───────────────────────────────╮
+│ Beat 4 · Checkpoint & Reflect │
+╰───────────────────────────────╯
+```
 
 Write `public/course-progress.json` with:
 ```json

@@ -13,9 +13,12 @@
 > - **Feedback form**: https://forms.gle/3U5wKpc3ZeEWJvaq7 — "Fill this out and we'll get back to you"
 > - **Discord**: https://discord.gg/rzdnErX — "Join our Discord for live 1:1 help"
 >
-> **Prefixes**:
-> - `RUN:` — YOU (the agent) execute this command.
-> - `SAY:` — YOU (the agent) tell the learner this message.
+> **Formatting**: Use this visual system consistently throughout setup.
+> - **Messages to learner** (SAY): prefix with 🐝, blank line before and after
+>
+> **Prefixes**: These are instructions for YOU — never output the prefix word itself.
+> - `RUN:` — Execute this command. Do not write "RUN:" in your response.
+> - `SAY:` — Deliver this message to the learner naturally. Do not write "SAY:" in your response.
 
 ---
 
