@@ -41,6 +41,12 @@ The AI coding agent will fetch a module page and use it as instructions for guid
 > - `ASK:` — YOU (the agent) ask the learner this question and wait for their response
 >   before continuing. Do not answer it for them.
 >
+> **Troubleshooting & human help**: If a command fails and your first troubleshooting
+> attempt does not resolve it, OR if the learner types "I NEED HUMAN HELP"
+> (case-insensitive), provide both of these links:
+> - **Feedback form**: https://forms.gle/3U5wKpc3ZeEWJvaq7 — "Fill this out and we'll get back to you"
+> - **Discord**: https://discord.gg/rzdnErX — "Join our Discord for live 1:1 help"
+>
 > **Showing code**: The learner may not have a code editor — they might only have
 > a terminal and a browser. Never tell them to "open a file" or "look at line 42."
 > Instead, print short, focused code snippets directly in your response using fenced
@@ -144,6 +150,8 @@ ASK: "[A synthesis question that checks overall understanding]"
 - Summarize what they learned in 3-4 bullet points
 - Preview what's coming in the next module
 
+SAY: "Before we move on, I'd love to hear how this went for you! Take a quick second to share your feedback — it really helps us improve the course: https://forms.gle/3U5wKpc3ZeEWJvaq7"
+
 Write `public/course-progress.json` with beat 4 and `"status": "complete"` and print final progress bar.
 
 ## Prompting Tip
@@ -193,6 +201,12 @@ Below is a fully fleshed-out example of what a module page would look like.
 > - `LEARNER:` — The learner performs this action.
 > - `SAY:` — YOU (the agent) tell the learner this message verbatim or near-verbatim.
 > - `ASK:` — YOU (the agent) ask this question and wait for a response.
+>
+> **Troubleshooting & human help**: If a command fails and your first troubleshooting
+> attempt does not resolve it, OR if the learner types "I NEED HUMAN HELP"
+> (case-insensitive), provide both of these links:
+> - **Feedback form**: https://forms.gle/3U5wKpc3ZeEWJvaq7 — "Fill this out and we'll get back to you"
+> - **Discord**: https://discord.gg/rzdnErX — "Join our Discord for live 1:1 help"
 >
 > **Showing code**: The learner may not have a code editor — they might only have
 > a terminal and a browser. Never tell them to "open a file" or "look at line 42."
@@ -326,6 +340,8 @@ Summarize:
 - You can describe a feature in plain language and build it with AI
 
 Preview: "In the next module, we'll make this app actually look good — you'll learn how the visual side works and build custom UI with Tailwind CSS."
+
+SAY: "Before we move on, I'd love to hear how this went for you! Take a quick second to share your feedback — it really helps us improve the course: https://forms.gle/3U5wKpc3ZeEWJvaq7"
 
 Write `public/course-progress.json` with beat 4 and `"status": "complete"` and print final progress bar.
 

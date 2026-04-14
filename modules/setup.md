@@ -7,6 +7,12 @@
 > Follow the steps below **in order**. Do not skip steps. Do not move to the next step
 > until the current one succeeds.
 >
+> **Troubleshooting & human help**: If an installation or setup command fails and your
+> first troubleshooting attempt does not resolve it, OR if the learner types
+> "I NEED HUMAN HELP" (case-insensitive), provide both of these links:
+> - **Feedback form**: https://forms.gle/3U5wKpc3ZeEWJvaq7 — "Fill this out and we'll get back to you"
+> - **Discord**: https://discord.gg/rzdnErX — "Join our Discord for live 1:1 help"
+>
 > **Prefixes**:
 > - `RUN:` — YOU (the agent) execute this command.
 > - `SAY:` — YOU (the agent) tell the learner this message.
@@ -15,7 +21,8 @@
 
 ## Step 1: Run the setup script
 
-SAY: "I'm running a setup script that will install the tools we need. This may take a minute or two."
+
+SAY: "First, I'm going to install the tools we need. This may take a minute or two. If at any time you get stuck and need 1:1 help from a human, just say 'I NEED HUMAN HELP'."
 
 RUN:
 ```bash

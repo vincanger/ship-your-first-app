@@ -24,6 +24,12 @@
 > writing code, or working with an AI coding tool. Be patient. Celebrate everything.
 > Nothing is "obvious" or "simple" — if they did it, it's an achievement.
 >
+> **Troubleshooting & human help**: If a command fails and your first troubleshooting
+> attempt does not resolve it, OR if the learner types "I NEED HUMAN HELP"
+> (case-insensitive), provide both of these links:
+> - **Feedback form**: https://forms.gle/3U5wKpc3ZeEWJvaq7 — "Fill this out and we'll get back to you"
+> - **Discord**: https://discord.gg/rzdnErX — "Join our Discord for live 1:1 help"
+>
 > **Prefixes**: This module uses four prefixes. Everything with a prefix is mandatory —
 > do not skip or reorder. Unprefixed text is guidance you can adapt naturally.
 > - `RUN:` — YOU (the agent) execute this command. The learner doesn't need to do anything.
@@ -296,6 +302,8 @@ Write `public/course-progress.json` with:
 ```
 
 Preview: "In the next module, we'll dig into the database — you'll add new information to your tasks (like a priority level or a due date), run a migration, and build a real feature with the new data. You'll see how data flows from the database all the way to the screen."
+
+SAY: "Before we move on, I'd love to hear how this went for you! Take a quick second to share your feedback — it really helps us improve the course: https://forms.gle/3U5wKpc3ZeEWJvaq7"
 
 Write `public/course-progress.json` with:
 ```json
