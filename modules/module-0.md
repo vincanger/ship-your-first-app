@@ -235,8 +235,10 @@ You don't need to memorize any of this — we'll explore these files hands-on in
 
 Write `public/course-progress.json` with:
 ```json
-{ "module": 0, "beat": 2, "title": "What's Under the Hood", "status": "in-progress", "guideStep": 5 }
+{ "module": 0, "beat": 2, "title": "What's Under the Hood", "status": "in-progress", "guideStep": 5, "interactiveStep": "data-flow" }
 ```
+
+This triggers the interactive data flow modal in the learner's browser — they'll see a step-by-step animated diagram showing exactly what happened when they added a task. Wait for them to finish exploring it (they'll say something or ask a question), then continue.
 
 ASK: "When you added a task in the browser and it showed up in your list, which of the three parts — frontend, backend, database — do you think were involved?"
 
