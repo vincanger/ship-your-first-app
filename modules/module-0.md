@@ -193,11 +193,14 @@ Print:
 ╰────────────────────────────────╯
 ```
 
+Print progress bar.
+
 Write `public/course-progress.json` with:
 ```json
-{ "module": 0, "beat": 2, "title": "What's Under the Hood", "status": "in-progress", "guideStep": null }
+{ "module": 0, "beat": 2, "title": "What's Under the Hood", "status": "in-progress", "guideStep": 5, "interactiveStep": "data-flow" }
 ```
-Print progress bar.
+
+This triggers the interactive data flow modal in the learner's browser — they'll see a step-by-step animated diagram showing exactly what happened when they added a task. Wait for them to finish exploring it (they'll say something or ask a question), then continue.
 
 **Explain what a web app is using what they just experienced.** Don't open any files or show any code — keep it conceptual. Use the app they just built as the example.
 
@@ -205,6 +208,13 @@ Explain the three layers:
 - **Frontend**: "When you signed up and saw the task list, that was the frontend — it's what runs in your browser. Think of it as the 'face' of the app. In our app, a tool called React builds those pages."
 - **Backend**: "When you clicked 'add task' and it actually saved, that request went to a server running on your computer. The backend handles the logic — is this user allowed to do this? OK, save it to the database."
 - **Database**: "The task didn't disappear when you refreshed, right? That's because it was saved in a database — a structured place to store information. Think of it like a spreadsheet that the server can read and write to."
+
+SAY: "Here's the mental model to take away for every interaction in your app;
+  1. something happens in the browser, 
+  2. it goes to the server, 
+  3. the server talks to the database, and 
+  4. the result comes back to your screen. 
+  That's how all web apps work, not just yours."
 
 Print an ASCII diagram showing how a click flows through the app:
 
@@ -222,32 +232,16 @@ You click "Add Task"
 🖥️ Frontend            — updates your screen
 ```
 
-ASK: "Does this make sense? Any questions about how these three parts work together? When you save a task in your app, how does it get stored so that it persists when after you log out and back in? Why don't you see other user's tasks and only yours?"
+ASK: "So when you save a task in your app, how does it get stored so that it persists after you log out and back in? Why don't you see other user's tasks and only yours?"
 
 After answering questions, briefly connect the layers to the project files — but do NOT open or print any file contents:
 
 "In your project, these three layers map to three key files:
-- **`main.wasp`** — the blueprint. It wires everything together: what pages exist, what the server can do, how login works. Think of it like an architect's plan.
+- **`the wasp config file`** — the blueprint. It wires everything together: what pages exist, what the server can do, how login works. Think of it like an architect's plan.
 - **`schema.prisma`** — the database layer. It defines what information your app stores (users, tasks, tags). Like a spreadsheet template.
 - **`src/` folder** — the actual code for both the frontend (what you see) and backend (what happens behind the scenes).
 
 You don't need to memorize any of this — we'll explore these files hands-on in future modules."
-
-Write `public/course-progress.json` with:
-```json
-{ "module": 0, "beat": 2, "title": "What's Under the Hood", "status": "in-progress", "guideStep": 5, "interactiveStep": "data-flow" }
-```
-
-This triggers the interactive data flow modal in the learner's browser — they'll see a step-by-step animated diagram showing exactly what happened when they added a task. Wait for them to finish exploring it (they'll say something or ask a question), then continue.
-
-ASK: "When you added a task in the browser and it showed up in your list, which of the three parts — frontend, backend, database — do you think were involved?"
-
-How to handle their response:
-- The answer is all three! The frontend sent the request, the backend processed it, the database stored it, and the result came back to the screen.
-- Celebrate any answer — even a partial one shows they're getting it.
-- If they say "all of them" — they nailed it.
-
-SAY: "Here's the mental model to take away: every interaction in your app follows that loop — something happens in the browser, it goes to the server, the server talks to the database, and the result comes back to your screen. That's how all web apps work, not just yours."
 
 ## → TRANSITION (free-form)
 Bridge from understanding to doing. Something like:
