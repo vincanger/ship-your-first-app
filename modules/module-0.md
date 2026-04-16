@@ -172,6 +172,8 @@ Write `public/course-progress.json` with:
 
 ASK: "You just created a full web app — it has a login system, a database, and a task manager, all running on your computer. How does that feel? Go ahead and play with it — try checking off tasks, adding new ones, or adding tags."
 
+PAUSE HERE
+
 Give them time to explore. Answer questions about what they see. If they notice the tags feature, show enthusiasm — that's a bonus feature baked into the starter template.
 
 ## → TRANSITION (free-form)
@@ -199,27 +201,25 @@ Print progress bar.
 
 Write `public/course-progress.json` with:
 ```json
-{ "module": 0, "beat": 2, "title": "What's Under the Hood", "status": "in-progress", "guideStep": 5, "interactiveStep": "data-flow" }
+{ "module": 0, "beat": 2, "title": "What's Under the Hood", "status": "in-progress", "guideStep": null, "interactiveStep": "data-flow" }
 ```
 
 This triggers the interactive data flow modal in the learner's browser — they'll see a step-by-step animated diagram showing exactly what happened when they added a task. 
 
-**Explain what a web app is doing.** Don't open any files or show any code — keep it conceptual. Use the app they just built as the example.
+**Explain briefly what a web app is made of.** Don't open any files or show any code — keep it conceptual. Use the app they just built as the example:
+1. **Frontend**
 
-Explain the three layers:
-1. **Frontend**: "When you sign in and see the task list, this is the frontend — it's what runs in your browser. Think of it as the 'face' of the app. In our app, a tool called React builds these pages."
+2. **Backend**
 
-2. **Backend**: "When you click 'create task', a request is sent to a server running on your computer. The backend handles the logic, checks the user is allowed to perform the action, and saves it to the database."
-
-3. **Database**: "The task doesn't disappear when you refresh, right? That's because it's saved in a database — a structured place to store information. Think of it like a spreadsheet that the server can read and write to."
+3. **Database**
 
 SAY: "So go ahead and add a new task and watch how data flows through the app in the interactive diagram. Let me know if you have any questions. When you're ready to continue, just say so."
 
 PAUSE HERE
 
 SAY: "Here's the mental model to take away for every interaction in your app;
-  1. something happens in the browser, 
-  2. it goes to the server, 
+  1. something happens in the browser (frontend), 
+  2. it goes to the server (backend), 
   3. the server talks to the database, and 
   4. the result comes back to your screen. 
   That's how all web apps work, not just yours."
