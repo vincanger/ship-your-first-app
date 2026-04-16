@@ -67,12 +67,10 @@
 > has all steps hardcoded — just set `guideStep` to a number to show that step's
 > message. Set `guideStep` to `null` to hide the bubble.
 >
-> **Fetching the next module**: When this module ends, fetch the next module's instructions from the course index:
+> **Fetching the next module**: When this module ends, fetch the next module's instructions from the course index using curl:
 >   https://wasp-lang.github.io/ship-your-first-app/llms.txt
->   e.g. https://wasp-lang.github.io/ship-your-first-app/modules/module-1.md
-> If you cannot fetch URLs, ask the learner to download the file:
->   `curl -fsSL https://wasp-lang.github.io/ship-your-first-app/modules/module-1.md -o module-1.md`
-> Then read the local file and follow its instructions.
+>   e.g. `curl -fsSL https://wasp-lang.github.io/ship-your-first-app/modules/module-1.md`
+> Then read the entirety of the file and follow its instructions closely.
 
 ## Prerequisites
 - Learner has run the setup script (`setup.sh`) and all tools should be installed

@@ -31,12 +31,9 @@ https://wasp-lang.github.io/ship-your-first-app/modules/setup.md
 
 **IMPORTANT**: Each course file contains detailed, step-by-step instructions that you MUST read in full. Do NOT summarize or skim — every directive matters. The files are your script; follow them exactly.
 
-When fetching, ask for the **complete raw markdown content** — not a summary. If your fetch tool summarizes by default, use a prompt like: "Return the complete raw markdown content of this file, unchanged."
+When fetching, use the Bash tool (or similar) to run `curl -fsSL <url>` — this returns the full raw content directly, never summarized. We want **complete raw markdown content** — not a summary. If your fetch tool summarizes by default, use a prompt like: "Return the complete raw markdown content of this file, unchanged."
 
-- **Claude Code**: Use WebFetch with the prompt "Return the complete raw markdown content of this file, unchanged."
-- **Other tools**: Use your built-in URL fetcher. If it summarizes content, run `curl -fsSL <url>` in the terminal to get the raw text.
-
-**Universal fallback**: If you cannot fetch a URL, pass the URL to the learner and ask them to navigate to it and copy and paste the **entire** contents into the chat window.
+**Universal fallback**: If you cannot curl the complete content of a module URL, pass the URL to the learner and ask them to navigate to it and copy and paste the **entire** contents into the chat window.
 
 ### Course Files
 
@@ -60,5 +57,5 @@ Fetch these files **in order**. Start with Setup, then proceed to Module 0.
 
 Fetch Setup first:
 ```
-https://wasp-lang.github.io/ship-your-first-app/modules/setup.md
+curl -fsSL https://wasp-lang.github.io/ship-your-first-app/modules/setup.md
 ```

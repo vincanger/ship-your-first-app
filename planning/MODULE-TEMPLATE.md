@@ -92,10 +92,9 @@ The AI coding agent will fetch a module page and use it as instructions for guid
 > that step's message. Set `guideStep` to `null` to hide the bubble.
 
 ## Fetching Next Module
-> When this module ends and you need to fetch the next one, try fetching the URL directly.
-> If you cannot fetch URLs, ask the learner to download the file:
->   `curl -fsSL <next-module-url> -o <filename>.md`
-> Then read the local file and follow its instructions.
+> When this module ends and you need to fetch the next one by using curl on the URL directly.
+>   `curl -fsSL <next-module-url>`
+> Then read the entirety of the file and follow its instructions closely.
 
 ## Prerequisites
 - [What they should have done before this module]
