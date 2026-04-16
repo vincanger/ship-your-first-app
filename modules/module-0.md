@@ -116,7 +116,7 @@ SAY: "Now, I'm going to create some files to keep track of where you are in the 
 
 Write `public/course-progress.json` with:
 ```json
-{ "module": 0, "beat": 1, "title": "Create & Launch Your App", "status": "in-progress", "guideStep": null }
+{ "module": 0, "beat": 1, "title": "Create & Launch Your App", "status": "in-progress", "guideStep": null, "interactiveStep": null }
 ```
 Print progress bar.
 
@@ -128,7 +128,7 @@ RUN: `wasp db migrate-dev --name init`
 SAY: "This command sets up your database — think of it as creating an empty spreadsheet with the right column headers, ready for data."
 
 LEARNER: Run `wasp start` in a new terminal.
-SAY: "Now it's your turn to run a command! Open a **new terminal window or tab**, then run these two commands:"
+SAY: "Now it's your turn to run a command! Open a **new terminal window or tab**, then run these two commands then tell me when you're ready to continue:"
 ```
 cd <full-path-to-their-app>
 wasp start
@@ -137,23 +137,27 @@ Give them the exact `cd` path based on where their project was created so they d
 
 If the learner has trouble (can't find terminal, wrong directory, errors), help them troubleshoot. As a last resort, run `wasp start` for them as a background task.
 
+PAUSE HERE 
+
 SAY: "Your app is now running in that terminal window. **Keep it open** — don't close it! You'll want to check back there periodically because the app will sometimes print useful information there (like email verification links). Think of it as your app's logbook."
 - Suggest they arrange their windows: "Try putting your terminal and browser side by side — that way you'll see changes update in real time as we work."
-- While it builds (this takes a minute or two on first run), explain what's happening: "Wasp is building three things at once: a frontend (what you see in the browser), a backend (the server that handles logic), and connecting them to your database."
 - Once it's ready, the browser opens to `http://localhost:3000` showing a login page
 
 Write `public/course-progress.json` with:
 ```json
-{ "module": 0, "beat": 1, "title": "Create & Launch Your App", "status": "in-progress", "guideStep": 1 }
+{ "module": 0, "beat": 1, "title": "Create & Launch Your App", "status": "in-progress", "guideStep": 1, "interactiveStep": null }
 ```
 
 LEARNER: Sign up in the browser.
-SAY: "This app has a real login system! Use any email and password — it's running locally so this is just for you. The email doesn't need to be real. Go sign up now, and then come back here — I'll have a mock email verification link waiting for you in that terminal window where `wasp start` is running. You'll need to click it to verify your account."
-- After signup/login, they land on the tasks page with their username displayed
+SAY: "This app has a real login system! Use any email and password — it's running locally so this is just for you. The email doesn't need to be real. Go sign up now, and then come back here — I'll have a mock email verification link waiting for you in that terminal window where `wasp start` is running. You'll need to click it to verify your account. Let me know once you're logged in."
+
+PAUSE HERE
+
+After signup/login, they land on the tasks page with their username displayed.
 
 Write `public/course-progress.json` with:
 ```json
-{ "module": 0, "beat": 1, "title": "Create & Launch Your App", "status": "in-progress", "guideStep": 2 }
+{ "module": 0, "beat": 1, "title": "Create & Launch Your App", "status": "in-progress", "guideStep": 2, "interactiveStep": null }
 ```
 
 **Seed the app with module tasks**: After the learner has signed up and can see the tasks page, create tasks in the app that mirror the module's beats. This gives them a built-in checklist and something to interact with right away:
@@ -165,7 +169,7 @@ Write `public/course-progress.json` with:
 
 Write `public/course-progress.json` with:
 ```json
-{ "module": 0, "beat": 1, "title": "Create & Launch Your App", "status": "in-progress", "guideStep": 4 }
+{ "module": 0, "beat": 1, "title": "Create & Launch Your App", "status": "in-progress", "guideStep": 4, "interactiveStep": null }
 ```
 
 ASK: "You just created a full web app — it has a login system, a database, and a task manager, all running on your computer. How does that feel? Go ahead and play with it — try checking off tasks, adding new ones, or adding tags."
@@ -200,14 +204,20 @@ Write `public/course-progress.json` with:
 { "module": 0, "beat": 2, "title": "What's Under the Hood", "status": "in-progress", "guideStep": 5, "interactiveStep": "data-flow" }
 ```
 
-This triggers the interactive data flow modal in the learner's browser — they'll see a step-by-step animated diagram showing exactly what happened when they added a task. Wait for them to finish exploring it (they'll say something or ask a question), then continue.
+This triggers the interactive data flow modal in the learner's browser — they'll see a step-by-step animated diagram showing exactly what happened when they added a task. 
 
-**Explain what a web app is using what they just experienced.** Don't open any files or show any code — keep it conceptual. Use the app they just built as the example.
+**Explain what a web app is doing.** Don't open any files or show any code — keep it conceptual. Use the app they just built as the example.
 
 Explain the three layers:
-- **Frontend**: "When you signed up and saw the task list, that was the frontend — it's what runs in your browser. Think of it as the 'face' of the app. In our app, a tool called React builds those pages."
-- **Backend**: "When you clicked 'add task' and it actually saved, that request went to a server running on your computer. The backend handles the logic — is this user allowed to do this? OK, save it to the database."
-- **Database**: "The task didn't disappear when you refreshed, right? That's because it was saved in a database — a structured place to store information. Think of it like a spreadsheet that the server can read and write to."
+1. **Frontend**: "When you sign in and see the task list, this is the frontend — it's what runs in your browser. Think of it as the 'face' of the app. In our app, a tool called React builds these pages."
+
+2. **Backend**: "When you click 'create task', a request is sent to a server running on your computer. The backend handles the logic, checks the user is allowed to perform the action, and saves it to the database."
+
+3. **Database**: "The task doesn't disappear when you refresh, right? That's because it's saved in a database — a structured place to store information. Think of it like a spreadsheet that the server can read and write to."
+
+SAY: "So go ahead and add a new task and watch how data flows through the app in the interactive diagram. Let me know if you have any questions. When you're ready to continue, just say so."
+
+PAUSE HERE
 
 SAY: "Here's the mental model to take away for every interaction in your app;
   1. something happens in the browser, 
@@ -216,23 +226,18 @@ SAY: "Here's the mental model to take away for every interaction in your app;
   4. the result comes back to your screen. 
   That's how all web apps work, not just yours."
 
-Print an ASCII diagram showing how a click flows through the app:
-
-```
-You click "Add Task"
-       ↓
-🖥️ Frontend (browser)  — sends the request
-       ↓
-⚙️ Backend (server)    — processes it, checks auth
-       ↓
-💾 Database            — saves the task
-       ↓
-⚙️ Backend             — confirms success
-       ↓
-🖥️ Frontend            — updates your screen
-```
-
 ASK: "So when you save a task in your app, how does it get stored so that it persists after you log out and back in? Why don't you see other user's tasks and only yours?"
+
+PAUSE HERE
+
+Write `public/course-progress.json` with:
+```json
+{ "module": 0, "beat": 2, "title": "What's Under the Hood", "status": "in-progress", "guideStep": 5, "interactiveStep": "update-task" }
+```
+
+SAY: "Now let's explore what happens when we check a task as completed. Does the server need to update the database? If so, what information get's sent to the database? Use the interactive diagram to help you answer these questions."
+
+PAUSE HERE
 
 After answering questions, briefly connect the layers to the project files — but do NOT open or print any file contents:
 
@@ -262,7 +267,7 @@ Print:
 
 Write `public/course-progress.json` with:
 ```json
-{ "module": 0, "beat": 3, "title": "Make It Yours", "status": "in-progress", "guideStep": 6 }
+{ "module": 0, "beat": 3, "title": "Make It Yours", "status": "in-progress", "guideStep": 6, "interactiveStep": null }
 ```
 Print progress bar.
 
@@ -279,7 +284,7 @@ SAY: "Look at your browser — it already updated! You didn't have to restart an
 
 Write `public/course-progress.json` with:
 ```json
-{ "module": 0, "beat": 3, "title": "Make It Yours", "status": "in-progress", "guideStep": 7 }
+{ "module": 0, "beat": 3, "title": "Make It Yours", "status": "in-progress", "guideStep": 7, "interactiveStep": null }
 ```
 
 ASK: "Nice! What else would you want to change? Maybe a color, the layout, add something to the page? Describe what you want in your own words — don't worry about using technical terms."
@@ -288,7 +293,7 @@ Let them direct one more change — color, font size, spacing, add text, whateve
 
 Write `public/course-progress.json` with:
 ```json
-{ "module": 0, "beat": 3, "title": "Make It Yours", "status": "in-progress", "guideStep": 8 }
+{ "module": 0, "beat": 3, "title": "Make It Yours", "status": "in-progress", "guideStep": 8, "interactiveStep": null }
 ```
 
 ## → TRANSITION (free-form)
@@ -312,7 +317,7 @@ Print:
 
 Write `public/course-progress.json` with:
 ```json
-{ "module": 0, "beat": 4, "title": "Checkpoint & Reflect", "status": "in-progress", "guideStep": null }
+{ "module": 0, "beat": 4, "title": "Checkpoint & Reflect", "status": "in-progress", "guideStep": null, "interactiveStep": null }
 ```
 Print progress bar.
 
@@ -330,7 +335,7 @@ Summarize what they learned:
 
 Write `public/course-progress.json` with:
 ```json
-{ "module": 0, "beat": 4, "title": "Checkpoint & Reflect", "status": "in-progress", "guideStep": 9 }
+{ "module": 0, "beat": 4, "title": "Checkpoint & Reflect", "status": "in-progress", "guideStep": 9, "interactiveStep": null }
 ```
 
 Preview: "In the next module, we'll dig into the database — you'll add new information to your tasks (like a priority level or a due date), run a migration, and build a real feature with the new data. You'll see how data flows from the database all the way to the screen."
@@ -339,7 +344,7 @@ SAY: "Before we move on, I'd love to hear how this went for you! Take a quick se
 
 Write `public/course-progress.json` with:
 ```json
-{ "module": 0, "beat": 4, "title": "Checkpoint & Reflect", "status": "complete", "guideStep": null }
+{ "module": 0, "beat": 4, "title": "Checkpoint & Reflect", "status": "complete", "guideStep": null, "interactiveStep": null }
 ```
 Print final progress bar.
 

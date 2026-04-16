@@ -249,7 +249,7 @@ Below is a fully fleshed-out example of what a module page would look like.
 >
 > The file format is:
 > ```json
-> { "module": number, "beat": number, "title": string, "status": "in-progress" | "complete", "guideStep": number | null }
+> { "module": number, "beat": number, "title": string, "status": "in-progress" | "complete", "guideStep": number | null, "interactiveStep": string | null }
 > ```
 > Set `"status": "complete"` after the final beat (Checkpoint & Reflect).
 >
