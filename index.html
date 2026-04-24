@@ -810,6 +810,7 @@ function OVAppsDeck() {
             zIndex: z, opacity: offset > 3 ? 0 : 1, pointerEvents: offset > 3 ? "none" : "auto",
           }}>
             {/* Browser chrome */}
+            <a href={app.href} target="_blank">
             <div style={{ display: "flex", alignItems: "center", gap: 5, padding: "7px 10px", background: "#f5f5f5", borderBottom: `1px solid ${OV_C.border}`, flexShrink: 0 }}>
               <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#ff5f56" }}/>
               <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#ffbd2e" }}/>
@@ -822,6 +823,7 @@ function OVAppsDeck() {
               alt={app.name}
               style={{ width: "100%", height: "calc(100% - 27px)", objectFit: "cover", objectPosition: "top", display: "block" }}
             />
+            </a>
           </div>
         );
       })}
@@ -1149,7 +1151,6 @@ function OVVariationB({ headline, cta }) {
       <OVHowItWorks/>
       <OVSaasCapstone/>
       <OVCurriculum/>
-      // <OVWhatYouBuild/>
       <OVFaq/>
       <OVInstallCTA headline="Start vibing. Start shipping." cta={cta}/>
       <OVFooter/>
