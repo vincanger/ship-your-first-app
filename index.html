@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Open Vibe — Vibe-code your way to real web dev skills</title>
+  <title>Open Vibe — Vibe code your way to real web dev skills</title>
   <link rel="icon" href="assets/favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -537,6 +537,91 @@ function OVHeroB({ headline, cta }) {
 }
 
 // ============================================================
+//  See it in action — video section
+// ============================================================
+function OVSeeItInAction() {
+  const [playing, setPlaying] = React.useState(false);
+  const videoRef = React.useRef(null);
+
+  function handleOverlayClick() {
+    if (!videoRef.current) return;
+    videoRef.current.play();
+  }
+
+  return (
+    <section style={{ padding: "120px 32px 40px", background: "#fff" }}>
+      <div style={{ maxWidth: 900, margin: "0 auto" }}>
+        <OVSectionHeading
+          eyebrow="See it in action"
+          title="Here's a quick demo."
+        />
+
+        {/* Mock window card */}
+        <div style={{
+          borderRadius: 14,
+          border: `1px solid ${OV_C.border}`,
+          boxShadow: "0 30px 60px -20px rgba(0,0,0,0.18), 0 8px 20px -8px rgba(0,0,0,0.08)",
+          overflow: "hidden",
+          background: "#0a0a0a",
+        }}>
+          {/* Browser chrome */}
+          <div style={{
+            display: "flex", alignItems: "center", gap: 8,
+            padding: "10px 14px", background: "#1c1c22",
+            borderBottom: "1px solid #2a2a30",
+          }}>
+            <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#ff5f56" }}/>
+            <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#ffbd2e" }}/>
+            <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#27c93f" }}/>
+            <div style={{
+              flex: 1, textAlign: "center",
+              fontFamily: OV_FONTS.mono, fontSize: 11, color: "#7a7a82",
+            }}>Open Vibe — Claude Code</div>
+          </div>
+
+          {/* Video + click-to-play overlay */}
+          <div style={{ position: "relative", lineHeight: 0 }}>
+            <video
+              ref={videoRef}
+              src="assets/open-vibe-3001-more-zoom.mp4"
+              onPlay={() => setPlaying(true)}
+              onPause={() => setPlaying(false)}
+              onEnded={() => setPlaying(false)}
+              controls
+              style={{ width: "100%", display: "block" }}
+            />
+            {/* Play button overlay — only shown when paused */}
+            {!playing && (
+              <div
+                onClick={handleOverlayClick}
+                style={{
+                  position: "absolute", inset: 0,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  background: "rgba(0,0,0,0.35)",
+                  cursor: "pointer",
+                }}
+              >
+                <div style={{
+                  width: 72, height: 72, borderRadius: "50%",
+                  background: OV_C.navy,
+                  border: `2px solid ${OV_C.amberSoft}`,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  boxShadow: "0 8px 24px rgba(0,0,0,0.4)",
+                }}>
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill={OV_C.amberSoft}>
+                    <path d="M8 5.14v14l11-7-11-7z"/>
+                  </svg>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ============================================================
 //  Why this vs tutorials
 // ============================================================
 function OVWhyThis() {
@@ -791,7 +876,7 @@ function OVAppsDeck() {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       onClick={next}
-      style={{ position: "relative", width: "100%", height: 340, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", perspective: 1400 }}
+      style={{ position: "relative", width: "100%", height: 340, paddingTop: "1rem", display: "flex", alignItems: "start", justifyContent: "center", cursor: "pointer", perspective: 3400 }}
     >
       {apps.map((app, i) => {
         const offset = (i - idx + apps.length) % apps.length;
@@ -801,7 +886,7 @@ function OVAppsDeck() {
         const rot = offset === 0 ? -3 : offset * 3 - 2;
         return (
           <div key={app.name} style={{
-            position: "absolute", width: 280, height: 200,
+            position: "absolute", width: 320, height: 220,
             borderRadius: 12, overflow: "hidden",
             background: "#fff", border: `1px solid ${OV_C.border}`,
             boxShadow: isFront ? "0 30px 60px -20px rgba(0,0,0,0.35), 0 10px 20px -10px rgba(0,0,0,0.15)" : "0 18px 36px -14px rgba(0,0,0,0.25)",
@@ -855,7 +940,7 @@ function OVSaasCapstone() {
         <OVSectionHeading
           eyebrow="For aspiring founders"
           title={<>Learn only what you need while you build your SaaS.</>}
-          subtitle="At the end of the course, you'll build your own SaaS with our free SaaS starter template, Open SaaS (a ~$300 value), and actually understand what you built."
+          subtitle={<>At the end of the course, you'll build your own SaaS with our free SaaS starter template, <a href="https://opensaas.sh" target="_blank" style={{ color: OV_C.ink, textDecoration: "underline"}}>Open SaaS</a> (a ~$300 value), and actually understand what you built.</>}
         />
         <div style={{
           borderRadius: 20, border: `1px solid ${OV_C.creamDeep}`,
@@ -866,7 +951,7 @@ function OVSaasCapstone() {
         }}>
           <OVAppsDeck/>
           <div>
-            <div style={{ fontFamily: OV_FONTS.mono, fontSize: 11, fontWeight: 700, color: OV_C.amber, letterSpacing: 1.5 }}>FINAL CHAPTER · WEEK 10</div>
+            <div style={{ fontFamily: OV_FONTS.mono, fontSize: 11, fontWeight: 700, color: OV_C.amber, letterSpacing: 1.5 }}>FINAL MODULE </div>
             <div style={{ fontFamily: OV_FONTS.mono, fontWeight: 700, fontSize: 22, lineHeight: 1.2, margin: "8px 0 22px", color: OV_C.ink }}>Launch a real SaaS — on the same stack as other successful builders.</div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10 }}>
               {features.map(f => (
@@ -1014,7 +1099,7 @@ function OVWhatYouBuild() {
 function OVFaq() {
   const FAQS = [
     { q: "Is it really free?",             a: "Yes. Open Vibe is 100% free and open source. The curriculum, the skills, the diagrams — all of it, under MIT. Fork it, remix it, run your own class with it." },
-    { q: "Do I need to know how to code?", a: "No. Open Vibe starts from 'what is a URL' and builds up. If you can type, follow instructions, and stay curious for ten weeks, you can do this." },
+    { q: "Do I need to know how to code?", a: "No. Open Vibe can be used by beginners or pros. You set the pace and focus your effots as you see fit. If you can type, follow instructions, and stay curious, you can do this." },
     { q: "What agent does it work with?",  a: "It's been designed and tested in Claude Code but the course pack is plain Markdown and runs in any agent that can read files and execute tools." },
     { q: "Do I need an API key?",          a: "You'll bring your own agent (Claude, Cursor, Codex, etc.) and its key or subscription. The course itself is free — we just teach on top of the tools you already use." },
     { q: "How long does it take?",         a: "The curriculum is built for ten weeks at ~6 hrs/week. People blow through it in three; people take six months. Your agent is patient either way." },
@@ -1023,18 +1108,20 @@ function OVFaq() {
   ];
   const [open, setOpen] = React.useState(0);
   return (
-    <section id="faq" style={{ maxWidth: 900, margin: "0 auto", padding: "120px 32px 80px" }}>
-      <OVSectionHeading eyebrow="FAQ" title="Questions, probably." />
-      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-        {FAQS.map((f, i) => (
-          <div key={i} style={{ border: `1px solid ${OV_C.border}`, borderRadius: 12, padding: "6px 24px", background: open === i ? "rgba(250,241,227,.4)" : "transparent", transition: "background .2s" }}>
-            <button onClick={() => setOpen(open === i ? -1 : i)} style={{ all: "unset", width: "100%", cursor: "pointer", padding: "18px 0", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24, fontFamily: OV_FONTS.mono, fontWeight: 600, fontSize: 15 }}>
-              <span>{f.q}</span>
-              <span style={{ transition: "transform .2s", color: OV_C.muted, transform: open === i ? "rotate(180deg)" : "none", flexShrink: 0 }}>▾</span>
-            </button>
-            {open === i && <div style={{ paddingBottom: 20, fontSize: 15, color: OV_C.muted, lineHeight: 1.65, maxWidth: 720 }}>{f.a}</div>}
-          </div>
-        ))}
+    <section id="faq" style={{ background: OV_C.cream, padding: "120px 32px 80px" }}>
+      <div style={{ maxWidth: 900, margin: "0 auto" }}>
+        <OVSectionHeading eyebrow="FAQ" title="Questions, probably." />
+        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          {FAQS.map((f, i) => (
+            <div key={i} style={{ border: `1px solid ${OV_C.creamDeep}`, borderRadius: 12, padding: "6px 24px", background: open === i ? "rgba(255,255,255)" : "rgba(255,255,255,.75)", transition: "background .2s" }}>
+              <button onClick={() => setOpen(open === i ? -1 : i)} style={{ all: "unset", width: "100%", cursor: "pointer", padding: "18px 0", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24, fontFamily: OV_FONTS.mono, fontWeight: 600, fontSize: 15 }}>
+                <span>{f.q}</span>
+                <span style={{ transition: "transform .2s", color: OV_C.muted, transform: open === i ? "rotate(180deg)" : "none", flexShrink: 0 }}>▾</span>
+              </button>
+              {open === i && <div style={{ paddingBottom: 20, fontSize: 15, color: OV_C.muted, lineHeight: 1.65, maxWidth: 720 }}>{f.a}</div>}
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -1147,6 +1234,7 @@ function OVVariationB({ headline, cta }) {
     <div style={{ background: "#fff" }}>
       <OVNavBar label="Open Vibe"/>
       <OVHeroB headline={headline} cta={cta}/>
+      <OVSeeItInAction/>
       <OVWhyThis/>
       <OVHowItWorks/>
       <OVSaasCapstone/>
@@ -1164,9 +1252,9 @@ function OVVariationB({ headline, cta }) {
 ReactDOM.createRoot(document.getElementById("root")).render(
   <OVVariationB
     headline={{
-      before: "Vibe-code your way",
-      gradient: "to real web dev",
-      after: "skills.",
+      before: "Vibe code your way",
+      gradient: "to real",
+      after: "web dev skills.",
     }}
     cta="Get started — it's free"
   />
