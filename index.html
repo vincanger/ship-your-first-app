@@ -101,7 +101,7 @@ function OVNavBar({ label = "Open Vibe" }) {
               }}>100% FREE</span>
             </a>
             <ul style={{ display: "flex", gap: 22, listStyle: "none", margin: 0, padding: 0 }}>
-              {["How it works","Curriculum","Build","FAQ"].map(l => (
+              {["How it works","Curriculum","FAQ"].map(l => (
                 <li key={l}>
                   <a href={"#"+l.toLowerCase().replace(/\s+/g,"-")}
                      style={{ fontSize: 14, color: OV_C.ink, textDecoration: "none", fontWeight: 500 }}>{l}</a>
