@@ -101,7 +101,7 @@ function OVNavBar({ label = "Open Vibe" }) {
               }}>100% FREE</span>
             </a>
             <ul style={{ display: "flex", gap: 22, listStyle: "none", margin: 0, padding: 0 }}>
-              {["How it works","Curriculum","FAQ"].map(l => (
+              {["See it in action","How it works","Curriculum","FAQ"].map(l => (
                 <li key={l}>
                   <a href={"#"+l.toLowerCase().replace(/\s+/g,"-")}
                      style={{ fontSize: 14, color: OV_C.ink, textDecoration: "none", fontWeight: 500 }}>{l}</a>
@@ -549,7 +549,7 @@ function OVSeeItInAction() {
   }
 
   return (
-    <section style={{ padding: "120px 32px 40px", background: "#fff" }}>
+    <section id="see-it-in-action" style={{ padding: "120px 32px 40px", background: "#fff" }}>
       <div style={{ maxWidth: 900, margin: "0 auto" }}>
         <OVSectionHeading
           eyebrow="See it in action"
