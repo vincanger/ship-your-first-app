@@ -1,1 +1,3 @@
-task-master/
+node_modules/
+dist/
+.astro/

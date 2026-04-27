@@ -29,7 +29,7 @@ SAY: "First, I'm going to install the tools we need. This may take a minute or t
 
 RUN:
 ```bash
-curl -fsSL https://wasp-lang.github.io/ship-your-first-app/utils/setup.sh | bash
+curl -fsSL https://openvibe.sh/utils/setup.sh | bash
 ```
 
 This script auto-detects the OS and installs:
@@ -71,10 +71,10 @@ If any check still fails after retrying, help the learner install the missing to
 ## Step 3: Done — move to Module 0
 
 Setup is complete. Fetch the Module 0 instructions and follow them:
-  https://wasp-lang.github.io/ship-your-first-app/modules/module-0.md
+  https://openvibe.sh/modules/module-0.md
 
 If you cannot fetch URLs, ask the learner to download the file:
 ```bash
-curl -fsSL https://wasp-lang.github.io/ship-your-first-app/modules/module-0.md -o module-0.md
+curl -fsSL https://openvibe.sh/modules/module-0.md -o module-0.md
 ```
 Then read the local `module-0.md` file and follow its instructions.

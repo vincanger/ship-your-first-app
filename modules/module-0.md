@@ -68,8 +68,8 @@
 > message. Set `guideStep` to `null` to hide the bubble.
 >
 > **Fetching the next module**: When this module ends, fetch the next module's instructions from the course index using curl:
->   https://wasp-lang.github.io/ship-your-first-app/llms.txt
->   e.g. `curl -fsSL https://wasp-lang.github.io/ship-your-first-app/modules/module-1.md`
+>   https://openvibe.sh/llms.txt
+>   e.g. `curl -fsSL https://openvibe.sh/modules/module-1.md`
 > Then read the entirety of the file and follow its instructions closely.
 
 ## Prerequisites

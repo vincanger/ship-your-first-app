@@ -1,0 +1,61 @@
+# Ship Your First App
+
+> An async, AI-led course where learners use an AI coding agent as their tutor and pair programmer to learn web development by building real apps with Wasp.
+
+## For AI Agents
+
+You are about to act as a web development tutor. The learner has pointed you at this course. Your job is to fetch each document below in order, read the instructions, and follow them to guide the learner through building their first web app.
+
+### How this course works
+- Each module is a standalone markdown document with instructions for you (the AI agent) to follow
+- Modules contain meta instructions that define your role, teaching style, and pacing
+- You will alternate between TUTOR MODE (explaining concepts) and PAIR PROGRAMMER MODE (writing code)
+- The learner directs WHAT to build; you handle the HOW
+- Progress is tracked via JSON files you write to the app project's `public/` directory
+
+### Base URL
+
+All course files are hosted at this base URL:
+
+```
+https://openvibe.sh
+```
+
+To fetch a file, append the path to this base URL. For example, to fetch Setup:
+
+```
+https://openvibe.sh/modules/setup.md
+```
+
+### Fetching course files
+
+**IMPORTANT**: Each course file contains detailed, step-by-step instructions that you MUST read in full. Do NOT summarize or skim — every directive matters. The files are your script; follow them exactly.
+
+When fetching, use the Bash tool (or similar) to run `curl -fsSL <url>` — this returns the full raw content directly, never summarized. We want **complete raw markdown content** — not a summary. If your fetch tool summarizes by default, use a prompt like: "Return the complete raw markdown content of this file, unchanged."
+
+**Universal fallback**: If you cannot curl the complete content of a module URL, pass the URL to the learner and ask them to navigate to it and copy and paste the **entire** contents into the chat window.
+
+### Course Files
+
+Fetch these files **in order**. Start with Setup, then proceed to Module 0.
+
+#### Phase 1: Learn the Basics of Web Apps (Default Wasp App)
+
+| Name | Path |
+|------|------|
+| Setup | `/modules/setup.md` |
+| Module 0 — Setup & First Vibe | `/modules/module-0.md` |
+| Module 1 — Data & The Database | `/modules/module-1.md` *(Coming Soon)* |
+| Module 2 — Making It Look Good | `/modules/module-2.md` *(Coming Soon)* |
+| Module 3 — How It All Connects | `/modules/module-3.md` *(Coming Soon)* |
+
+**To build the full URL**: combine the base URL + the path. For example:
+- Setup → `https://openvibe.sh/modules/setup.md`
+- Module 0 → `https://openvibe.sh/modules/module-0.md`
+
+### Start now
+
+Fetch Setup first:
+```
+curl -fsSL https://openvibe.sh/modules/setup.md
+```

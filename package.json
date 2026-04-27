@@ -1,0 +1,26 @@
+{
+  "name": "ship-your-first-app",
+  "version": "1.0.0",
+  "description": "An async, AI-led course where learners use an AI coding agent as their tutor and pair programmer to learn web development by building real apps with [Wasp](https://wasp.sh).",
+  "main": "index.js",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vincanger/ship-your-first-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/vincanger/ship-your-first-app/issues"
+  },
+  "homepage": "https://github.com/vincanger/ship-your-first-app#readme",
+  "dependencies": {
+    "astro": "^6.1.9"
+  }
+}

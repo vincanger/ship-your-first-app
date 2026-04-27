@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ship Your First App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #f5f5f5;
+        --bg-warm: #f5f4f0;
+        --surface: #ffffff;
+        --text: #262626;
+        --text-secondary: #737373;
+        --text-muted: #a3a3a3;
+        --accent: #eab308;
+        --accent-light: rgba(234, 179, 8, 0.25);
+        --accent-bg: rgba(234, 179, 8, 0.05);
+        --border: #e5e5e5;
+        --border-strong: #d4d4d4;
+        --terminal-bg: #1b1b1d;
+        --terminal-text: #e3e3e3;
+        --code-green: #4ade80;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          'Inter',
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.65;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .container {
+        max-width: 720px;
+        width: 100%;
+        padding: 4rem 1.5rem;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: var(--text);
+        letter-spacing: -0.02em;
+      }
+
+      h2 {
+        color: var(--text);
+        font-size: 0.85rem;
+        letter-spacing: 0.08em;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+      }
+
+      .subtitle {
+        color: var(--text-secondary);
+        font-size: 1.1rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .powered-by {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        margin-bottom: 3rem;
+      }
+
+      .powered-by a {
+        color: var(--accent);
+        text-decoration: underline;
+        text-decoration-color: var(--accent-light);
+        text-underline-offset: 2px;
+      }
+
+      .powered-by a:hover {
+        text-decoration-color: var(--accent);
+      }
+
+      .agent-box {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-top: 3px solid var(--accent);
+        border-radius: 3px;
+        padding: 1.75rem;
+        margin-bottom: 2.5rem;
+      }
+
+      .agent-box p {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+        margin-bottom: 1rem;
+      }
+
+      .copy-btn {
+        background: var(--accent);
+        color: var(--text);
+        border: none;
+        border-radius: 3px;
+        padding: 0.5rem 1rem;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        cursor: pointer;
+        transition: opacity 0.2s;
+      }
+
+      .copy-btn:hover {
+        opacity: 0.85;
+      }
+
+      .prompt-box {
+        background: var(--terminal-bg);
+        border-radius: 3px;
+        padding: 0.75rem 1rem;
+        padding-right: 4.5rem;
+        font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.85rem;
+        color: var(--code-green);
+        margin-bottom: 0.75rem;
+        position: relative;
+      }
+
+      .prompt-box .copy-btn {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        padding: 0.3rem 0.6rem;
+        font-size: 0.7rem;
+      }
+
+      h2 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        margin-top: 0.5rem;
+        letter-spacing: -0.01em;
+      }
+
+      .steps {
+        list-style: none;
+        counter-reset: step;
+      }
+
+      .steps li {
+        counter-increment: step;
+        margin-bottom: 1.5rem;
+        padding-left: 2.5rem;
+        position: relative;
+      }
+
+      .steps li::before {
+        content: counter(step);
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1.75rem;
+        height: 1.75rem;
+        background: var(--accent-light);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--text);
+      }
+
+      .steps li strong {
+        display: block;
+        margin-bottom: 0.25rem;
+      }
+
+      .steps li p {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+      }
+
+      .steps li code {
+        background: var(--terminal-bg);
+        border-radius: 3px;
+        padding: 0.5rem 0.75rem;
+        display: block;
+        margin-top: 0.5rem;
+        font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.85rem;
+        color: var(--code-green);
+      }
+
+      .modules {
+        margin: 2.5rem 0;
+      }
+
+      .module-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 3px;
+        padding: 1rem 1.25rem;
+        margin-bottom: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .module-card .label {
+        font-size: 0.95rem;
+      }
+
+      .tag {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.6rem;
+        border-radius: 3px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      .tag.available {
+        background: var(--accent-light);
+        color: #a16207;
+      }
+
+      .tag.soon {
+        background: var(--bg);
+        color: var(--text-muted);
+      }
+
+      .footer {
+        margin-top: 3rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border);
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
+      .footer a {
+        color: var(--text-secondary);
+        text-decoration: none;
+      }
+
+      .footer a:hover {
+        color: var(--accent);
+      }
+
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Ship Your First App</h1>
+      <p class="subtitle">Learn web development by building real apps with AI, using your AI coding agent as your personal tutor!</p>
+      <p class="powered-by">Powered by <a href="https://wasp.sh">Wasp</a></p>
+
+      <h2>Get Started with Claude Code</h2>
+      <p>Once you've installed <a href="https://docs.anthropic.com/en/docs/claude-code">Claude Code</a> and signed up for a plan, give it this prompt:</p> 
+
+      <div class="agent-box" style="border-top-color: var(--border-strong)">
+        <div class="prompt-box">
+          <span class="prompt-text">I'm starting the "Ship Your First App" course. Fetch the following URL and follow the instructions: https://openvibe.sh/llms.txt</span>
+          <button class="copy-btn" onclick="copyPrompt()">Copy</button>
+        </div>
+        <p>That's it! Your agent will guide you through getting your new app set up, and teach you everything you need to know.</p>
+        <p>This course was tested and works with Claude Code but is designed to work with most popular coding agents: Codex, Cursor, Copilot, Open Code, etc.</p>
+        <p style="margin-top: 0.75rem; padding: 0.75rem 1rem; background: var(--accent-bg); border-left: 3px solid var(--accent); border-radius: 0 3px 3px 0; font-size: 0.9rem; color: var(--text-secondary)">
+          <strong style="color: var(--text)">Stuck on setup?</strong> Contact us and we'll respond ASAP: <a href="https://discord.gg/rzdnErX">Discord</a> · <a href="https://forms.gle/3U5wKpc3ZeEWJvaq7">Feedback form</a>
+        </p>
+        <h2 style="margin-top: 0">Tips</h2>
+        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; color: var(--text-secondary); font-size: 0.95rem">
+          <li>&#x2022; Don't be afraid to ask the agent questions whenever you feel lost</li>
+          <li>&#x2022; You can copy and paste screenshots into the agent chat</li>
+          <li>&#x2022; Press ESC to stop the agent when things start going wrong</li>
+          <li>&#x2022; Just say "continue with the lesson" whenever you want to get back on track</li>
+          <li>&#x2022; Join our <a href="https://discord.gg/rzdnErX">Discord</a> for 1:1 help</li>
+        </ul>
+      </div>
+
+      <h2>Lessons</h2>
+      <div class="modules">
+        <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text);">Phase 1: Learn the Basics of Web Apps</h3>
+        <div class="module-card">
+          <span class="label"><strong>Setup</strong> &mdash; Environment & tools</span>
+          <span class="tag available">Available</span>
+        </div>
+        <div class="module-card">
+          <span class="label"><strong>Module 0</strong> &mdash; Your First Web App</span>
+          <span class="tag available">Available</span>
+        </div>
+        <div class="module-card">
+          <span class="label"><strong>Module 1</strong> &mdash; Data & The Database</span>
+          <span class="tag soon">Coming Soon</span>
+        </div>
+        <div class="module-card">
+          <span class="label"><strong>Module 2</strong> &mdash; Making It Look Good</span>
+          <span class="tag soon">Coming Soon</span>
+        </div>
+        <div class="module-card">
+          <span class="label"><strong>Module 3</strong> &mdash; How It All Connects</span>
+          <span class="tag soon">Coming Soon</span>
+        </div>
+
+        <h3 style="font-size: 1rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text); display: flex; padding-right: 1.25rem; justify-content: space-between; align-items: center;">Phase 2: Build Your Own App From Scratch <span class="tag soon">Coming Soon</span></h3>
+
+        <h3 style="font-size: 1rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text); display: flex; padding-right: 1.25rem; justify-content: space-between; align-items: center;">Phase 3: Build a SaaS Business <span class="tag soon">Coming Soon</span></h3>
+      </div>
+
+      <h2>Getting Started (Manual)</h2>
+      <ol class="steps">
+        <li>
+          <strong>Run the setup script</strong>
+          <p>Checks your system and installs everything you need:</p>
+          <code>curl -fsSL https://openvibe.sh/utils/setup.sh | bash</code>
+        </li>
+        <li>
+          <strong>Start the course</strong>
+          <p>Open your AI coding agent in the project folder and tell it to fetch the course instructions for the first module:</p>
+          <code>curl -fsSL https://openvibe.sh/modules/module-0.md</code>
+        </li>
+      </ol>
+
+      <div class="footer">
+        <p>Built with <a href="https://wasp.sh">Wasp</a> &middot; <a href="https://discord.gg/rzdnErX">Discord</a></p>
+      </div>
+    </div>
+
+    <script>
+      function copyPrompt() {
+        const text = document.querySelector('.prompt-text').textContent.trim();
+        navigator.clipboard.writeText(text);
+        event.target.textContent = 'Copied!';
+        setTimeout(() => (event.target.textContent = 'Copy'), 1500);
+      }
+    </script>
+  </body>
+</html>

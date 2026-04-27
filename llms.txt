@@ -18,13 +18,13 @@ You are about to act as a web development tutor. The learner has pointed you at 
 All course files are hosted at this base URL:
 
 ```
-https://wasp-lang.github.io/ship-your-first-app
+https://openvibe.sh
 ```
 
 To fetch a file, append the path to this base URL. For example, to fetch Setup:
 
 ```
-https://wasp-lang.github.io/ship-your-first-app/modules/setup.md
+https://openvibe.sh/modules/setup.md
 ```
 
 ### Fetching course files
@@ -50,12 +50,12 @@ Fetch these files **in order**. Start with Setup, then proceed to Module 0.
 | Module 3 — How It All Connects | `/modules/module-3.md` *(Coming Soon)* |
 
 **To build the full URL**: combine the base URL + the path. For example:
-- Setup → `https://wasp-lang.github.io/ship-your-first-app/modules/setup.md`
-- Module 0 → `https://wasp-lang.github.io/ship-your-first-app/modules/module-0.md`
+- Setup → `https://openvibe.sh/modules/setup.md`
+- Module 0 → `https://openvibe.sh/modules/module-0.md`
 
 ### Start now
 
 Fetch Setup first:
 ```
-curl -fsSL https://wasp-lang.github.io/ship-your-first-app/modules/setup.md
+curl -fsSL https://openvibe.sh/modules/setup.md
 ```
