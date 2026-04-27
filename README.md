@@ -14,10 +14,10 @@ Or paste this prompt into your agent:
 
 > I'm starting the "Ship Your First App" course. Fetch the following URL and follow the instructions: https://openvibe.sh/llms.txt
 
-If your agent can't fetch URLs, download the file and point it at the local copy:
+If your agent can't fetch URLs, try using curl:
 
 ```bash
-curl -fsSL https://openvibe.sh/llms.txt -o llms.txt
+curl -fsSL https://openvibe.sh/llms.txt
 ```
 
 **Works with:** Claude Code, Codex, Copilot, Open Code, and any agent that can read files and run terminal commands.
