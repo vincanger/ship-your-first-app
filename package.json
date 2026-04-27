@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "prebuild": "node scripts/build-og.mjs",
+    "build:og": "node scripts/build-og.mjs",
     "preview": "astro preview"
   },
   "repository": {
@@ -21,6 +23,12 @@
   },
   "homepage": "https://github.com/vincanger/ship-your-first-app#readme",
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.2",
     "astro": "^6.1.9"
+  },
+  "devDependencies": {
+    "@fontsource/jetbrains-mono": "^5.2.8",
+    "@resvg/resvg-js": "^2.6.2",
+    "wawoff2": "^2.0.1"
   }
 }

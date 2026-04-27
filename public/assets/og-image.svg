@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg-cream" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#faf1e3"/>
+      <stop offset="100%" stop-color="#fff8e8"/>
+    </linearGradient>
+    <linearGradient id="text-gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ecc89a"/>
+      <stop offset="100%" stop-color="#bc7508"/>
+    </linearGradient>
+    <pattern id="dot-grid" x="0" y="0" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#ffffff" fill-opacity="0.06"/>
+    </pattern>
+    <style>
+      .mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    </style>
+  </defs>
+
+  <!-- ============== CREAM ZONE ============== -->
+  <rect x="0" y="0" width="1200" height="460" fill="url(#bg-cream)"/>
+
+  <!-- Brand row -->
+  <g transform="translate(96, 88)">
+    <!-- Logo mark -->
+    <circle cx="22" cy="22" r="22" fill="#f5c518"/>
+    <text class="mono" x="22" y="30" text-anchor="middle" font-weight="800" font-size="20" fill="#001a42">=}</text>
+    <!-- Wordmark -->
+    <text class="mono" x="72" y="29" font-weight="700" font-size="22" letter-spacing="-0.01em" fill="#0a0a0a">Open Vibe</text>
+    <!-- 100% FREE pill -->
+    <g transform="translate(255, 4)">
+      <rect width="156" height="36" rx="18" fill="#faf1e3" stroke="#f5e6c8" stroke-width="1.5"/>
+      <text class="mono" x="78" y="24" text-anchor="middle" font-weight="700" font-size="14" letter-spacing="1.2px" fill="#bc7508">100% FREE</text>
+    </g>
+  </g>
+
+  <!-- Headline -->
+  <g transform="translate(96, 240)">
+    <text class="mono" font-weight="800" font-size="88" letter-spacing="-0.035em" fill="#0a0a0a">
+      <tspan x="0" dy="0">Learn web dev by</tspan>
+      <tspan x="0" dy="92" fill="url(#text-gold)">shipping real apps</tspan>
+      <tspan x="0" dy="92" fill="url(#text-gold)">with AI.</tspan>
+    </text>
+  </g>
+
+  <!-- ============== DARK ZONE ============== -->
+  <rect x="0" y="460" width="1200" height="170" fill="#0f0f13"/>
+  <rect x="0" y="460" width="1200" height="170" fill="url(#dot-grid)"/>
+
+  <!-- Node 1: BROWSER -->
+  <g transform="translate(250, 470)">
+    <rect width="180" height="150" rx="14" fill="#1c1c22" stroke="#2a2a30" stroke-width="1"/>
+    <g transform="translate(66, 22) scale(2)" fill="none" stroke="#d0d0d6" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25"/>
+    </g>
+    <text class="mono" x="90" y="106" text-anchor="middle" font-weight="700" font-size="14" letter-spacing="2.5px" fill="#d0d0d6">BROWSER</text>
+    <text class="mono" x="90" y="128" text-anchor="middle" font-weight="500" font-size="12" fill="#7a7a82">React</text>
+  </g>
+
+  <!-- Arrow 1 -->
+  <g stroke="#f5c518" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <line x1="440" y1="545" x2="500" y2="545"/>
+    <path d="M492 537 L500 545 L492 553"/>
+  </g>
+
+  <!-- Node 2: SERVER -->
+  <g transform="translate(510, 470)">
+    <rect width="180" height="150" rx="14" fill="#1c1c22" stroke="#2a2a30" stroke-width="1"/>
+    <g transform="translate(66, 22) scale(2)" fill="none" stroke="#d0d0d6" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 0 1 1.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.559.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.894.149c-.424.07-.764.383-.929.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 0 1-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.398.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 0 1-.12-1.45l.527-.737c.25-.35.272-.806.108-1.204-.165-.397-.506-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.108-1.204l-.526-.738a1.125 1.125 0 0 1 .12-1.45l.773-.773a1.125 1.125 0 0 1 1.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894Z"/>
+      <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+    </g>
+    <text class="mono" x="90" y="106" text-anchor="middle" font-weight="700" font-size="14" letter-spacing="2.5px" fill="#d0d0d6">SERVER</text>
+    <text class="mono" x="90" y="128" text-anchor="middle" font-weight="500" font-size="12" fill="#7a7a82">Node.js</text>
+  </g>
+
+  <!-- Arrow 2 -->
+  <g stroke="#f5c518" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <line x1="700" y1="545" x2="760" y2="545"/>
+    <path d="M752 537 L760 545 L752 553"/>
+  </g>
+
+  <!-- Node 3: DATABASE -->
+  <g transform="translate(770, 470)">
+    <rect width="180" height="150" rx="14" fill="#1c1c22" stroke="#2a2a30" stroke-width="1"/>
+    <g transform="translate(66, 22) scale(2)" fill="none" stroke="#d0d0d6" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"/>
+    </g>
+    <text class="mono" x="90" y="106" text-anchor="middle" font-weight="700" font-size="14" letter-spacing="2.5px" fill="#d0d0d6">DATABASE</text>
+    <text class="mono" x="90" y="128" text-anchor="middle" font-weight="500" font-size="12" fill="#7a7a82">PostgreSQL</text>
+  </g>
+</svg>

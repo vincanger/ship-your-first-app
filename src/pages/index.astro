@@ -1,6 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
+import { Image } from 'astro:assets';
+import imgSearchcraft      from '../assets/examples/searchcraft.webp';
+import imgScribeist        from '../assets/examples/scribeist.webp';
+import imgMessync          from '../assets/examples/messync.webp';
+import imgKivo             from '../assets/examples/kivo.webp';
+import imgMicroinfluencers from '../assets/examples/microinfluencers.webp';
+import imgPromptpanda      from '../assets/examples/promptpanda.webp';
+import imgReviewradar      from '../assets/examples/reviewradar.webp';
 const base = import.meta.env.BASE_URL;
+
 
 const INSTALL_PROMPT = `I'm starting the "Ship Your First App" course. Fetch the following URL and follow the instructions: https://openvibe.sh/llms.txt`;
 
@@ -17,13 +26,13 @@ const whyRows = [
 ];
 
 const deckApps = [
-  { name: "Searchcraft",      domain: "searchcraft.io",       img: `${base}assets/examples/searchcraft.webp`,      href: "https://www.searchcraft.io" },
-  { name: "Scribeist",        domain: "scribeist.com",         img: `${base}assets/examples/scribeist.webp`,        href: "https://scribeist.com" },
-  { name: "Messync",          domain: "messync.com",           img: `${base}assets/examples/messync.webp`,          href: "https://messync.com" },
-  { name: "Kivo",             domain: "kivo.dev",              img: `${base}assets/examples/kivo.webp`,             href: "https://kivo.dev" },
-  { name: "Microinfluencers", domain: "microinfluencer.club",  img: `${base}assets/examples/microinfluencers.webp`, href: "https://microinfluencer.club" },
-  { name: "Prompt Panda",     domain: "promptpanda.io",        img: `${base}assets/examples/promptpanda.webp`,      href: "https://promptpanda.io" },
-  { name: "Review Radar",     domain: "reviewradar.ai",        img: `${base}assets/examples/reviewradar.webp`,      href: "https://reviewradar.ai" },
+  { name: "Searchcraft",      domain: "searchcraft.io",       img: imgSearchcraft,      href: "https://www.searchcraft.io" },
+  { name: "Scribeist",        domain: "scribeist.com",         img: imgScribeist,        href: "https://scribeist.com" },
+  { name: "Messync",          domain: "messync.com",           img: imgMessync,          href: "https://messync.com" },
+  { name: "Kivo",             domain: "kivo.dev",              img: imgKivo,             href: "https://kivo.dev" },
+  { name: "Microinfluencers", domain: "microinfluencer.club",  img: imgMicroinfluencers, href: "https://microinfluencer.club" },
+  { name: "Prompt Panda",     domain: "promptpanda.io",        img: imgPromptpanda,      href: "https://promptpanda.io" },
+  { name: "Review Radar",     domain: "reviewradar.ai",        img: imgReviewradar,      href: "https://reviewradar.ai" },
 ];
 
 const saasFeatures = [
@@ -52,23 +61,48 @@ const faqs = [
   { q: "Is this a bootcamp with a certificate?",   a: "No. It's a course you do with an AI tutor. What you have at the end is three real apps in your GitHub and the knowledge to build more — which employers tend to find more convincing than paper." },
   { q: "Why 'Open Vibe'?",                         a: "Because vibe-coding with an agent is how we actually build in 2026 — and Open Vibe teaches you to do it well, instead of building fragile apps you don't understand." },
 ];
+
+const courseJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "Open Vibe",
+  description: "A free, open-source, ten-week course where you learn to build real full-stack web apps with an AI coding agent as your tutor and pair programmer.",
+  url: Astro.site!.toString(),
+  inLanguage: "en",
+  isAccessibleForFree: true,
+  educationalLevel: "Beginner",
+  about: ["Web development", "Full-stack apps", "AI-assisted coding", "Wasp framework", "vibe coding"],
+  provider: { "@id": "https://wasp.sh/#org" },
+  offers: {
+    "@type": "Offer",
+    price: 0,
+    priceCurrency: "USD",
+    category: "Free",
+  },
+  hasCourseInstance: {
+    "@type": "CourseInstance",
+    courseMode: "Online",
+    courseWorkload: "PT60H",
+  },
+};
 ---
 
 <Base>
+<script type="application/ld+json" set:html={JSON.stringify(courseJsonLd)} />
 
 <!-- ============================================================
      NavBar
 ============================================================ -->
 <header style="position:sticky;top:0;z-index:50">
   <div style="background:rgba(255,255,255,.85);backdrop-filter:blur(12px);border-bottom:1px solid #e5e5e5">
-    <nav style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:18px 32px">
-      <div style="display:flex;align-items:center;gap:28px">
-        <a href="#" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#0a0a0a">
-          <img src={`${base}assets/logo.webp`} style="width:28px;height:28px" alt="" />
+    <nav class="ov-nav" style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:18px 32px;gap:16px">
+      <div class="ov-nav-left" style="display:flex;align-items:center;gap:28px;min-width:0">
+        <a href="#top" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#0a0a0a">
+          <img loading="eager" src={`${base}assets/logo.webp`} style="width:28px;height:28px" alt="Wasp Logo" />
           <span style="font-family:var(--os-font-mono);font-weight:700;font-size:15px;letter-spacing:-0.01em">Open Vibe</span>
-          <span style="margin-left:4px;padding:2px 8px;border-radius:9999px;background:#faf1e3;font-family:var(--os-font-mono);font-size:10px;font-weight:600;color:#bc7508;text-transform:uppercase;letter-spacing:0.8px">100% FREE</span>
+          <span class="ov-free-badge" style="margin-left:4px;padding:2px 8px;border-radius:9999px;background:#faf1e3;font-family:var(--os-font-mono);font-size:10px;font-weight:600;color:#bc7508;text-transform:uppercase;letter-spacing:0.8px">100% FREE</span>
         </a>
-        <ul style="display:flex;gap:22px;list-style:none;margin:0;padding:0">
+        <ul class="ov-nav-links" style="display:flex;gap:22px;list-style:none;margin:0;padding:0">
           {navLinks.map(l => (
             <li>
               <a href={`#${l.toLowerCase().replace(/\s+/g, "-")}`} style="font-size:14px;color:#0a0a0a;text-decoration:none;font-weight:500">{l}</a>
@@ -76,22 +110,39 @@ const faqs = [
           ))}
         </ul>
       </div>
-      <div style="display:flex;align-items:center;gap:14px">
-        <a href="https://github.com/wasp-lang/ship-your-first-app" target="_blank" style="font-size:14px;color:#0a0a0a;text-decoration:none;font-weight:500">GitHub ↗</a>
+      <div class="ov-nav-right" style="display:flex;align-items:center;gap:14px">
+        <a class="ov-nav-github" href="https://github.com/wasp-lang/ship-your-first-app" target="_blank" style="font-size:14px;color:#0a0a0a;text-decoration:none;font-weight:500">GitHub ↗</a>
         <a href="#install" style="padding:9px 18px;border-radius:9999px;background:#001a42;color:#fafafa;font-size:13px;font-weight:600;text-decoration:none;font-family:var(--os-font-mono);display:inline-flex;align-items:center;gap:6px">Get Started <span style="opacity:0.7">→</span></a>
+        <button class="ov-nav-hamburger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="ov-mobile-menu" style="display:none;background:none;border:1px solid #e5e5e5;border-radius:8px;padding:0;cursor:pointer;width:40px;height:40px;align-items:center;justify-content:center;flex-direction:column;gap:5px">
+          <span style="display:block;width:18px;height:2px;background:#0a0a0a;border-radius:2px;transition:transform .2s,opacity .2s"></span>
+          <span style="display:block;width:18px;height:2px;background:#0a0a0a;border-radius:2px;transition:transform .2s,opacity .2s"></span>
+          <span style="display:block;width:18px;height:2px;background:#0a0a0a;border-radius:2px;transition:transform .2s,opacity .2s"></span>
+        </button>
       </div>
     </nav>
+    <div id="ov-mobile-menu" class="ov-mobile-menu" hidden>
+      <ul style="list-style:none;margin:0;padding:8px 20px 16px;display:flex;flex-direction:column">
+        {navLinks.map(l => (
+          <li>
+            <a href={`#${l.toLowerCase().replace(/\s+/g, "-")}`} style="display:block;padding:14px 4px;font-size:16px;color:#0a0a0a;text-decoration:none;font-weight:500;border-bottom:1px solid #f5e6c8">{l}</a>
+          </li>
+        ))}
+        <li>
+          <a href="https://github.com/wasp-lang/ship-your-first-app" target="_blank" style="display:block;padding:14px 4px;font-size:16px;color:#0a0a0a;text-decoration:none;font-weight:500">GitHub ↗</a>
+        </li>
+      </ul>
+    </div>
   </div>
 </header>
 
 <!-- ============================================================
      Hero
 ============================================================ -->
-<section style="padding:56px 32px 64px;background:linear-gradient(180deg,#faf1e3 0%,transparent 85%)">
-  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:center">
+<section class="ov-hero" style="padding:56px 32px 64px;background:linear-gradient(180deg,#faf1e3 0%,transparent 85%)">
+  <div class="ov-hero-grid" style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:center">
 
     <!-- Left: pitch -->
-    <div>
+    <div class="ov-hero-pitch">
       <!-- Announce bar -->
       <div style="display:inline-flex;align-items:center;gap:10px;padding:6px 14px 6px 8px;border-radius:9999px;background:#faf1e3;border:1px solid #f5e6c8;font-family:var(--os-font-mono);font-size:12px;font-weight:600">
         <span style="padding:2px 8px;border-radius:9999px;background:#f5c518;color:#001a42;font-size:10px;font-weight:700;letter-spacing:0.5px">NEW</span>
@@ -108,11 +159,11 @@ const faqs = [
         Stop watching videos. Start building. Open Vibe drops a full, interactive web dev curriculum into Claude Code
         (or your agent of choice) and lets you learn by shipping real apps.
       </p>
-      <div style="margin-top:32px;display:flex;gap:12px;flex-wrap:wrap">
+      <div class="ov-hero-ctas" style="margin-top:32px;display:flex;gap:12px;flex-wrap:wrap">
         <a href="#install" style="padding:14px 24px;border-radius:10px;background:#001a42;color:#fafafa;font-family:var(--os-font-mono);font-weight:700;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:8px">Get started — it's free <span>→</span></a>
-        <a href="#how-it-works" style="padding:14px 24px;border-radius:10px;background:#fff;color:#0a0a0a;border:1px solid #e5e5e5;font-family:var(--os-font-mono);font-weight:600;font-size:14px;text-decoration:none">Watch a demo</a>
+        <a href="#see-it-in-action" style="padding:14px 24px;border-radius:10px;background:#fff;color:#0a0a0a;border:1px solid #e5e5e5;font-family:var(--os-font-mono);font-weight:600;font-size:14px;text-decoration:none">Watch a demo</a>
       </div>
-      <div style="margin-top:28px;display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:#737373;font-family:var(--os-font-mono)">
+      <div class="ov-hero-trust" style="margin-top:28px;display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:#737373;font-family:var(--os-font-mono)">
         <span>✓ 100% free &amp; open source</span>
         <span>✓ No signup</span>
         <span>✓ MIT licensed</span>
@@ -120,7 +171,7 @@ const faqs = [
     </div>
 
     <!-- Right: fanned card mock -->
-    <div style="position:relative">
+    <div class="ov-hero-cards-col" style="position:relative">
       <div class="hero-cards">
 
         <!-- Card 1: Todo app (front) -->
@@ -177,27 +228,27 @@ const faqs = [
               <div style="margin-top:14px;border-radius:10px;padding:24px 18px;background:#0f0f13;background-image:radial-gradient(rgba(255,255,255,0.05) 1px,transparent 1px);background-size:18px 18px">
                 <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:14px">
                   <!-- Browser node -->
-                  <div style="background:#1c1c22;border-radius:10px;border:1px solid #2a2a30;padding:16px 10px;text-align:center;color:#d0d0d6">
+                  <div id="diag-browser" style="background:#1c1c22;border-radius:10px;padding:16px 10px;text-align:center;color:#d0d0d6">
                     <div style="display:flex;align-items:center;justify-content:center;height:36px;margin-bottom:6px">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="28" height="28"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" /></svg>
                     </div>
                     <div style="font-family:var(--os-font-mono);font-size:11px;font-weight:700;color:#d0d0d6;letter-spacing:1.2px">BROWSER</div>
                     <div style="font-family:var(--os-font-mono);font-size:10px;color:#7a7a82;margin-top:2px">React</div>
                   </div>
-                  <!-- Arrow 1 (active) -->
-                  <div style="display:flex;align-items:center;justify-content:center;color:#f5c518;font-size:18px;animation:ovPulse 1.4s ease-in-out infinite">→</div>
-                  <!-- Server node (highlight) -->
-                  <div style="background:#1c1c22;border-radius:10px;border:1px solid #f5c518;box-shadow:0 0 0 4px #f5c51822;padding:16px 10px;text-align:center;color:#f5c518">
+                  <!-- Arrow 1 -->
+                  <div id="diag-arrow1" style="display:flex;align-items:center;justify-content:center;font-size:18px">→</div>
+                  <!-- Server node -->
+                  <div id="diag-server" style="background:#1c1c22;border-radius:10px;padding:16px 10px;text-align:center">
                     <div style="display:flex;align-items:center;justify-content:center;height:36px;margin-bottom:6px">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="28" height="28"><path stroke-linecap="round" stroke-linejoin="round" d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 0 1 1.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.559.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.894.149c-.424.07-.764.383-.929.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 0 1-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.398.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 0 1-.12-1.45l.527-.737c.25-.35.272-.806.108-1.204-.165-.397-.506-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.108-1.204l-.526-.738a1.125 1.125 0 0 1 .12-1.45l.773-.773a1.125 1.125 0 0 1 1.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /></svg>
+                      <svg id="diag-cog" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="28" height="28"><path stroke-linecap="round" stroke-linejoin="round" d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 0 1 1.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.559.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.894.149c-.424.07-.764.383-.929.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 0 1-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.398.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 0 1-.12-1.45l.527-.737c.25-.35.272-.806.108-1.204-.165-.397-.506-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.108-1.204l-.526-.738a1.125 1.125 0 0 1 .12-1.45l.773-.773a1.125 1.125 0 0 1 1.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /></svg>
                     </div>
                     <div style="font-family:var(--os-font-mono);font-size:11px;font-weight:700;letter-spacing:1.2px">SERVER</div>
                     <div style="font-family:var(--os-font-mono);font-size:10px;color:#7a7a82;margin-top:2px">Node.js</div>
                   </div>
                   <!-- Arrow 2 -->
-                  <div style="display:flex;align-items:center;justify-content:center;color:#5a5a62;font-size:18px">→</div>
+                  <div id="diag-arrow2" style="display:flex;align-items:center;justify-content:center;font-size:18px">→</div>
                   <!-- DB node -->
-                  <div style="background:#1c1c22;border-radius:10px;border:1px solid #2a2a30;padding:16px 10px;text-align:center;color:#d0d0d6">
+                  <div id="diag-db" style="background:#1c1c22;border-radius:10px;padding:16px 10px;text-align:center;color:#d0d0d6">
                     <div style="display:flex;align-items:center;justify-content:center;height:36px;margin-bottom:6px">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="28" height="28"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" /></svg>
                     </div>
@@ -265,12 +316,12 @@ const faqs = [
 <!-- ============================================================
      See it in action
 ============================================================ -->
-<section id="see-it-in-action" style="padding:120px 32px 40px;background:#fff">
+<section id="see-it-in-action" class="ov-demo" style="padding:120px 32px 40px;background:#fff">
   <div style="max-width:900px;margin:0 auto">
     <!-- Section heading -->
     <div style="text-align:center;max-width:760px;margin:0 auto 56px">
       <div style="font-family:var(--os-font-mono);font-size:12px;font-weight:600;color:#bc7508;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:14px">See it in action</div>
-      <h2 style="font-family:var(--os-font-mono);font-weight:700;font-size:40px;line-height:1.1;letter-spacing:-0.02em;margin:0;color:#0a0a0a">Here's a quick demo.</h2>
+      <h2 class="ov-h2" style="font-family:var(--os-font-mono);font-weight:700;font-size:40px;line-height:1.1;letter-spacing:-0.02em;margin:0;color:#0a0a0a">Here's a quick demo.</h2>
     </div>
     <!-- Video card -->
     <div style="border-radius:14px;border:1px solid #e5e5e5;box-shadow:0 30px 60px -20px rgba(0,0,0,0.18),0 8px 20px -8px rgba(0,0,0,0.08);overflow:hidden;background:#0a0a0a">
@@ -297,27 +348,27 @@ const faqs = [
 <!-- ============================================================
      Why This
 ============================================================ -->
-<section id="why" style="max-width:1120px;margin:0 auto;padding:120px 32px 40px">
+<section id="why" class="ov-why" style="max-width:1120px;margin:0 auto;padding:120px 32px 40px">
   <div style="text-align:center;max-width:760px;margin:0 auto 56px">
     <div style="font-family:var(--os-font-mono);font-size:12px;font-weight:600;color:#bc7508;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:14px">Why Open Vibe</div>
-    <h2 style="font-family:var(--os-font-mono);font-weight:700;font-size:40px;line-height:1.1;letter-spacing:-0.02em;margin:0;color:#0a0a0a">Static tutorials are broken.</h2>
+    <h2 class="ov-h2" style="font-family:var(--os-font-mono);font-weight:700;font-size:40px;line-height:1.1;letter-spacing:-0.02em;margin:0;color:#0a0a0a">Static tutorials are broken.</h2>
     <p style="font-size:17px;line-height:1.55;color:#737373;margin-top:16px;margin-bottom:0">You follow along, copy the code, nod at the right moments — and a week later you can't build a thing on your own. Open Vibe flips it: you build, and the agent teaches in context.</p>
   </div>
   <div style="position:relative">
-    <div style="position:absolute;top:50%;left:42%;transform:translate(-50%,-50%);font-size:260px;line-height:1;opacity:0.09;pointer-events:none;z-index:0;user-select:none;filter:grayscale(1) brightness(0)">❌</div>
-    <div style="position:absolute;top:50%;left:80%;transform:translate(-50%,-50%);font-size:320px;line-height:1;opacity:0.1;pointer-events:none;z-index:0;user-select:none">✔️</div>
+    <div class="ov-why-deco" style="position:absolute;top:50%;left:42%;transform:translate(-50%,-50%);font-size:260px;line-height:1;opacity:0.09;pointer-events:none;z-index:0;user-select:none;filter:grayscale(1) brightness(0)">❌</div>
+    <div class="ov-why-deco" style="position:absolute;top:50%;left:80%;transform:translate(-50%,-50%);font-size:320px;line-height:1;opacity:0.1;pointer-events:none;z-index:0;user-select:none">✔️</div>
     <div style="position:relative;z-index:1;border:1px solid #e5e5e5;border-radius:16px;overflow:hidden;background:rgba(255,255,255,0.72);backdrop-filter:blur(1px);box-shadow:var(--os-shadow-card)">
       <!-- Header row -->
-      <div style="display:grid;grid-template-columns:1.2fr 1.4fr 1.6fr;background:#faf1e3;font-family:var(--os-font-mono);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px">
+      <div class="ov-why-header" style="display:grid;grid-template-columns:1.2fr 1.4fr 1.6fr;background:#faf1e3;font-family:var(--os-font-mono);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px">
         <div style="padding:16px 24px"></div>
         <div style="padding:16px 24px;color:#737373">Static tutorials :(</div>
         <div style="padding:16px 24px;color:#001a42;border-left:2px solid #e5a659">Open Vibe =&#125;</div>
       </div>
       {whyRows.map(r => (
-        <div style="display:grid;grid-template-columns:1.2fr 1.4fr 1.6fr;border-top:1px solid #e5e5e5;font-size:15px;line-height:1.5">
-          <div style="padding:20px 24px;font-weight:600;font-family:var(--os-font-mono);font-size:13px">{r.feature}</div>
-          <div style="padding:20px 24px;color:#737373">{r.tutorials}</div>
-          <div style="padding:20px 24px;color:#0a0a0a;font-weight:500;border-left:2px solid #e5a659;background:rgba(229,166,89,0.04)">{r.openvibe}</div>
+        <div class="ov-why-row" style="display:grid;grid-template-columns:1.2fr 1.4fr 1.6fr;border-top:1px solid #e5e5e5;font-size:15px;line-height:1.5">
+          <div class="ov-why-cell ov-why-feature" style="padding:20px 24px;font-weight:600;font-family:var(--os-font-mono);font-size:13px">{r.feature}</div>
+          <div class="ov-why-cell ov-why-bad" style="padding:20px 24px;color:#737373">{r.tutorials}</div>
+          <div class="ov-why-cell ov-why-good" style="padding:20px 24px;color:#0a0a0a;font-weight:500;border-left:2px solid #e5a659;background:rgba(229,166,89,0.04)">{r.openvibe}</div>
         </div>
       ))}
     </div>
@@ -327,14 +378,14 @@ const faqs = [
 <!-- ============================================================
      How It Works
 ============================================================ -->
-<section id="how-it-works" style="background:#faf1e3;padding:120px 32px">
+<section id="how-it-works" class="ov-how" style="background:#faf1e3;padding:120px 32px">
   <div style="max-width:1120px;margin:0 auto">
     <div style="text-align:center;max-width:760px;margin:0 auto 56px">
       <div style="font-family:var(--os-font-mono);font-size:12px;font-weight:600;color:#bc7508;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:14px">How it works</div>
-      <h2 style="font-family:var(--os-font-mono);font-weight:700;font-size:40px;line-height:1.1;letter-spacing:-0.02em;margin:0;color:#0a0a0a">The course lives inside your agent.</h2>
+      <h2 class="ov-h2" style="font-family:var(--os-font-mono);font-weight:700;font-size:40px;line-height:1.1;letter-spacing:-0.02em;margin:0;color:#0a0a0a">The course lives inside your agent.</h2>
       <p style="font-size:17px;line-height:1.55;color:#737373;margin-top:16px;margin-bottom:0">Not a video library. Not a PDF. A set of skills, instructions, and interactive components that turn Claude Code — or any capable agent — into the world's most patient tutor. Works with Codex, Cursor, Copilot, Open Code, and more.</p>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+    <div class="ov-how-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
 
       <!-- Step 01: paste prompt -->
       <div style="background:#fff;border-radius:14px;border:1px solid #e5e5e5;padding:28px;display:flex;flex-direction:column;box-shadow:var(--os-shadow-card)">
@@ -412,14 +463,14 @@ const faqs = [
 <!-- ============================================================
      SaaS Capstone
 ============================================================ -->
-<section id="for-founders" style="padding:120px 32px;background:#fff">
+<section id="for-founders" class="ov-saas" style="padding:120px 32px;background:#fff">
   <div style="max-width:1120px;margin:0 auto">
     <div style="text-align:center;max-width:760px;margin:0 auto 56px">
       <div style="font-family:var(--os-font-mono);font-size:12px;font-weight:600;color:#bc7508;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:14px">For aspiring founders</div>
-      <h2 style="font-family:var(--os-font-mono);font-weight:700;font-size:40px;line-height:1.1;letter-spacing:-0.02em;margin:0;color:#0a0a0a">Learn only what you need while you build your SaaS.</h2>
+      <h2 class="ov-h2" style="font-family:var(--os-font-mono);font-weight:700;font-size:40px;line-height:1.1;letter-spacing:-0.02em;margin:0;color:#0a0a0a">Learn only what you need while you build your SaaS.</h2>
       <p style="font-size:17px;line-height:1.55;color:#737373;margin-top:16px;margin-bottom:0">At the end of the course, you'll build your own SaaS with our free SaaS starter template, <a href="https://opensaas.sh" target="_blank" style="color:#0a0a0a;text-decoration:underline">Open SaaS</a> (a ~$300 value), and actually understand what you built.</p>
     </div>
-    <div style="border-radius:20px;border:1px solid #f5e6c8;background:linear-gradient(180deg,#faf1e3 0%,#fff 75%);padding:40px 40px 36px;display:grid;grid-template-columns:1fr 1.4fr;gap:48px;align-items:center;position:relative;overflow:hidden">
+    <div class="ov-saas-card" style="border-radius:20px;border:1px solid #f5e6c8;background:linear-gradient(180deg,#faf1e3 0%,#fff 75%);padding:40px 40px 36px;display:grid;grid-template-columns:1fr 1.4fr;gap:48px;align-items:center;position:relative;overflow:hidden">
 
       <!-- App deck carousel -->
       <div class="deck-wrap" style="position:relative;width:100%;height:340px;padding-top:1rem;display:flex;align-items:flex-start;justify-content:center;cursor:pointer;perspective:3400px">
@@ -432,7 +483,7 @@ const faqs = [
                 <span style="width:7px;height:7px;border-radius:50%;background:#27c93f"></span>
                 <div style="margin-left:6px;padding:2px 8px;border-radius:4px;background:#fff;border:1px solid #e5e5e5;font-family:var(--os-font-mono);font-size:9px;color:#737373">{app.domain}</div>
               </div>
-              <img src={app.img} alt={app.name} style="width:100%;height:calc(100% - 27px);object-fit:cover;object-position:top;display:block" />
+              <Image src={app.img} alt={app.name} loading="lazy" style="width:100%;height:calc(100% - 27px);object-fit:cover;object-position:top;display:block" />
             </a>
           </div>
         ))}
@@ -451,7 +502,7 @@ const faqs = [
       <div>
         <div style="font-family:var(--os-font-mono);font-size:11px;font-weight:700;color:#bc7508;letter-spacing:1.5px">FINAL MODULE</div>
         <div style="font-family:var(--os-font-mono);font-weight:700;font-size:22px;line-height:1.2;margin:8px 0 22px;color:#0a0a0a">Launch a real SaaS — on the same stack as other successful builders.</div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+        <div class="ov-saas-features" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
           {saasFeatures.map(f => (
             <div style={`padding:16px 14px;border-radius:12px;background:#fff;border:1px solid #e5e5e5;display:flex;align-items:center;gap:10px;box-shadow:var(--os-shadow-card)`}>
               <div style={`width:34px;height:34px;border-radius:9px;background:${f.color}22;color:${f.color};display:flex;align-items:center;justify-content:center;flex-shrink:0`}>
@@ -470,7 +521,7 @@ const faqs = [
     </div>
 
     <!-- Bottom row -->
-    <div style="margin-top:24px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+    <div class="ov-saas-trust" style="margin-top:24px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
       {[
         ["🚀","MIT-licensed","100% yours forever"],
         ["🛠","Built by Wasp","Same team, same quality bar"],
@@ -491,10 +542,10 @@ const faqs = [
 <!-- ============================================================
      Curriculum
 ============================================================ -->
-<section id="curriculum" style="max-width:1120px;margin:0 auto;padding:120px 32px">
+<section id="curriculum" class="ov-curriculum" style="max-width:1120px;margin:0 auto;padding:120px 32px">
   <div style="text-align:center;max-width:760px;margin:0 auto 56px">
     <div style="font-family:var(--os-font-mono);font-size:12px;font-weight:600;color:#bc7508;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:14px">Curriculum</div>
-    <h2 style="font-family:var(--os-font-mono);font-weight:700;font-size:40px;line-height:1.1;letter-spacing:-0.02em;margin:0;color:#0a0a0a">Three phases, ship as you learn.</h2>
+    <h2 class="ov-h2" style="font-family:var(--os-font-mono);font-weight:700;font-size:40px;line-height:1.1;letter-spacing:-0.02em;margin:0;color:#0a0a0a">Three phases, ship as you learn.</h2>
     <p style="font-size:17px;line-height:1.55;color:#737373;margin-top:16px;margin-bottom:0">Each lesson is a set of skills your agent loads, a short reading, a running app, and a checkpoint you actually build. New modules drop as they're ready.</p>
   </div>
 
@@ -543,11 +594,11 @@ const faqs = [
 <!-- ============================================================
      FAQ
 ============================================================ -->
-<section id="faq" style="background:#faf1e3;padding:120px 32px 80px">
+<section id="faq" class="ov-faq" style="background:#faf1e3;padding:120px 32px 80px">
   <div style="max-width:900px;margin:0 auto">
     <div style="text-align:center;max-width:760px;margin:0 auto 56px">
       <div style="font-family:var(--os-font-mono);font-size:12px;font-weight:600;color:#bc7508;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:14px">FAQ</div>
-      <h2 style="font-family:var(--os-font-mono);font-weight:700;font-size:40px;line-height:1.1;letter-spacing:-0.02em;margin:0;color:#0a0a0a">Questions, probably.</h2>
+      <h2 class="ov-h2" style="font-family:var(--os-font-mono);font-weight:700;font-size:40px;line-height:1.1;letter-spacing:-0.02em;margin:0;color:#0a0a0a">Questions, probably.</h2>
     </div>
     <div style="display:flex;flex-direction:column;gap:12px">
       {faqs.map((f, i) => (
@@ -566,28 +617,33 @@ const faqs = [
 <!-- ============================================================
      Install CTA
 ============================================================ -->
-<section id="install" style="padding:60px 32px 120px">
-  <div style="max-width:960px;margin:0 auto;background:#001a42;color:#fafafa;border-radius:24px;padding:64px 48px;position:relative;overflow:hidden;box-shadow:var(--os-shadow-lg)">
+<section id="install" class="ov-install" style="padding:60px 32px 120px">
+  <div class="ov-install-card" style="max-width:960px;margin:0 auto;background:#001a42;color:#fafafa;border-radius:24px;padding:64px 48px;position:relative;overflow:hidden;box-shadow:var(--os-shadow-lg)">
     <div style="position:absolute;right:-100px;top:-100px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,#bc750830,transparent 60%);pointer-events:none"></div>
     <div style="position:relative">
-      <h2 style="font-family:var(--os-font-mono);font-weight:700;font-size:44px;line-height:1.1;letter-spacing:-0.02em;margin:0;color:#f7ead6">Start vibing. Start shipping.</h2>
-      <p style="font-size:17px;line-height:1.6;color:rgba(247,234,214,0.75);max-width:520px;margin:18px 0 32px">
-        One command. No signup required. Just copy and paste the prompt below into your agent, and start building.
+      <h2 class="ov-install-h2" style="font-family:var(--os-font-mono);font-weight:700;font-size:44px;line-height:1.1;letter-spacing:-0.02em;margin:0;color:#f7ead6">Start vibing. Start shipping.</h2>
+      <p style="font-size:17px;line-height:1.6;color:rgba(247,234,214,0.75);max-width:520px;margin:18px 0">
+        One command. No signup required.
       </p>
-      <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
-        <!-- Install pill -->
-        <div style="font-family:var(--os-font-mono);font-size:13.5px;background:rgba(255,255,255,0.08);padding:12px 14px 12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;gap:10px;max-width:560px">
+      <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap">
+        <!-- Install pill — wider, no max-width cap -->
+        <div style="font-family:var(--os-font-mono);font-size:13.5px;background:rgba(255,255,255,0.08);padding:12px 14px 12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;gap:10px;flex:1;min-width:0">
           <span style="color:#ecc89a;flex-shrink:0">&gt;</span>
-          <span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:rgba(247,234,214,0.9)">I'm starting the "Ship Your First App" course. Fetch the following URL…</span>
+          <span style="flex:1;min-width:0;color:rgba(247,234,214,0.9);">{INSTALL_PROMPT}</span>
           <button
             data-copy={INSTALL_PROMPT}
             data-copied-label="✓ COPIED"
             style="flex-shrink:0;padding:5px 12px;border-radius:6px;background:rgba(255,255,255,0.1);color:rgba(247,234,214,0.9);border:1px solid rgba(255,255,255,0.15);font-family:var(--os-font-mono);font-size:11px;font-weight:700;cursor:pointer;letter-spacing:0.5px"
           >COPY</button>
         </div>
-        <a href="#" style="padding:14px 24px;border-radius:10px;background:#f5c518;color:#001a42;font-family:var(--os-font-mono);font-weight:700;font-size:14px;text-decoration:none">Get started — it's free →</a>
+        <!-- Callout annotation — two-line pill, J-curve arrow pointing up at COPY -->
+        <div class="ov-install-callout" style="display:flex;flex-direction:column;align-items:flex-end;pointer-events:none;flex-shrink:0;margin-top:-48px">
+          <div style="background:#f5c518;color:#001a42;font-family:var(--os-font-mono);font-size:11px;font-weight:700;padding:8px 14px;border-radius:14px;transform:rotate(-7deg);transform-origin:bottom right;box-shadow:0 4px 18px rgba(245,197,24,0.35);letter-spacing:0.2px;text-align:center;line-height:1.5;width:144px">
+            Copy and paste this prompt into your agent!
+          </div>
+        </div>
       </div>
-      <div style="margin-top:32px;display:flex;gap:24px;flex-wrap:wrap;font-size:13px;color:rgba(247,234,214,0.55);font-family:var(--os-font-mono)">
+      <div style="margin-top:18px;display:flex;gap:24px;flex-wrap:wrap;font-size:13px;color:rgba(247,234,214,0.55);font-family:var(--os-font-mono)">
         <span>★ MIT licensed</span>
         <span>no account required</span>
         <span>works with Claude Code, Cursor, Codex, Open Code, etc.</span>
@@ -605,16 +661,16 @@ const faqs = [
 <!-- ============================================================
      Footer
 ============================================================ -->
-<footer style="border-top:1px solid #e5e5e5;padding:48px 32px 64px">
-  <div style="max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;gap:80px;flex-wrap:wrap">
+<footer class="ov-footer" style="border-top:1px solid #e5e5e5;padding:48px 32px 64px">
+  <div class="ov-footer-row" style="max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;gap:80px;flex-wrap:wrap">
     <div style="max-width:320px">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-        <img src={`${base}assets/logo.webp`} style="width:26px;height:26px" alt="" />
+        <img loading="lazy" src={`${base}assets/logo.webp`} style="width:26px;height:26px" alt="" loading="lazy" />
         <span style="font-family:var(--os-font-mono);font-weight:700;font-size:15px">Open Vibe</span>
       </div>
       <p style="font-size:13px;color:#737373;line-height:1.55;margin:0">Learn to build web apps with an AI agent as your tutor. Free, open source, ten weeks, zero filler.</p>
     </div>
-    <div style="display:flex;gap:72px">
+    <div class="ov-footer-cols" style="display:flex;gap:72px">
       <div>
         <h4 style="font-family:var(--os-font-mono);font-size:12px;font-weight:700;margin:0 0 16px;text-transform:uppercase;letter-spacing:1px">Course</h4>
         <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px">
@@ -626,7 +682,7 @@ const faqs = [
       <div>
         <h4 style="font-family:var(--os-font-mono);font-size:12px;font-weight:700;margin:0 0 16px;text-transform:uppercase;letter-spacing:1px">Project</h4>
         <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px">
-          {[["https://github.com/wasp-lang/ship-your-first-app","GitHub ↗"],["https://github.com/wasp-lang/ship-your-first-app","Contribute"],["#","License (MIT)"]].map(([href,label]) => (
+          {[["https://github.com/wasp-lang/ship-your-first-app","GitHub ↗"],["https://github.com/wasp-lang/ship-your-first-app","Contribute"],["https://github.com/wasp-lang/ship-your-first-app","License (MIT)"]].map(([href,label]) => (
             <li><a href={href} target="_blank" style="font-size:13px;color:#737373;text-decoration:none">{label}</a></li>
           ))}
         </ul>
@@ -681,7 +737,7 @@ const faqs = [
   }
 
   /* Video overlay */
-  .demo-overlay.hidden { display: none; }
+  .demo-overlay.hidden { display: none !important; }
 
   /* Copy button copied state */
   [data-copy][data-copied] {
@@ -697,6 +753,200 @@ const faqs = [
   /* Curriculum row hover */
   .curriculum-row { transition: background .15s; }
   .curriculum-row:hover { background: rgba(250,241,227,.35); }
+
+  /* === 3-node diagram sequential animation ===
+     14s loop, 30/30/30/10% split → each node phase = 4.2s exactly
+       0–30%  (0–4.2s)   Browser ×3  (pulse every 10% = 1.4s)
+       30–60% (4.2–8.4s) Arrow1 + Server ×3 + Cog 3 rotations
+       60–90% (8.4–12.6s) Arrow2 + DB ×3
+       90–100%(12.6–14s) Pause                                    */
+  #diag-browser, #diag-db { border: 1px solid #2a2a30; }
+  #diag-server  { border: 1px solid #2a2a30; color: #d0d0d6; }
+  #diag-arrow1, #diag-arrow2 { color: #5a5a62; }
+
+  #diag-browser { animation: diagBrowser 14s ease-in-out infinite; }
+  #diag-arrow1  { animation: diagArrow1  14s ease-in-out infinite; }
+  #diag-server  { animation: diagServer  14s ease-in-out infinite; }
+  #diag-cog     { transform-box: fill-box; transform-origin: center; animation: diagCog 14s ease-in-out infinite; }
+  #diag-arrow2  { animation: diagArrow2  14s ease-in-out infinite; }
+  #diag-db      { animation: diagDb     14s ease-in-out infinite; }
+
+  /* Browser: 3 pulses across 0–30%, peak at 5/15/25% */
+  @keyframes diagBrowser {
+    0%   { border-color: #2a2a30; box-shadow: none; }
+    5%   { border-color: #f5c518; box-shadow: 0 0 0 4px #f5c51822; }
+    10%  { border-color: #2a2a30; box-shadow: none; }
+    15%  { border-color: #f5c518; box-shadow: 0 0 0 4px #f5c51822; }
+    20%  { border-color: #2a2a30; box-shadow: none; }
+    25%  { border-color: #f5c518; box-shadow: 0 0 0 4px #f5c51822; }
+    30%  { border-color: #2a2a30; box-shadow: none; }
+    100% { border-color: #2a2a30; box-shadow: none; }
+  }
+  /* Arrow1 + Server: 3 pulses in sync across 30–60%, peak at 35/45/55% */
+  @keyframes diagArrow1 {
+    0%, 30% { color: #5a5a62; }
+    35%     { color: #f5c518; }
+    40%     { color: #5a5a62; }
+    45%     { color: #f5c518; }
+    50%     { color: #5a5a62; }
+    55%     { color: #f5c518; }
+    60%     { color: #5a5a62; }
+    100%    { color: #5a5a62; }
+  }
+  @keyframes diagServer {
+    0%, 30% { border-color: #2a2a30; box-shadow: none; color: #d0d0d6; }
+    35%     { border-color: #f5c518; box-shadow: 0 0 0 4px #f5c51822; color: #f5c518; }
+    40%     { border-color: #2a2a30; box-shadow: none; color: #d0d0d6; }
+    45%     { border-color: #f5c518; box-shadow: 0 0 0 4px #f5c51822; color: #f5c518; }
+    50%     { border-color: #2a2a30; box-shadow: none; color: #d0d0d6; }
+    55%     { border-color: #f5c518; box-shadow: 0 0 0 4px #f5c51822; color: #f5c518; }
+    60%     { border-color: #2a2a30; box-shadow: none; color: #d0d0d6; }
+    100%    { border-color: #2a2a30; box-shadow: none; color: #d0d0d6; }
+  }
+  /* Cog: ease-in-out across 30→60% = 4.2s, 3 full rotations */
+  @keyframes diagCog {
+    0%, 30% { transform: rotate(0deg); }
+    60%     { transform: rotate(1080deg); }
+    100%    { transform: rotate(1080deg); }
+  }
+  /* Arrow2 + DB: 3 pulses in sync across 60–90%, peak at 65/75/85% */
+  @keyframes diagArrow2 {
+    0%, 60% { color: #5a5a62; }
+    65%     { color: #f5c518; }
+    70%     { color: #5a5a62; }
+    75%     { color: #f5c518; }
+    80%     { color: #5a5a62; }
+    85%     { color: #f5c518; }
+    90%     { color: #5a5a62; }
+    100%    { color: #5a5a62; }
+  }
+  @keyframes diagDb {
+    0%, 60%  { border-color: #2a2a30; box-shadow: none; color: #d0d0d6; }
+    65%      { border-color: #f5c518; box-shadow: 0 0 0 4px #f5c51822; color: #f5c518; }
+    70%      { border-color: #2a2a30; box-shadow: none; color: #d0d0d6; }
+    75%      { border-color: #f5c518; box-shadow: 0 0 0 4px #f5c51822; color: #f5c518; }
+    80%      { border-color: #2a2a30; box-shadow: none; color: #d0d0d6; }
+    85%      { border-color: #f5c518; box-shadow: 0 0 0 4px #f5c51822; color: #f5c518; }
+    90%      { border-color: #2a2a30; box-shadow: none; color: #d0d0d6; }
+    100%     { border-color: #2a2a30; box-shadow: none; color: #d0d0d6; }
+  }
+
+  /* ============================================================
+     Mobile / tablet responsive overrides
+  ============================================================ */
+  @media (max-width: 900px) {
+    /* Nav: collapse links + GitHub into a hamburger drawer */
+    .ov-nav { padding: 12px 16px !important; gap: 10px !important; }
+    .ov-nav-left { gap: 10px !important; }
+    .ov-nav-right { gap: 8px !important; }
+    .ov-nav-links { display: none !important; }
+    .ov-nav-github { display: none !important; }
+    .ov-free-badge { display: none !important; }
+    .ov-nav-hamburger { display: inline-flex !important; }
+    .ov-nav-hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .ov-nav-hamburger.is-open span:nth-child(2) { opacity: 0; }
+    .ov-nav-hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .ov-mobile-menu {
+      background: rgba(255,255,255,.97);
+      border-top: 1px solid #f5e6c8;
+      box-shadow: 0 8px 16px -8px rgba(0,0,0,0.08);
+    }
+
+    /* Hero: stack to a single centred column, hide the fanned cards */
+    .ov-hero { padding: 40px 20px 56px !important; }
+    .ov-hero-grid {
+      grid-template-columns: 1fr !important;
+      gap: 0 !important;
+      max-width: 640px !important;
+      text-align: center !important;
+    }
+    .ov-hero-pitch p { margin-left: auto !important; margin-right: auto !important; }
+    .ov-hero-ctas { justify-content: center !important; }
+    .ov-hero-trust { justify-content: center !important; gap: 12px !important; font-size: 12px !important; }
+    .ov-hero-cards-col { display: none !important; }
+
+    /* Section titles + generic horizontal padding */
+    .ov-h2 { font-size: 30px !important; line-height: 1.15 !important; }
+    .ov-demo, .ov-why, .ov-how, .ov-saas, .ov-curriculum, .ov-faq, .ov-install {
+      padding-left: 20px !important;
+      padding-right: 20px !important;
+    }
+    .ov-demo, .ov-why, .ov-how, .ov-saas, .ov-curriculum, .ov-faq {
+      padding-top: 64px !important;
+      padding-bottom: 48px !important;
+    }
+
+    /* Why-section table → stack each row vertically; hide header + giant emojis */
+    .ov-why-deco { display: none !important; }
+    .ov-why-header { display: none !important; }
+    .ov-why-row {
+      grid-template-columns: 1fr !important;
+      padding: 4px 0 !important;
+    }
+    .ov-why-cell { padding: 8px 16px !important; font-size: 14px !important; }
+    .ov-why-feature {
+      padding-top: 14px !important;
+      padding-bottom: 4px !important;
+      background: #faf1e3 !important;
+      font-size: 12px !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.5px !important;
+    }
+    .ov-why-bad::before {
+      content: "Static: ";
+      color: #a3a3a3;
+      font-family: var(--os-font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-right: 6px;
+    }
+    .ov-why-good {
+      border-left: none !important;
+      border-top: 1px dashed #f0d9a8 !important;
+    }
+    .ov-why-good::before {
+      content: "Open Vibe: ";
+      color: #bc7508;
+      font-family: var(--os-font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-right: 6px;
+    }
+
+    /* How-it-works: 3-up → 1-up */
+    .ov-how-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+
+    /* SaaS capstone: stack deck above features; shrink the deck */
+    .ov-saas-card {
+      grid-template-columns: 1fr !important;
+      gap: 32px !important;
+      padding: 28px 20px 24px !important;
+    }
+    .ov-saas-features { grid-template-columns: repeat(2, 1fr) !important; }
+    .ov-saas-trust { grid-template-columns: 1fr !important; gap: 10px !important; }
+    .deck-wrap { height: 240px !important; perspective: 2000px !important; }
+    .deck-card { width: 260px !important; height: 175px !important; }
+    .deck-nav { opacity: 1 !important; }
+
+    /* Install CTA: tighten and drop the rotated callout pill (its anchor goes off) */
+    .ov-install-card { padding: 40px 22px !important; border-radius: 18px !important; }
+    .ov-install-h2 { font-size: 28px !important; line-height: 1.15 !important; }
+    .ov-install-callout { display: none !important; }
+
+    /* Footer: reduce gaps so wrap looks intentional */
+    .ov-footer-row { gap: 32px !important; }
+    .ov-footer-cols { gap: 40px !important; flex-wrap: wrap !important; }
+  }
+
+  @media (max-width: 480px) {
+    .ov-saas-features { grid-template-columns: 1fr !important; }
+    .ov-h2 { font-size: 26px !important; }
+    .ov-install-h2 { font-size: 24px !important; }
+  }
 </style>
 
 <script>
@@ -797,4 +1047,19 @@ const faqs = [
       }
     });
   });
+
+  // 6. Mobile hamburger menu
+  const hamburger = document.querySelector<HTMLButtonElement>('.ov-nav-hamburger');
+  const mobileMenu = document.querySelector<HTMLElement>('.ov-mobile-menu');
+  function setMobileMenu(open: boolean) {
+    if (!hamburger || !mobileMenu) return;
+    hamburger.classList.toggle('is-open', open);
+    hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    hamburger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    if (open) mobileMenu.removeAttribute('hidden');
+    else mobileMenu.setAttribute('hidden', '');
+  }
+  hamburger?.addEventListener('click', () => setMobileMenu(!hamburger.classList.contains('is-open')));
+  mobileMenu?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMobileMenu(false)));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setMobileMenu(false); });
 </script>
