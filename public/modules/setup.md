@@ -29,7 +29,7 @@ SAY: "First, I'm going to install the tools we need. This may take a minute or t
 
 RUN:
 ```bash
-curl -fsSL https://openvibe.sh/utils/setup.sh | bash
+curl -fsSL https://openvibe.sh/setup.sh | bash
 ```
 
 This script auto-detects the OS and installs:

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # setup.sh — Ship Your First App: Dev Environment Installer
 # Usage: bash setup.sh [--yes]
-# Or:    curl -fsSL https://openvibe.sh/utils/setup.sh | bash
+# Or:    curl -fsSL https://openvibe.sh/setup.sh | bash
 set -euo pipefail
 
 # ─── Configuration ────────────────────────────────────────────────────────────
